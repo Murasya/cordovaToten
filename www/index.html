@@ -42,7 +42,7 @@
   <script type="text/javascript" src="js/slick.min.js"></script>
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="category.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
 </body>
 </html>
 
@@ -322,7 +322,7 @@
     <div class="background" style="background-color: #FFF"></div>
     <div id="category_future">
       <div class="cat-detail__header--yellow">
-        <a @click="document.getElementById('myNavigator').popPage()"><img src="images/各種ボタン/help-back_ボタン.png"></a>
+        <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
       </div>
       <div class="cat-detail__title">
         取り組みたいこと<br>叶えたいこと
@@ -362,7 +362,7 @@
     <div class="background" style="background-color: #FFF"></div>
     <div id="category_hobby">
       <div class="cat-detail__header--pink">
-        <a @click="document.getElementById('myNavigator').popPage()"><img src="images/各種ボタン/help-back_ボタン.png"></a>
+        <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
       </div>
       <div class="cat-detail__title">
         趣味・好きなこと
@@ -398,7 +398,7 @@
     <div class="background" style="background-color: #FFF"></div>
     <div id="category_experience">
       <div class="cat-detail__header--green">
-        <a @click="document.getElementById('myNavigator').popPage()"><img src="images/各種ボタン/help-back_ボタン.png"></a>
+        <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
       </div>
       <div class="cat-detail__title">
         過去の体験・経験
@@ -440,7 +440,7 @@
     <div class="background" style="background-color: #FFF"></div>
     <div id="category_task">
       <div class="cat-detail__header--blue">
-        <a @click="document.getElementById('myNavigator').popPage()"><img src="images/各種ボタン/help-back_ボタン.png"></a>
+        <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
       </div>
       <div class="cat-detail__title">
         タスク
@@ -479,6 +479,121 @@
 
 <template id="analyze.html">
   <ons-page id="analyze">
+    <div class="background analyze__background"></div>
+    <div class="content">
+      <div id="analyzeVue" v-cloak class="analyze">
+        <img class="tenchan__lefttop" src="./images/分析中_キャラ.png">
+        <img src="images/吹き出し/分析_吹き出し(analyze).png" class="tenchan__comment">
+        <input class="analyze__thema" type="text" v-model="theme" placeholder="テーマを入力">
+        <div>
+          <select v-model="cat[0]" class="analyze__category">
+            <option disabled value="">カテゴリ</option>
+            <option v-for="n in categories" :value="n">{{ n }}</option>
+          </select>
+          <select v-model="cat[1]" class="analyze__category">
+            <option disabled value="">カテゴリ</option>
+            <option v-for="n in categories" :value="n">{{ n }}</option>
+          </select>
+          <select v-model="cat[2]" class="analyze__category">
+            <option disabled value="">カテゴリ</option>
+            <option v-for="n in categories" :value="n">{{ n }}</option>
+          </select>
+        </div>
+        <button @click="nextButtonClick" class="analyze__next-button">これを分析！</button>
+        <a class="analyze__help-button" @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png" width="40px"></a>
+        <my-toolbar></my-toolbar>
+      </div>
+    </div>
+    
+    <script>
+      ons.getScriptPage().onInit = function () {
+        sBanner();
+        var qAndA = new QAndA();
+        var vm_a = new Vue({
+          el: '#analyzeVue',
+          data: {
+            theme: "",
+            category: [],
+            cat: [
+              "",
+              "",
+              "",
+            ],
+            categories: [
+              "夢",
+              "欲しいもの",
+              "就活",
+              "研究",
+              "進路",
+              "将来",
+              "勉強",
+              "スキルアップ",
+              "ゼミ",
+              "読書",
+              "資格",
+              "サークル",
+              "部活",
+              "人間関係",
+              "趣味",
+              "自己分析",
+              "1週間後",
+              "1年後",
+              "10年後",
+              "その他",
+            ],
+          },
+          methods: {
+            nextButtonClick: function() {
+              this.category = [];
+              for(var i=0; i<3; i++) {
+                if(this.cat[i] != "") {
+                  this.category.push(this.cat[i]);
+                }
+              }
+              if (this.theme == "") {
+                ons.notification.toast('テーマが入力されていません', {timeout: 2000, animation: "fall"});
+                return;
+              }
+              if (this.category.length == 0) {
+                ons.notification.toast('カテゴリを1～3つ選択してください', {timeout: 2000, animation: "fall"});
+                return;
+              }
+              if (this.existsSameValue(this.category)) {
+                ons.notification.toast('同じカテゴリが選択されています', {timeout: 2000, animation: "fall"});
+                return;
+              }
+              qAndA.questions.push("取り組みたいこと/叶えたいこと");
+              qAndA.answers.push(this.theme);
+              qAndA.uid = firebase.auth().currentUser.uid;
+              qAndA.category = this.category;
+              qAndA.id = setNewData(qAndA);
+              localStorage.setItem("tutorial_finished", "true");
+              hBanner();
+              document.querySelector('#myNavigator').replacePage('start.html', {
+                data: {
+                  qAndA: qAndA
+                }
+              });
+            },
+            helpButtonClick: function() {
+              document.getElementById('myNavigator').pushPage('help.html');
+            },
+            closeModal: function() {
+              this.showHelpModal = false;
+            },
+            existsSameValue: function(a) {
+              var s = new Set(a);
+              return s.size != a.length;
+            }
+          }
+        });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="analyze_future.html">
+  <ons-page>
     <div class="background analyze__background"></div>
     <div class="content">
       <div id="analyzeVue" v-cloak class="analyze">
@@ -1160,17 +1275,17 @@
       </div>
       <div class="overlay" v-show="showModal1" @click="closeModal">
         <img class="tenchan__lefttop" src="images/分析中_キャラ.png">
-        <img class="tenchan__comment" src="images/吹き出し/分析_吹き出し(comment1).png">
+        <img class="tenchan__comment" src="images/吹き出し/comment1.png">
       </div>
       <div class="overlay" v-show="showModal2" @click="closeModal">
         <img class="tenchan__lefttop" src="images/分析中_キャラ2.png">
-        <img class="tenchan__comment" src="images/吹き出し/分析_吹き出し(comment2).png">
+        <img class="tenchan__comment" src="images/吹き出し/comment2.png">
       </div>
       <div class="overlay" v-show="showModal3" @click="showModal3 = false">
         <img class="tenchan__lefttop" src="images/分析中_キャラ3.png">
-        <img class="tenchan__comment" src="images/吹き出し/分析_吹き出し(comment3).png">
+        <img class="tenchan__comment" src="images/吹き出し/comment3.png">
         <button class="overlay--finbtn" @click="closeModal3">記録する</button>
-        <a class="overlay--backbtn" @click="showModal3 = false"><img src="images/各種ボタン/help-back_ボタン.png" width="77px"></a>
+        <a class="overlay--backbtn" @click="showModal3 = false"><img src="images/分析カテゴリ追加時_素材/back-question.png" width="77px"></a>
         </div>
       </div>
     </div>
