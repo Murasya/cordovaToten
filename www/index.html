@@ -343,6 +343,8 @@
         setTimeout(function() {
           $('.category__slider').css('opacity', 1);
         },100);
+      }
+      ons.getScriptPage().onInit = function() {
         new Vue({
           el: '#categoryVue',
         });
