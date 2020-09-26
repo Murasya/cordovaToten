@@ -1,0 +1,38 @@
+/* index */
+#buttons_index {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.index {
+  &__logo {
+    width: 40%;
+    display: block;
+    margin: 15vh auto 5vh;
+  }
+  &__recents {
+    color: #7B7B7B;
+    font-size: 15px;
+    text-align: center;
+  }
+  &__recode {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 100px;
+  }
+  &__mada {
+    text-align: center;
+    margin: 10vh;
+  }
+}
+#notSignIn .img-button {
+  width: 75pt;
+  margin-top: 10pt;
+  margin-left: 150pt;
+}
+#isSignIn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

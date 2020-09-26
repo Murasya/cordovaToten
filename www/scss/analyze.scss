@@ -1,0 +1,109 @@
+.analyze {
+  %__header {
+    margin: 0;
+    padding: 2vh;
+  }
+  &__header {
+    &--yellow {
+      @extend %__header;
+      background-color: #F4BC3E;
+  
+      img {
+        height: 5vh;
+      }
+    }
+    &--pink {
+      @extend %__header;
+      background-color: #F49C9C;
+  
+      img {
+        height: 5vh;
+      }
+    }
+    &--green {
+      @extend %__header;
+      background-color: #6EB161;
+  
+      img {
+        height: 5vh;
+      }
+    }
+    &--blue {
+      @extend %__header;
+      background-color: #558FC9;
+  
+      img {
+        height: 5vh;
+      }
+    }
+  }
+
+  &__background {
+    background-image: url("../images/分析カテゴリ追加時_素材/analyze_background.png");
+    background-size: contain;
+  }
+
+  &__tenchan {
+    height: 10vh;
+    margin: 7vh 0 0 10vw;
+  }
+
+  &__main {
+    background-color: #FFF;
+    border-radius: 14px;
+    padding: 20px;
+    margin: 0 10vw;
+  }
+
+  &__theme {
+    border: none;
+    width: 100%;
+    height: 10vh;
+    font-size: 16px;
+  }
+
+  &__hr {
+    &--yellow {
+      border: 1px solid #F4BC3E;
+    }
+    &--pink {
+      border: 1px solid #F49C9C;
+    }
+    &--green {
+      border: 1px solid #6EB161;
+    }
+    &--blue {
+      border: 1px solid #558FC9;
+    }
+  }
+
+  &__exp {
+    font-size: 11px;
+    text-align: center;
+    color: #484848;
+    margin-top: 4vh;
+  }
+
+  &__tag {
+    border: solid .3px #A6A7A7;
+    border-radius: 1.45px;
+    width: 20vw;
+    color: #8E8E8F;
+  }
+
+  &__help-button {
+    margin-left: 55vw;
+  }
+
+  &__next-button {
+    border: none;
+    border-radius: 8px;
+    background-color: #ED6A4C;
+    color: #FFF;
+    font-size: 15px;
+    font-weight: bold;
+    display: block;
+    margin: 5vh auto;
+    height: 30px;
+  }
+}

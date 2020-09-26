@@ -26,7 +26,8 @@ function QAndA(
   complete=false,
   category=[],
   success="",
-  id=""
+  id="",
+  color="",
 ) {
   this.questions = questions;
   this.answers = answers;
@@ -39,6 +40,7 @@ function QAndA(
   this.category = category;
   this.success = success;
   this.id = id;
+  this.color = color;
 }
 
 function User(
@@ -67,7 +69,8 @@ function setNewData(qAndA) {
     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     complete: qAndA.complete,
     category: qAndA.category,
-    success: qAndA.success
+    success: qAndA.success,
+    color: qAndA.color,
   }).then(function(docRef) {
     console.log('Document written with ID: ', docRef.id);
     id = docRef.id;
@@ -134,6 +137,7 @@ function getQuestionAndAnswer(limit = 100) {
           doc.data().category,
           doc.data().success,
           doc.id,
+          doc.data().color,
         );
         array.push(qAndA);
       });
@@ -159,7 +163,8 @@ function updateData(qAndA) {
     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     complete: qAndA.complete,
     category: qAndA.category,
-    success: qAndA.success
+    success: qAndA.success,
+    color: qAndA.color,
   }).then(function() {
     console.log("Document successfully updated!");
   });
@@ -187,6 +192,7 @@ function getIncomplete() {
           doc.data().category,
           doc.data().success,
           doc.id,
+          doc.data().color,
         );
         array.push(qAndA);
       });

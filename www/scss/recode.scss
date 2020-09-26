@@ -1,0 +1,27 @@
+.recode {
+  &__tab {
+    position: sticky;
+    top: 0;
+    background-color: #E0836E;
+    height: 97px;
+    width: 100%;
+    z-index: 1;
+    &--archive {
+      position: absolute;
+      left: 19pt;
+      top: 50px;
+      height: 26pt;
+      border-radius: 13pt;
+      border: none;
+      font-size: 10pt;
+    }
+    &--saving {
+      position: absolute;
+      top: 50px;
+      height: 26pt;
+      border-radius: 13pt;
+      border: none;
+      font-size: 10pt;
+    }
+  }
+}

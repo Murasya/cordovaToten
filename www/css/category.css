@@ -14,9 +14,10 @@
   font-size: 13px;
 }
 .category__slider {
-  padding: 30px 0;
+  padding: 0;
   background-color: #DEEFF7;
   transition: .3s;
+  margin-bottom: 0;
 }
 .category__active {
   transform: scale(1) !important;
@@ -26,8 +27,8 @@
   background-color: #FFF;
   border-radius: 15px;
   box-shadow: 0px 3px 4px #657D9529;
-  margin: 0;
   transform: scale(0.8);
+  transition: .3s ease;
 }
 .category .category__header--yellow, .category .category__header--pink, .category .category__header--blue, .category .category__header--green {
   display: table;
@@ -80,7 +81,13 @@
   padding: 9px 30px;
   font-weight: bold;
   display: block;
-  margin: 30px auto 0;
+  margin: 10px auto 0;
+}
+.category__triangle {
+  border-top: 60px solid #DEEFF7;
+  border-right: 19.5vw solid transparent;
+  border-left: 19.5vw solid transparent;
+  margin: 0 30vw;
 }
 
 /*# sourceMappingURL=category.css.map */

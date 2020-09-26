@@ -1,0 +1,54 @@
+.archive {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 100px;
+  &__data {
+    display: block;
+    width: 90%;
+    margin: 12px auto 0;
+  }
+  %__time {
+    font-size: 10px;
+    padding: 3px 21px;
+    border-radius: 5px 5px 0 0;
+  }
+  &__time {
+    @extend %__time;
+    background-color: #E8F6FD;
+    color: #626262;
+    &--yellow {
+      @extend %__time;
+      background-color: #F4BC3E;
+      color: #FFF;
+    }
+    &--blue {
+      @extend %__time;
+      background-color: #558FC9;
+      color: #FFF;
+    }
+    &--pink {
+      @extend %__time;
+      background-color: #F49C9C;
+      color: #FFF;
+    }
+    &--green {
+      @extend %__time;
+      background-color: #6EB161;
+      color: #FFF;
+    }
+  }
+  &__p {
+    position: relative;
+    font-size: 12px;
+    margin: 0;
+    padding: 12px 0 18px 21px;
+    background-color: #E8F6FD;
+    border-radius: 0 5px 5px 5px;
+  }
+  &__hr {
+    position: relative;
+    bottom: 17px;
+    margin: 0 21px;
+  }
+}
