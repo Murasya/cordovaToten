@@ -1,0 +1,22 @@
+.explain {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100%;
+  background-color: #B9B9B9;
+  background-image: url('../images/機能紹介_サインイン_サインアップ_背景.png');
+  background-size: cover;
+
+  &__tab {
+    width: 100vw;
+  }
+  &__white {
+    height: 15vh;
+  }
+  &__nextbtn {
+    margin-top: 5vh;
+    height: 10vh;
+  }
+}

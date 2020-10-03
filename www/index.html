@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="css/cat-detail.css">
   <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/archive.css">
+  <link rel="stylesheet" href="css/explain.css">
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
 
@@ -53,7 +54,7 @@
     <div class="background" style="background-color: #FFFFFF;"></div>
     <div class="index" v-cloak>
       <div v-if="!tutorialFinish">
-        <a @click="goTutorial"><img class="logo" src="images/ダウンロード後_シンボル_顔なし.png"></a>
+        <a @click="goTutorial"><img class="index__first-logo" src="images/ダウンロード後_シンボル_顔なし.png"></a>
       </div>
       <div v-else>
         <header v-show="currentUser != null">
@@ -124,6 +125,12 @@
           },
           created: function() {
             console.log("created");
+            if(!(this.tutorialFinish)) {
+              setTimeout(function() {
+                hBanner();
+                document.getElementById("myNavigator").pushPage('explain.html');
+              }, 5000);
+            }
           },
           methods: {
             loginButtonClick: function () {
@@ -347,6 +354,18 @@
       ons.getScriptPage().onInit = function() {
         new Vue({
           el: '#categoryVue',
+          data: {
+            tutorialFinish: localStorage.getItem("tutorial_finished"),
+            overlay1: false,
+            overlay2: false,
+            overlay3: false,
+            overlay4: false,
+          },
+          created: function() {
+            if(!(this.tutorialFinish)) {
+              
+            }
+          }
         });
       }
     </script>
@@ -1261,8 +1280,8 @@
 </template>
 
 <template id="explain.html">
-  <ons-page id="explain">
-    <div id="explainVue">
+  <ons-page>
+    <div>
       <ons-tabbar swipeable hide-tabs>
         <ons-tab page="tab1.html" active></ons-tab>
         <ons-tab page="tab2.html"></ons-tab>
@@ -1273,25 +1292,25 @@
 
 <template id="tab1.html">
   <ons-page>
-    <div class="explain-page">
-      <img src="images/explain_tab1.png" class="back">
-      <div style="height: 70px;"></div>
+    <div class="explain">
+      <img src="images/explain_tab1.png" class="explain__tab">
+      <div class="explain__white"></div>
     </div>
   </ons-page>
 </template>
 
 <template id="tab2.html">
   <ons-page>
-    <div class="explain-page" id="tab2">
-      <img src="images/explain_tab2.png" class="back">
-      <a @click="onClick" style="margin-top: 30px;"><img src="images/機能説明_次へボタン.png" width="50px"></a>
+    <div class="explain" id="tab2">
+      <img src="images/explain_tab2.png" class="explain__tab">
+      <a @click="onClick"><img class="explain__nextbtn" src="images/機能説明_次へボタン.png"></a>
     </div>
     <script>
       var vm = new Vue({
         el: '#tab2',
         methods: {
           onClick: function() {
-            document.getElementById("myNavigator").pushPage('ready.html');
+            document.getElementById("myNavigator").pushPage('register.html');
           }
         }
       })
@@ -2171,7 +2190,7 @@
       <ul class="register__explain">
         <li class="register__explain-item">アカウント登録を行うことにより、<a @click="urlClick" class="register__link">利用規約</a>・<a @click="urlClick" class="register__link">プライバシーポリシー</a>に同意したものとみなします。</li><br>
         <li class="register__explain-item">メールアドレスおよび連携サービスのDMにアプリ改善のためのアンケート等をお送りする場合がございます。あらかじめご了承ください。</li><br>
-        <li class="register__explain-item">個人情報は記入必須ではありません。</li>
+        <li class="register__explain-item">性別・生年月日・職業は記入必須ではありません。</li>
       </ul>
       <div class="register__form">
         <p class="register__title">メールアドレス</p>

@@ -18,12 +18,12 @@
     <preference name="Fullscreen" value="true" />
     <platform name="android">
         <allow-intent href="market:*" />
-        <splash src="res/screen/android/splash_ldpi.9@0.75x.png" density="land-ldpi"/>
+        <!-- <splash src="res/screen/android/splash_ldpi.9@0.75x.png" density="land-ldpi"/>
         <splash src="res/screen/android/splash_mdpi.9.png" density="land-mdpi"/>
         <splash src="res/screen/android/splash_hdpi.9@1.5x.png" density="land-hdpi"/>
         <splash src="res/screen/android/splash_xhdpi.9@2x.png" density="land-xhdpi"/>
         <splash src="res/screen/android/splash_xxhdpi.9@3x.png" density="land-xxhdpi"/>
-        <splash src="res/screen/android/splash_xxxhdpi.9@4x.png" density="land-xxxhdpi"/>
+        <splash src="res/screen/android/splash_xxxhdpi.9@4x.png" density="land-xxxhdpi"/> -->
         <preference name="android-targetSdkVersion" value="29" />
     </platform>
     <platform name="ios">

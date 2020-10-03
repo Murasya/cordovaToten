@@ -33,15 +33,15 @@
   }
 
   &__input {
-    border-radius: 22pt;
-    border: solid 0.8pt #707070;
+    border-radius: 10px;
+    border: solid 0.8px #707070;
     padding: 10px;
     width: 95%;
   }
 
   &__select {
-    border-radius: 13pt;
-    border: solid 0.8pt #707070;
+    border-radius: 7px;
+    border: solid 0.8px #707070;
     padding: 7px 0 7px 10px;
     font-size: 11px;
   }
@@ -53,6 +53,7 @@
     font-size: 14px;
     padding: 8px 41px 7px 43px;
     color: #FFF;
+    font-weight: bold;
   }
 
   &__birthday {
