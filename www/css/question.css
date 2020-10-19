@@ -143,13 +143,13 @@
   top: 0;
   left: -10%;
   width: 110%;
-  height: 25pt;
-  line-height: 25pt;
+  height: 2em;
+  line-height: 1em;
   border-color: #707070;
   border-width: 0.2pt;
   z-index: 4;
   margin: 0;
-  padding: 0 10%;
+  padding: .5em 10%;
   font-size: 13px;
   box-sizing: border-box;
   overflow: auto;
