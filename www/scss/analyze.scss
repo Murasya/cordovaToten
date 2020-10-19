@@ -1,7 +1,9 @@
 .analyze {
   %__header {
     margin: 0;
-    padding: 2vh;
+    padding: 3vh 5vw 2vh;
+    display: flex;
+    justify-content: space-between;
   }
   &__header {
     &--yellow {
@@ -93,11 +95,6 @@
     border-radius: 1.45px;
     width: 20vw;
     color: #8E8E8F;
-  }
-
-  &__help-button {
-    margin-left: 55vw;
-    height: 3vh;
   }
 
   &__next-button {

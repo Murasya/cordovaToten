@@ -1,7 +1,9 @@
 @charset "UTF-8";
 .analyze .analyze__header--yellow, .analyze .analyze__header--pink, .analyze .analyze__header--green, .analyze .analyze__header--blue {
   margin: 0;
-  padding: 2vh;
+  padding: 3vh 5vw 2vh;
+  display: flex;
+  justify-content: space-between;
 }
 .analyze__header--yellow {
   background-color: #F4BC3E;
@@ -73,10 +75,6 @@
   border-radius: 1.45px;
   width: 20vw;
   color: #8E8E8F;
-}
-.analyze__help-button {
-  margin-left: 55vw;
-  height: 3vh;
 }
 .analyze__next-button {
   border: none;
