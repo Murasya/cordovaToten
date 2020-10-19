@@ -467,3 +467,5 @@ function dismissSafari() {
 //     main.style = 'height: ' + original_main_height + 'px;';
 //   });
 // }
+
+// 改行をfirebaseに反映させる

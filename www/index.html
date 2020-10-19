@@ -1605,15 +1605,15 @@
       </div>
       <div class="overlay" v-show="showModal1" @click="closeModal">
         <img class="tenchan__lefttop" src="images/分析中_キャラ.png">
-        <img class="tenchan__comment" src="images/吹き出し/comment1.png">
+        <img class="tenchan__comment" src="images/分析カテゴリ追加時_素材/comment1.png">
       </div>
       <div class="overlay" v-show="showModal2" @click="closeModal">
         <img class="tenchan__lefttop" src="images/分析中_キャラ2.png">
-        <img class="tenchan__comment" src="images/吹き出し/comment2.png">
+        <img class="tenchan__comment" src="images/分析カテゴリ追加時_素材/comment2.png">
       </div>
       <div class="overlay" v-show="showModal3" @click="showModal3 = false">
         <img class="tenchan__lefttop" src="images/分析中_キャラ3.png">
-        <img class="tenchan__comment" src="images/吹き出し/comment3.png">
+        <img class="tenchan__comment" src="images/分析カテゴリ追加時_素材/comment3.png">
         <button class="overlay--finbtn" @click="closeModal3">記録する</button>
         <a class="overlay--backbtn" @click="showModal3 = false"><img src="images/分析カテゴリ追加時_素材/back-question.png" width="77px"></a>
         </div>
@@ -2206,9 +2206,22 @@
       <select v-else class="result__success">
         <option>{{ success }}</option>
       </select>
-      <button class="result__savebtn" v-show="recode == false" @click="saveButtonClick">完了</button>
+      <div class="result__btns">
+        <div class="result__btns--ver">
+          <a @click="interruptionButtonClick"><img src="./images/各種ボタン/break_ボタン.png" alt="中断ボタン" width="30px"></a>
+          <a @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png" alt="ヘルプボタン" width="30px"></a> 
+        </div>
+        <button class="result__savebtn" v-show="recode == false" @click="saveButtonClick">完了</button>
+      </div>
       <!--<a @click="onTweet" class="result__tweetbtn"><ons-icon icon="fa-twitter"></ons-icon> Tweet</a>
       <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
+      <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
+        <p class="overlay__save--string">分析を中断しますか？</p>
+        <div>
+          <button class="overlay__save--yesbtn" @click="savingButton">はい</button>
+          <button class="overlay__save--nobtn" @click="closeModal">いいえ</button>
+        </div>
+      </div>
       <my-toolbar v-show="recode == true"></my-toolbar>
     </div>
   
@@ -2238,6 +2251,7 @@
             lightClass: "lightBlue",
             blueClass: "blue",
             headerClass: "",
+            showSavingModal: false,
             tweet: {
               text: "",
               url: "http://toten.html.xdomain.jp/",
@@ -2263,6 +2277,12 @@
             }
           },
           methods: {
+            interruptionButtonClick: function() {
+              this.showSavingModal = true;
+            },
+            helpButtonClick: function() {
+              document.getElementById('myNavigator').pushPage('help.html');
+            },
             saveButtonClick: function() {
               if (this.memo == "") {
                 ons.notification.toast("分析結果を振り返って今後に活かしましょう", {timeout: 1000, animation: "fall"});
@@ -2304,6 +2324,17 @@
               this.tweet.url += "?id=" + qAndA.id;
               window.plugins.socialsharing.shareViaTwitter(this.tweet.text, null, this.tweet.url);
             },
+            savingButton: function() {
+              qAndA.memo = this.memo;
+              qAndA.success = this.success;
+              qAndA.category = this.category;
+              qAndA.complete = false;
+              updateData(qAndA);
+              myNavigator.resetToPage('index.html');
+            },
+            closeModal: function() {
+              this.showSavingModal = false;
+            }
           }
         });
       }
@@ -2405,11 +2436,20 @@
         setTimeout(startQuestion, 800)
       }
       function startQuestion() {
-        myNavigator.replacePage('question.html', {
-          data: {
-            qAndA: myNavigator.topPage.data.qAndA
-          }
-        })
+        var qAndA = myNavigator.topPage.data.qAndA;
+        if(qAndA.memo === "" && qAndA.success === "") {
+          myNavigator.replacePage('question.html', {
+            data: {
+              qAndA: myNavigator.topPage.data.qAndA
+            }
+          });
+        } else {
+          myNavigator.replacePage('result.html', {
+            data: {
+              qAndA: myNavigator.topPage.data.qAndA
+            }
+          });
+        }
       }
     </script>
   </ons-page>
