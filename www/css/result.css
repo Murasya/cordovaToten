@@ -62,6 +62,7 @@
   width: 80%;
   word-wrap: break-word;
   overflow: scroll;
+  white-space: pre-wrap;
 }
 .result__success {
   display: block;

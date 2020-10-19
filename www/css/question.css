@@ -172,6 +172,7 @@
   text-align: left;
   overflow-y: scroll;
   box-sizing: border-box;
+  white-space: pre-wrap;
 }
 
 .down-arrow {
