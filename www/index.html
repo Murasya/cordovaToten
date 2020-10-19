@@ -1573,49 +1573,49 @@
 <template id="question.html">
   <ons-page>
     <div class="background" style="background-color: hsl(200, 84%, 95%);"></div>
-    <div id="questionVue" v-cloak class="question">
-      <div :class="headerClass">
-        <p class="question__theme">{{ theme }}</p>
-        <div class="question__topbuttons">
-          <a @click="interruptionButtonClick"><img src="./images/各種ボタン/break_ボタン.png" alt="中断ボタン" width="30px"></a>
-          <a @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png" alt="ヘルプボタン" width="30px"></a>
+      <div id="questionVue" v-cloak class="question">
+        <div :class="headerClass">
+          <p class="question__theme">{{ theme }}</p>
+          <div class="question__topbuttons">
+            <a @click="interruptionButtonClick"><img src="./images/各種ボタン/break_ボタン.png" alt="中断ボタン" width="30px"></a>
+            <a @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png" alt="ヘルプボタン" width="30px"></a>
+          </div>
         </div>
-      </div>
-      <div v-for="item in items" class="items">
-        <p :class='item.tag == "out" ? "lightBlue" : "blue"'>{{ item.num }}</p>
-        <p>{{ item.why }}</p>
-        <p>{{ item.answer }}</p>
-      </div>
-      <ons-icon class="down-arrow" icon="fa-arrow-down" v-show="qa.num != 1"></ons-icon>
-      <div class="question__writting">
-        <a @click="onNumber" :class="numberClass">{{ qa.num }}</a>
-        <p class="question__why">{{ qa.why }}<input class="question__question" v-show="qa.num >= 2" type="text" v-model="qa.question">？</p>
-        <textarea v-model="qa.answer" class="question__answer"></textarea>
-      </div>
-      <div class="question__buttons">
-        <a @click="nextButtonClick"><img src="./images/各種ボタン/next_ボタン.png" alt="Nextボタン"  height="90px"></a>
-        <a v-show="qa.num >= 5" @click="finishButtonClick" style="margin-left: 20px;"><img src="./images/各種ボタン/finish_ボタン.png" alt="finishボタン" height="75px"></a>
-      </div>
-      <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
-        <p class="overlay__save--string">分析を中断しますか？</p>
-        <div>
-          <button class="overlay__save--yesbtn" @click="savingButton">はい</button>
-          <button class="overlay__save--nobtn" @click="closeModal">いいえ</button>
+        <div v-for="item in items" class="items">
+          <p :class='item.tag == "out" ? "lightBlue" : "blue"'>{{ item.num }}</p>
+          <p>{{ item.why }}</p>
+          <p>{{ item.answer }}</p>
         </div>
-      </div>
-      <div class="overlay" v-show="showModal1" @click="closeModal">
-        <img class="tenchan__lefttop" src="images/分析中_キャラ.png">
-        <img class="tenchan__comment" src="images/分析カテゴリ追加時_素材/comment1.png">
-      </div>
-      <div class="overlay" v-show="showModal2" @click="closeModal">
-        <img class="tenchan__lefttop" src="images/分析中_キャラ2.png">
-        <img class="tenchan__comment" src="images/分析カテゴリ追加時_素材/comment2.png">
-      </div>
-      <div class="overlay" v-show="showModal3" @click="showModal3 = false">
-        <img class="tenchan__lefttop" src="images/分析中_キャラ3.png">
-        <img class="tenchan__comment" src="images/分析カテゴリ追加時_素材/comment3.png">
-        <button class="overlay--finbtn" @click="closeModal3">記録する</button>
-        <a class="overlay--backbtn" @click="showModal3 = false"><img src="images/分析カテゴリ追加時_素材/back-question.png" width="77px"></a>
+        <ons-icon class="down-arrow" icon="fa-arrow-down" v-show="qa.num != 1"></ons-icon>
+        <div class="question__writting">
+          <a @click="onNumber" :class="numberClass">{{ qa.num }}</a>
+          <p class="question__why">{{ qa.why }}<input class="question__question" v-show="qa.num >= 2" type="text" v-model="qa.question">？</p>
+          <textarea v-model="qa.answer" class="question__answer"></textarea>
+        </div>
+        <div class="question__buttons">
+          <a @click="nextButtonClick"><img src="./images/各種ボタン/next_ボタン.png" alt="Nextボタン"  height="90px"></a>
+          <a v-show="qa.num >= 5" @click="finishButtonClick" style="margin-left: 20px;"><img src="./images/各種ボタン/finish_ボタン.png" alt="finishボタン" height="75px"></a>
+        </div>
+        <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
+          <p class="overlay__save--string">分析を中断しますか？</p>
+          <div>
+            <button class="overlay__save--yesbtn" @click="savingButton">はい</button>
+            <button class="overlay__save--nobtn" @click="closeModal">いいえ</button>
+          </div>
+        </div>
+        <div class="overlay" v-show="showModal1" @click="closeModal">
+          <img class="tenchan__lefttop" src="images/分析中_キャラ.png">
+          <img class="tenchan__comment" src="images/分析カテゴリ追加時_素材/comment1.png">
+        </div>
+        <div class="overlay" v-show="showModal2" @click="closeModal">
+          <img class="tenchan__lefttop" src="images/分析中_キャラ2.png">
+          <img class="tenchan__comment" src="images/分析カテゴリ追加時_素材/comment2.png">
+        </div>
+        <div class="overlay" v-show="showModal3" @click="showModal3 = false">
+          <img class="tenchan__lefttop" src="images/分析中_キャラ3.png">
+          <img class="tenchan__comment" src="images/分析カテゴリ追加時_素材/comment3.png">
+          <button class="overlay--finbtn" @click="closeModal3">記録する</button>
+          <a class="overlay--backbtn" @click="showModal3 = false"><img src="images/分析カテゴリ追加時_素材/back-question.png" width="77px"></a>
         </div>
       </div>
     </div>
@@ -1720,17 +1720,18 @@
               }
               if (this.qa.tag == "out") {
                 this.outCount++;
+                if (this.outCount == 3) {
+                  this.showModal1 = true;
+                  this.outCount = 4;
+                }
               } else {
                 this.inCount++;
+                if (this.inCount == 3) {
+                  this.showModal2 = true;
+                  this.inCount = 4;
+                }
               }
-              if (this.outCount == 3) {
-                this.showModal1 = true;
-                this.outCount = 4;
-              }
-              if (this.inCount == 3) {
-                this.showModal2 = true;
-                this.inCount = 4;
-              }
+              
               this.qa.why = this.qa.why + this.qa.question + "？";
               this.items.push(Object.assign({}, this.qa));
               qAndA.questions.push(this.qa.why);

@@ -31,7 +31,7 @@
 }
 .analyze__background {
   background-image: url("../images/分析カテゴリ追加時_素材/analyze_background.png");
-  background-size: contain;
+  background-size: cover;
 }
 .analyze__tenchan {
   height: 10vh;

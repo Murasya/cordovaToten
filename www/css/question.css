@@ -4,11 +4,14 @@
   box-sizing: border-box;
 }
 .question .question__header, .question .question__header--yellow, .question .question__header--pink, .question .question__header--blue, .question .question__header--green {
+  position: sticky;
   box-shadow: 0 3pt 6pt rgba(0, 0, 0, 0.29);
   color: #FFF;
-  margin-top: 0;
-  margin-bottom: 25px;
-  padding: 20px 100px 20px 20px;
+  margin-bottom: 3vh;
+  padding: 2vh 5vw;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
 }
 .question__header {
   background-color: #E0836E;
@@ -29,11 +32,6 @@
   margin: 0;
   font-size: 20px;
   overflow: auto;
-}
-.question__topbuttons {
-  position: absolute;
-  right: 20px;
-  top: 20px;
 }
 .question__writting {
   position: relative;
@@ -76,7 +74,7 @@
   border: none;
   border-bottom: solid 0.5pt #7B7B7B;
   background: none;
-  width: 60%;
+  width: 55vw;
   margin: 0 5pt;
   font-size: 10pt;
 }

@@ -16,6 +16,7 @@
   color: white;
   font-size: 18pt;
   display: block;
+  margin-top: 0;
 }
 .overlay__save--yesbtn {
   width: 78.9pt;
@@ -43,7 +44,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(0, 162, 222, 0.6), rgba(141, 204, 222, 0.42));
+  background: rgba(191, 208, 222, 0.75);
   animation: slide-down 1s both;
 }
 @keyframes slide-down {
@@ -55,9 +56,9 @@
   }
 }
 .overlay--backbtn {
-  position: fixed;
-  bottom: 80pt;
-  right: 35pt;
+  position: absolute;
+  bottom: 20vh;
+  left: 15vw;
   z-index: 100;
 }
 .overlay--finbtn {
