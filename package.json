@@ -21,6 +21,7 @@
     "cordova-plugin-inappbrowser": "^4.0.0",
     "cordova-plugin-safariviewcontroller": "^1.6.0",
     "cordova-plugin-splashscreen": "^5.0.4",
+    "cordova-plugin-statusbar": "^2.4.3",
     "cordova-plugin-wkwebview-engine": "^1.2.1",
     "cordova-plugin-x-socialsharing": "^5.6.8",
     "cordova-promise-polyfill": "0.0.2",
@@ -42,12 +43,13 @@
       "cordova-plugin-safariviewcontroller": {},
       "cordova-plugin-admob-free": {
         "ADMOB_APP_ID": "ca-app-pub-8657757436017103~1121360773"
-      }
+      },
+      "cordova-plugin-statusbar": {}
     },
     "platforms": [
       "browser",
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

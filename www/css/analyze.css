@@ -65,6 +65,9 @@
   color: #484848;
   margin-top: 4vh;
 }
+.analyze__tag-container {
+  text-align: center;
+}
 .analyze__tag {
   border: solid .3px #A6A7A7;
   border-radius: 1.45px;
@@ -73,6 +76,7 @@
 }
 .analyze__help-button {
   margin-left: 55vw;
+  height: 3vh;
 }
 .analyze__next-button {
   border: none;

@@ -6,21 +6,37 @@
   margin-bottom: 100px;
 }
 .result__theme {
-  margin-top: 50pt;
-  margin-left: 28pt;
-  font-size: 17pt;
-  color: #DE4D2B;
+  margin-top: 5vh;
+  margin-left: 5vw;
+  font-size: 17px;
+  font-weight: 700;
+  color: #818181;
   align-self: flex-start;
 }
-.result__category{
+.result .result__category, .result .result__category--yellow, .result .result__category--blue, .result .result__category--green, .result .result__category--pink {
   display: inline-block;
-  border: solid 0.23pt rgba(166, 167, 167, 1);
-  background-color: #FFF;
-  color: rgba(166, 167, 167, 1);
-  padding: 5pt;
-  font-size: 10pt;
+  color: #FFF;
+  padding: 5px 0 5px 10px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: bold;
   align-self: flex-start;
-  margin: 0 0 20pt 28pt;
+  margin: 0 0 3vh 5vw;
+}
+.result__category {
+  background-color: #EC785E;
+}
+.result__category--yellow {
+  background-color: #F2C252;
+}
+.result__category--blue {
+  background-color: #558FC9;
+}
+.result__category--green {
+  background-color: #6EB161;
+}
+.result__category--pink {
+  background-color: #F49C9C;
 }
 .result__memo {
   width: 75%;
@@ -48,20 +64,17 @@
   overflow: scroll;
 }
 .result__success {
-  display: inline-block;
+  display: block;
   color: #A6A7A7;
-  border-radius: 1.45pt;
-  border-width: 0.23pt;
-  width: 30%;
-  padding: 10pt;
+  border-radius: 1.45px;
+  border-width: 0.23px;
+  background-color: #FFF;
+  padding: 0.5em 40px 0.5em 1em;
   text-align: left;
-}
-.result__success--readonly {
-  border: solid 0.36pt #A6A7A7;
-  border-radius: 2.27pt;
-  padding: 12pt 14pt 15pt;
-  width: 80%;
-  font-size: 10pt;
+  background-image: linear-gradient(45deg, transparent 50%, #FFF 50%), linear-gradient(135deg, #FFF 50%, transparent 50%), linear-gradient(to right, #797979, #797979);
+  background-position: calc(100% - 15px) calc(1em + 2px), calc(100% - 10px) calc(1em + 2px), 100% 0;
+  background-size: 5px 5px, 5px 5px, 30px 100%;
+  background-repeat: no-repeat;
 }
 .result__savebtn {
   width: 94pt;
@@ -86,3 +99,5 @@
   margin-top: 10pt;
   margin-bottom: 68pt;
 }
+
+/*# sourceMappingURL=result.css.map */

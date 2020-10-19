@@ -15,6 +15,8 @@ firebase.analytics();
 
 var db = firebase.firestore();
 
+localStorage.setItem("tutorial_finished", true);
+
 function QAndA(
   questions=[],
   answers=[],
@@ -259,13 +261,13 @@ Vue.component("my-toolbar", {
   template: `
     <div class="my-toolbar">
       <div class="my-toolbar__list">
-        <div :class="analyzeItem" @click="goAnalyze">
-          <img class="my-toolbar__logo" src="images/タブバー_新アイコン/analysis_アイコン.png" height="30px"></img>
-          <span :class="analyzeClass">分析</span>
-        </div>
         <div :class="homeItem" @click="goHome">
           <img class="my-toolbar__logo" src="images/タブバー_新アイコン/home_アイコン.png" height="30px"></img>
           <span :class="homeClass">ホーム</span>
+        </div>
+        <div :class="analyzeItem" @click="goAnalyze">
+          <img class="my-toolbar__logo" src="images/タブバー_新アイコン/analysis_アイコン.png" height="30px"></img>
+          <span :class="analyzeClass">分析</span>
         </div>
         <div :class="arcItem" @click="goArchive">
           <img class="my-toolbar__logo" src="images/タブバー_新アイコン/archives_アイコン.png" height="30px"></img>
@@ -354,7 +356,6 @@ if( /(android)/i.test(navigator.userAgent) ) {
 function initialization() {
   if(typeof admob === 'undefined') {
     console.log("admob undefined");
-    ons.notificatin.toast("admob undefined");
     return ;
   }
 
@@ -440,3 +441,29 @@ function openUrl(url, readerMode) {
 function dismissSafari() {
   SafariViewController.hide()
 }
+
+// キーボードで画面が隠れないようにする
+// //メイン画面の高さ
+// if( /(android)/i.test(navigator.userAgent) ) {
+//   let original_main_height = 0;
+
+//   document.addEventListener('show', function(event) {
+//     //メイン画面の高さを取得
+//     let main = document.querySelector('.page__content');
+//     original_main_height = main.clientHeight;
+//   });
+
+//   //ソフトウェアキーボード表示処理
+//   window.addEventListener('keyboardWillShow', (event) => {
+//     //画面の高さをキーボードの高さを差し引いた値とする
+//     let main = document.querySelector('.page__content');
+//     main.style = 'height: ' + (original_main_height - event.keyboardHeight) + 'px;';
+//   });
+
+//   //ソフトウェアキーボード非表示処理
+//   window.addEventListener('keyboardWillHide', () => {
+//     //画面の高さを元の高さに戻す
+//     let main = document.querySelector('.page__content');
+//     main.style = 'height: ' + original_main_height + 'px;';
+//   });
+// }

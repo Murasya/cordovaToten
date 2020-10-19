@@ -84,6 +84,10 @@
     margin-top: 4vh;
   }
 
+  &__tag-container {
+    text-align: center;
+  }
+
   &__tag {
     border: solid .3px #A6A7A7;
     border-radius: 1.45px;
@@ -93,6 +97,7 @@
 
   &__help-button {
     margin-left: 55vw;
+    height: 3vh;
   }
 
   &__next-button {

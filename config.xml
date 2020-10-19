@@ -15,7 +15,8 @@
     <allow-intent href="geo:*" />
     <icon src="res/icon/icon.png" />
     <preference name="Orientation" value="portrait" />
-    <preference name="Fullscreen" value="true" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarBackgroundColor" value="#ED6A4C" />
     <platform name="android">
         <allow-intent href="market:*" />
         <!-- <splash src="res/screen/android/splash_ldpi.9@0.75x.png" density="land-ldpi"/>

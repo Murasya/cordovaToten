@@ -1,17 +1,17 @@
 .category__title {
   font-size: 17px;
-  padding-left: 30%;
   background-color: #E8E8E8;
-  padding: 80px 0 30px 35%;
-  margin-bottom: 70px;
+  padding: 80px 0 30px 40vw;
+  margin-bottom: 10vh;
 }
 .category__title u {
   text-decoration: none;
   border-bottom: 2px solid #363636;
-  font-weight: bold;
+  font-weight: 900;
 }
 .category__title span {
   font-size: 13px;
+  font-weight: bold;
 }
 .category__slider {
   padding: 0;
@@ -57,8 +57,7 @@
   font-weight: bold;
 }
 .category__li {
-  margin: 15px 20px 0 -10px;
-  list-style-type: disc;
+  margin: 15px 15px 0;
   font-size: 14px;
 }
 .category__nado {

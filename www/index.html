@@ -80,10 +80,9 @@
         
         <div v-show="loading">
           <div id="notSignIn" v-if="currentUser == null">
-            <p><img class="logo" src="./images/サインイン前_シンボル.png" alt="ロゴ"></p>
-            <!--<a @click="loginButtonClick"><img class="img-button" src="images/各種ボタン/signin_ボタン.png"></a>-->
-            <input type="image" class="img-button" src="./images/各種ボタン/signin_ボタン.png" @click="loginButtonClick"><br>
-            <a @click="signUpButtonClick"><img class="img-button" src="images/各種ボタン/register_ボタン.png"></a>
+            <p><img class="index__logo" src="./images/サインイン前_シンボル.png" alt="ロゴ"></p>
+            <input type="image" class="index__signin" src="./images/各種ボタン/signin_ボタン.png" @click="loginButtonClick">
+            <button @click="signUpButtonClick" class="index__new-account">NEW ACCOUNT</button>
           </div>
           <div id="isSignIn" v-else>
             <a @click="goAnalyze"><img class="index__logo" src="./images/home_シンボル.png" alt="ロゴ"></a>
@@ -224,7 +223,7 @@
               firebase.auth().signInWithEmailAndPassword(this.email, this.password)
                 .then(function () {
                   ons.notification.toast('ログイン成功', { timeout: 1000, animation: 'fall'});
-                  document.querySelector('#myNavigator').popPage();
+                  document.querySelector('#myNavigator').resetToPage("index.html");
                 }).catch(function(error) {
                   ons.notification.toast(error.message, { timeout: 1000, animation: 'fall'});
                 });
@@ -256,40 +255,40 @@
           <div class="category__header--yellow">
             <span class="category__header-title">取り組みたいこと<br>叶えたいこと</span>
           </div>
-          <ul class="category__li">
-            <li>留学したい</li>
-            <li>インターンに行きたい<div class="category__nado">など</div></li>
-          </ul>
+          <div class="category__li">
+            ●留学したい<br>
+            ●インターンに行きたい<div class="category__nado">など</div>
+          </div>
           <a class="category__link" id="future_detail_btn">詳しい説明</a>
         </li>
         <li class="category__item category__non-active" id="hobby">
           <div class="category__header--pink">
             <span class="category__header-title">趣味・好きなこと</span>
           </div>
-          <ul class="category__li">
-            <li>読書が好き</li>
-            <li>テニスが好き<div class="category__nado">など</div></li>
-          </ul>
+          <div class="category__li">
+            ●テニスが好き<br>
+            ●古書店に行くのが好き<div class="category__nado">など</div>
+          </div>
           <a class="category__link" id="hobby_detail_btn">詳しい説明</a>
         </li>
         <li class="category__item category__non-active" id="task">
           <div class="category__header--blue">
             <span class="category__header-title">タスク</span>
           </div>
-          <ul class="category__li">
-            <li>マニュアルを作成する</li>
-            <li>レポートを作成する<div class="category__nado">など</div></li>
-          </ul>
+          <div class="category__li">
+            ●マニュアルを作成する<br>
+            ●レポートを作成する<div class="category__nado">など</div>
+          </div>
           <a class="category__link" id="task_detail_btn">詳しい説明</a>
         </li>
         <li class="category__item category__non-active" id="experience">
           <div class="category__header--green">
             <span class="category__header-title">過去の体験・経験</span>
           </div>
-          <ul class="category__li">
-            <li>アルバイトで接客に力を入れた</li>
-            <li>イメチェンした<div class="category__nado">など</div></li>
-          </ul>
+          <div class="category__li">
+            ●アルバイトで接客に力を入れた<br>
+            ●イメチェンした<div class="category__nado">など</div>
+          </div>
           <a class="category__link" id="exp_detail_btn">詳しい説明</a>
         </li>
       </ul>
@@ -300,58 +299,58 @@
       </div>
     </div>
     <script>
-      $(".category__slider").on('init', function(){
-        $('.slick-current').addClass('category__active');
-      });
-      $(".category__slider").slick({
-        centerMode: true,
-        centerPadding: "70px",
-        arrows: false,
-        focusOnSelect: true,
-      });
-      $(".category__slider").on('beforeChange', function(){
-        $('.slick-current').removeClass('category__active');
-      });
-      $('.category__slider').on('afterChange', function(){
-        $('.slick-current').addClass('category__active');
-      });
-      $("#future_detail_btn").on("click", function() {
-        document.querySelector("#myNavigator").pushPage("category_future.html");
-        $('.category__slider').css('opacity', 0);
-      });
-      $("#hobby_detail_btn").on("click", function() {
-        document.querySelector("#myNavigator").pushPage("category_hobby.html");
-        $('.category__slider').css('opacity', 0);
-      });
-      $("#task_detail_btn").on("click", function() {
-        document.querySelector("#myNavigator").pushPage("category_task.html");
-        $('.category__slider').css('opacity', 0);
-      });
-      $("#exp_detail_btn").on("click", function() {
-        document.querySelector("#myNavigator").pushPage("category_experience.html");
-        $('.category__slider').css('opacity', 0);
-      });
-      $(".category__go").on("click", function() {
-        if($("#future").hasClass("slick-active")) {
-          document.querySelector("#myNavigator").pushPage("analyze_future.html");
-        } else if($("#hobby").hasClass("slick-active")) {
-          document.querySelector("#myNavigator").pushPage("analyze_hobby.html");
-        } else if($("#task").hasClass("slick-active")) {
-          document.querySelector("#myNavigator").pushPage("analyze_task.html");
-        } else {
-          document.querySelector("#myNavigator").pushPage("analyze_experience.html");
-        }
-        $('.category__slider').css('opacity', 0);
-      })
-
       ons.getScriptPage().onShow = function () {
         toolbar_active = 0;
         $('.category__slider').slick('setPosition');
         setTimeout(function() {
           $('.category__slider').css('opacity', 1);
         },100);
+        $(".category__slider").on('beforeChange', function(){
+          $('.slick-current').removeClass('category__active');
+        });
+        $('.category__slider').on('afterChange', function(){
+          $('.slick-current').addClass('category__active');
+        });
+        $("#future_detail_btn").on("click", function() {
+          document.querySelector("#myNavigator").pushPage("category_future.html");
+          $('.category__slider').css('opacity', 0);
+        });
+        $("#hobby_detail_btn").on("click", function() {
+          document.querySelector("#myNavigator").pushPage("category_hobby.html");
+          $('.category__slider').css('opacity', 0);
+        });
+        $("#task_detail_btn").on("click", function() {
+          document.querySelector("#myNavigator").pushPage("category_task.html");
+          $('.category__slider').css('opacity', 0);
+        });
+        $("#exp_detail_btn").on("click", function() {
+          document.querySelector("#myNavigator").pushPage("category_experience.html");
+          $('.category__slider').css('opacity', 0);
+        });
+        $(".category__go").on("click", function() {
+          if($("#future").hasClass("slick-active")) {
+            document.querySelector("#myNavigator").pushPage("analyze_future.html");
+          } else if($("#hobby").hasClass("slick-active")) {
+            document.querySelector("#myNavigator").pushPage("analyze_hobby.html");
+          } else if($("#task").hasClass("slick-active")) {
+            document.querySelector("#myNavigator").pushPage("analyze_task.html");
+          } else {
+            document.querySelector("#myNavigator").pushPage("analyze_experience.html");
+          }
+          $('.category__slider').css('opacity', 0);
+        });
       }
       ons.getScriptPage().onInit = function() {
+        $(".category__slider").on('init', function(){
+          $('.slick-current').addClass('category__active');
+        });
+        $(".category__slider").slick({
+          centerMode: true,
+          centerPadding: "70px",
+          arrows: false,
+          focusOnSelect: true,
+          accessibility: false,
+        });
         new Vue({
           el: '#categoryVue',
           data: {
@@ -532,121 +531,6 @@
   </ons-page>
 </template>
 
-<!-- <template id="analyze.html">
-  <ons-page id="analyze">
-    <div class="background analyze__background"></div>
-    <div class="content">
-      <div id="analyzeVue" v-cloak class="analyze">
-        <img class="tenchan__lefttop" src="./images/分析中_キャラ.png">
-        <img src="images/吹き出し/分析_吹き出し(analyze).png" class="tenchan__comment">
-        <input class="analyze__thema" type="text" v-model="theme" placeholder="テーマを入力">
-        <div>
-          <select v-model="cat[0]" class="analyze__category">
-            <option disabled value="">カテゴリ</option>
-            <option v-for="n in categories" :value="n">{{ n }}</option>
-          </select>
-          <select v-model="cat[1]" class="analyze__category">
-            <option disabled value="">カテゴリ</option>
-            <option v-for="n in categories" :value="n">{{ n }}</option>
-          </select>
-          <select v-model="cat[2]" class="analyze__category">
-            <option disabled value="">カテゴリ</option>
-            <option v-for="n in categories" :value="n">{{ n }}</option>
-          </select>
-        </div>
-        <button @click="nextButtonClick" class="analyze__next-button">これを分析！</button>
-        <a class="analyze__help-button" @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png" width="40px"></a>
-        <my-toolbar></my-toolbar>
-      </div>
-    </div>
-    
-    <script>
-      ons.getScriptPage().onInit = function () {
-        sBanner();
-        var qAndA = new QAndA();
-        var vm_a = new Vue({
-          el: '#analyzeVue',
-          data: {
-            theme: "",
-            category: [],
-            cat: [
-              "",
-              "",
-              "",
-            ],
-            categories: [
-              "夢",
-              "欲しいもの",
-              "就活",
-              "研究",
-              "進路",
-              "将来",
-              "勉強",
-              "スキルアップ",
-              "ゼミ",
-              "読書",
-              "資格",
-              "サークル",
-              "部活",
-              "人間関係",
-              "趣味",
-              "自己分析",
-              "1週間後",
-              "1年後",
-              "10年後",
-              "その他",
-            ],
-          },
-          methods: {
-            nextButtonClick: function() {
-              this.category = [];
-              for(var i=0; i<3; i++) {
-                if(this.cat[i] != "") {
-                  this.category.push(this.cat[i]);
-                }
-              }
-              if (this.theme == "") {
-                ons.notification.toast('テーマが入力されていません', {timeout: 2000, animation: "fall"});
-                return;
-              }
-              if (this.category.length == 0) {
-                ons.notification.toast('カテゴリを1～3つ選択してください', {timeout: 2000, animation: "fall"});
-                return;
-              }
-              if (this.existsSameValue(this.category)) {
-                ons.notification.toast('同じカテゴリが選択されています', {timeout: 2000, animation: "fall"});
-                return;
-              }
-              qAndA.questions.push("取り組みたいこと/叶えたいこと");
-              qAndA.answers.push(this.theme);
-              qAndA.uid = firebase.auth().currentUser.uid;
-              qAndA.category = this.category;
-              qAndA.id = setNewData(qAndA);
-              localStorage.setItem("tutorial_finished", "true");
-              hBanner();
-              document.querySelector('#myNavigator').replacePage('start.html', {
-                data: {
-                  qAndA: qAndA
-                }
-              });
-            },
-            helpButtonClick: function() {
-              document.getElementById('myNavigator').pushPage('help.html');
-            },
-            closeModal: function() {
-              this.showHelpModal = false;
-            },
-            existsSameValue: function(a) {
-              var s = new Set(a);
-              return s.size != a.length;
-            }
-          }
-        });
-      }
-    </script>
-  </ons-page>
-</template> -->
-
 <template id="analyze_future.html">
   <ons-page>
     <div class="background analyze__background"></div>
@@ -654,7 +538,7 @@
       <div id="analyzeVue" v-cloak>
         <div class="analyze__header--yellow">
           <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
-          <a class="analyze__help-button" @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png" width="40px"></a>
+          <a class="analyze__help-button" @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png"></a>
         </div>
         <div>
           <img class="analyze__tenchan" src="images/分析カテゴリ追加時_素材/analyze_character.png">
@@ -663,17 +547,17 @@
           <input class="analyze__theme" type="text" v-model="theme" placeholder="取り組みたい・叶えたいこと">
           <hr class="analyze__hr--yellow">
           <p class="analyze__exp">＊タグを選んでください(最大3つまで)</p>
-          <div>
+          <div class="analyze__tag-container">
             <select v-model="cat[0]" class="analyze__tag">
-              <option disabled value="">タグ</option>
+              <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
             <select v-model="cat[1]" class="analyze__tag">
-              <option disabled value="">タグ</option>
+              <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
             <select v-model="cat[2]" class="analyze__tag">
-              <option disabled value="">タグ</option>
+              <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
           </div>
@@ -744,8 +628,8 @@
               qAndA.answers.push(this.theme);
               qAndA.uid = firebase.auth().currentUser.uid;
               qAndA.category = this.category;
-              qAndA.id = setNewData(qAndA);
               qAndA.color = "future";
+              qAndA.id = setNewData(qAndA);
               localStorage.setItem("tutorial_finished", "true");
               hBanner();
               document.querySelector('#myNavigator').replacePage('start.html', {
@@ -778,7 +662,7 @@
       <div id="analyzeVue" v-cloak>
         <div class="analyze__header--pink">
           <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
-          <a class="analyze__help-button" @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png" width="40px"></a>
+          <a class="analyze__help-button" @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png"></a>
         </div>
         <div>
           <img class="analyze__tenchan" src="images/分析カテゴリ追加時_素材/analyze_character.png">
@@ -787,17 +671,17 @@
           <input class="analyze__theme" type="text" v-model="theme" placeholder="趣味・好きなこと">
           <hr class="analyze__hr--pink">
           <p class="analyze__exp">＊タグを選んでください(最大3つまで)</p>
-          <div>
+          <div class="analyze__tag-container">
             <select v-model="cat[0]" class="analyze__tag">
-              <option disabled value="">タグ</option>
+              <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
             <select v-model="cat[1]" class="analyze__tag">
-              <option disabled value="">タグ</option>
+              <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
             <select v-model="cat[2]" class="analyze__tag">
-              <option disabled value="">タグ</option>
+              <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
           </div>
@@ -868,8 +752,8 @@
               qAndA.answers.push(this.theme);
               qAndA.uid = firebase.auth().currentUser.uid;
               qAndA.category = this.category;
-              qAndA.id = setNewData(qAndA);
               qAndA.color = "hobby";
+              qAndA.id = setNewData(qAndA);
               localStorage.setItem("tutorial_finished", "true");
               hBanner();
               document.querySelector('#myNavigator').replacePage('start.html', {
@@ -902,7 +786,7 @@
       <div id="analyzeVue" v-cloak>
         <div class="analyze__header--green">
           <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
-          <a class="analyze__help-button" @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png" width="40px"></a>
+          <a class="analyze__help-button" @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png"></a>
         </div>
         <div>
           <img class="analyze__tenchan" src="images/分析カテゴリ追加時_素材/analyze_character.png">
@@ -911,17 +795,17 @@
           <input class="analyze__theme" type="text" v-model="theme" placeholder="過去の体験・経験">
           <hr class="analyze__hr--green">
           <p class="analyze__exp">＊タグを選んでください(最大3つまで)</p>
-          <div>
+          <div class="analyze__tag-container">
             <select v-model="cat[0]" class="analyze__tag">
-              <option disabled value="">タグ</option>
+              <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
             <select v-model="cat[1]" class="analyze__tag">
-              <option disabled value="">タグ</option>
+              <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
             <select v-model="cat[2]" class="analyze__tag">
-              <option disabled value="">タグ</option>
+              <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
           </div>
@@ -992,8 +876,8 @@
               qAndA.answers.push(this.theme);
               qAndA.uid = firebase.auth().currentUser.uid;
               qAndA.category = this.category;
-              qAndA.id = setNewData(qAndA);
               qAndA.color = "experience";
+              qAndA.id = setNewData(qAndA);
               localStorage.setItem("tutorial_finished", "true");
               hBanner();
               document.querySelector('#myNavigator').replacePage('start.html', {
@@ -1026,7 +910,7 @@
       <div id="analyzeVue" v-cloak>
         <div class="analyze__header--blue">
           <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
-          <a class="analyze__help-button" @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png" width="40px"></a>
+          <a class="analyze__help-button" @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png"></a>
         </div>
         <div>
           <img class="analyze__tenchan" src="images/分析カテゴリ追加時_素材/analyze_character.png">
@@ -1035,17 +919,17 @@
           <input class="analyze__theme" type="text" v-model="theme" placeholder="タスク">
           <hr class="analyze__hr--blue">
           <p class="analyze__exp">＊タグを選んでください(最大3つまで)</p>
-          <div>
+          <div class="analyze__tag-container">
             <select v-model="cat[0]" class="analyze__tag">
-              <option disabled value="">タグ</option>
+              <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
             <select v-model="cat[1]" class="analyze__tag">
-              <option disabled value="">タグ</option>
+              <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
             <select v-model="cat[2]" class="analyze__tag">
-              <option disabled value="">タグ</option>
+              <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
           </div>
@@ -1116,8 +1000,8 @@
               qAndA.answers.push(this.theme);
               qAndA.uid = firebase.auth().currentUser.uid;
               qAndA.category = this.category;
-              qAndA.id = setNewData(qAndA);
               qAndA.color = "task";
+              qAndA.id = setNewData(qAndA);
               localStorage.setItem("tutorial_finished", "true");
               hBanner();
               document.querySelector('#myNavigator').replacePage('start.html', {
@@ -1154,15 +1038,15 @@
         <input class="analyze__thema" type="text" v-model="theme" placeholder="英会話を学びたい">
         <div>
           <select v-model="cat[0]" class="analyze__category">
-            <option disabled value="">カテゴリ</option>
+            <option value="">タグ</option>
             <option v-for="n in categories" :value="n">{{ n }}</option>
           </select>
           <select v-model="cat[1]" class="analyze__category">
-            <option disabled value="">カテゴリ</option>
+            <option value="">タグ</option>
             <option v-for="n in categories" :value="n">{{ n }}</option>
           </select>
           <select v-model="cat[2]" class="analyze__category">
-            <option disabled value="">カテゴリ</option>
+            <option value="">タグ</option>
             <option v-for="n in categories" :value="n">{{ n }}</option>
           </select>
         </div>
@@ -1293,7 +1177,7 @@
 <template id="tab1.html">
   <ons-page>
     <div class="explain">
-      <img src="images/explain_tab1.png" class="explain__tab">
+      <img src="images/チュートリアル/explain_tab1.svg" class="explain__tab">
       <div class="explain__white"></div>
     </div>
   </ons-page>
@@ -1302,7 +1186,7 @@
 <template id="tab2.html">
   <ons-page>
     <div class="explain" id="tab2">
-      <img src="images/explain_tab2.png" class="explain__tab">
+      <img src="images/チュートリアル/explain_tab2.svg" class="explain__tab">
       <a @click="onClick"><img class="explain__nextbtn" src="images/機能説明_次へボタン.png"></a>
     </div>
     <script>
@@ -1369,9 +1253,8 @@
   <ons-page>
     <div id="help">
       <div class="header">
-        <img class="cartoon" src="images/ヘルプ_キャラ.png">
+        <img class="tenchan__lefttop" src="images/ヘルプ_キャラ.png">
         <div class="speech-box">
-          <img src="images/吹き出し/ヘルプ_吹き出し.png">
         </div>
         <div class="links">
           <a href="#1">▶︎やりたいことが挙げられない</a>
@@ -2225,6 +2108,7 @@
       </div>
       <div class="register__btns">
         <button @click="onRegister" class="register__send-btn">仮登録メールを送信</button>
+        <button @click="already" class="register__already">既にアカウントがある</button>
         <!-- <hr>
         <h3>他のアカウントで登録</h3>
         <div>
@@ -2287,6 +2171,9 @@
             },
             urlClick: function() {
               window.open("https://noteappm.wixsite.com/policies", "_self", "location=no");
+            },
+            already: function() {
+              document.getElementById("myNavigator").pushPage("account.html");
             }
           }
         });
@@ -2300,7 +2187,7 @@
     <div class="background" style="background-color: #E8F6FD;"></div>
     <div id="resultVue" class="result" v-cloak>
       <p class="result__theme">{{ theme }}</p>
-      <span class="result__category">
+      <span :class="headerClass">
         <span v-for="n in category">{{ n }}&emsp;</span>
       </span>
       <div v-for="index in answers.length-1" class="items">
@@ -2308,15 +2195,17 @@
         <p>{{ questions[index] }}</p>
         <p>{{ answers[index] }}</p>
       </div>
-      <textarea class="result__memo" v-model="memo" v-if="recode == false" placeholder="感想を入力"></textarea>
+      <textarea class="result__memo" v-model="memo" v-if="recode == false" placeholder="振り返りを入力"></textarea>
       <div v-else class="result__memo--readonly">{{ memo }}</div>
-      <p style="font-size: 11pt; color: #767676; margin-top: 30px;" v-show="recode==false">分析はうまくいった？</p>
+      <p style="font-size: 11pt; color: #767676; margin-top: 30px;">分析はうまくいった？</p>
       <select v-model="success" v-if="recode == false" class="result__success">
         <option>はい</option>
         <option>いいえ</option>
         <option>どちらともいえない</option>
-      </select><br>
-      <span class="result__success--readonly" v-if="recode == true">分析はうまくいった？<ons-icon icon="fa-arrow-right"></ons-icon>{{ success }}</span>
+      </select>
+      <select v-else class="result__success">
+        <option>{{ success }}</option>
+      </select>
       <button class="result__savebtn" v-show="recode == false" @click="saveButtonClick">完了</button>
       <!--<a @click="onTweet" class="result__tweetbtn"><ons-icon icon="fa-twitter"></ons-icon> Tweet</a>
       <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
@@ -2343,23 +2232,44 @@
             memo: qAndA.memo,
             success: qAndA.success,
             category: qAndA.category,
+            color: qAndA.color,
             recode: recode,
             defoClass: "defo",
             lightClass: "lightBlue",
             blueClass: "blue",
+            headerClass: "",
             tweet: {
               text: "",
               url: "http://toten.html.xdomain.jp/",
             }
           },
+          created: function() {
+            switch(this.color) {
+              case "future":
+                this.headerClass = "result__category--yellow";
+                break;
+              case "hobby":
+                this.headerClass = "result__category--pink";
+                break;
+              case "task":
+                this.headerClass = "result__category--blue";
+                break;
+              case "experience":
+                this.headerClass = "result__category--green";
+                break;
+              default:
+                this.headerClass = "result__category";
+                break;
+            }
+          },
           methods: {
             saveButtonClick: function() {
               if (this.memo == "") {
-                ons.notification.toast("感想を書いてください", {timeout: 1000, animation: "fall"});
+                ons.notification.toast("分析結果を振り返って今後に活かしましょう", {timeout: 1000, animation: "fall"});
                 return;
               }
               if (this.success == "") {
-                ons.notification.toast("分析が成功したか選んでください", {timeout: 1000, animation: "fall"});
+                ons.notification.toast("分析がうまくいったかを考えて選びましょう", {timeout: 1000, animation: "fall"});
                 return;
               }
               qAndA.memo = this.memo;
@@ -2372,11 +2282,11 @@
             },
             onTweet: function() {
               if (this.memo == "") {
-                ons.notification.toast("感想を書いてください", {timeout: 1000, animation: "fall"});
+                ons.notification.toast("分析結果を振り返って今後に活かしましょう", {timeout: 1000, animation: "fall"});
                 return;
               }
               if (this.success == "") {
-                ons.notification.toast("分析が成功したか選んでください", {timeout: 1000, animation: "fall"});
+                ons.notification.toast("分析がうまくいったかを考えて選びましょう", {timeout: 1000, animation: "fall"});
                 return;
               }
               qAndA.memo = this.memo;

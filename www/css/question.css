@@ -47,10 +47,10 @@
   margin: 0;
   top: 0;
   left: 0;
-  width: 35pt;
+  width: 10%;
   height: 75pt;
   border-radius: 0 100% 100% 0/0 50% 50% 0;
-  padding-left: 10pt;
+  padding-left: 3%;
   line-height: 75pt;
   z-index: 5;
   color: #5F5E5E;
@@ -125,9 +125,9 @@
   position: relative;
   display: table-cell;
   vertical-align: middle;
-  width: 35pt;
+  width: 10%;
   border-radius: 0 100% 100% 0/0 50% 50% 0;
-  padding-left: 10pt;
+  padding-left: 3%;
   z-index: 5;
   color: #FFF;
   font-size: 20pt;
@@ -145,12 +145,12 @@
   width: 110%;
   height: 25pt;
   line-height: 25pt;
-  padding-left: 10%;
   border-color: #707070;
   border-width: 0.2pt;
   z-index: 4;
   margin: 0;
-  font-size: 11px;
+  padding: 0 10%;
+  font-size: 13px;
   box-sizing: border-box;
   overflow: auto;
 }

@@ -1,7 +1,7 @@
 .index__logo {
-  width: 40%;
+  width: 40vw;
   display: block;
-  margin: 15vh auto 5vh;
+  margin: 20vh auto 0;
 }
 .index__first-logo {
   width: 50vw;
@@ -12,6 +12,7 @@
   color: #7B7B7B;
   font-size: 15px;
   text-align: center;
+  margin-top: 5vh;
 }
 .index__recode {
   display: flex;
@@ -23,11 +24,20 @@
   text-align: center;
   margin: 10vh;
 }
-
-#notSignIn .img-button {
+.index__new-account {
+  display: block;
+  font-size: 15px;
+  color: #FFF;
+  background-color: #ED6A4C;
+  border-radius: 3px;
+  margin: 2vh 10vw 0 auto;
+  padding: 5px;
+  border: none;
+}
+.index__signin {
+  display: block;
   width: 75pt;
-  margin-top: 10pt;
-  margin-left: 150pt;
+  margin: 15vh 10vw 0 auto;
 }
 
 #isSignIn {
