@@ -16,11 +16,21 @@
   top: 54vh;
   left: 10vw;
 }
-
 .tutorial__skip {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 2vh;
+  right: 25vw;
+  border-radius: 8pt;
+  border: none;
+  height: 30px;
+  background-color: #dbdbdb;
+  color: #6a6a6a;
+  z-index: 10;
+}
+.tutorial__skip2 {
+  position: absolute;
+  top: 3.5vh;
+  right: 20vw;
   border-radius: 8pt;
   border: none;
   height: 30px;

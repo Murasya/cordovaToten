@@ -17,18 +17,30 @@
     top: 54vh;
     left: 10vw;
   }
+  &__skip {
+    position: absolute;
+    top: 2vh;
+    right: 25vw;
+    border-radius: 8pt;
+    border: none;
+    height: 30px;
+    background-color: rgba(219, 219, 219, 1);
+    color: rgba(106, 106, 106, 1);
+    z-index: 10;
+  }
+  &__skip2 {
+    position: absolute;
+    top: 3.5vh;
+    right: 20vw;
+    border-radius: 8pt;
+    border: none;
+    height: 30px;
+    background-color: rgba(219, 219, 219, 1);
+    color: rgba(106, 106, 106, 1);
+    z-index: 10;
+  }
 }
-.tutorial__skip {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  border-radius: 8pt;
-  border: none;
-  height: 30px;
-  background-color: rgba(219, 219, 219, 1);
-  color: rgba(106, 106, 106, 1);
-  z-index: 10;
-}
+
 .tutorial__question--ans {
   position: relative;
   top: -10pt;

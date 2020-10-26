@@ -45,7 +45,7 @@
   <script type="text/javascript" src="js/slick.min.js"></script>
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="analyze_tutorial.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="question_tutorial.html"></ons-navigator>
 </body>
 </html>
 
@@ -1232,6 +1232,7 @@
       <div id="analyzeVue" v-cloak>
         <div class="analyze__header--yellow">
           <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
+          <button @click="showSkipModal = true" class="tutorial__skip2">SKIP</button>
           <a class="analyze__help-button" @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png"></a>
         </div>
         <div>
@@ -1259,7 +1260,7 @@
           <button @click="nextButtonClick" class="analyze__next-button">これを分析！</button>
           <img class="tutorial__analyze2" src="images/チュートリアル/tutorial_explain3.png">
         </div>
-        <my-toolbar></my-toolbar>
+        <skip-modal v-if="showSkipModal" @close="showSkipModal = false"></skip-modal>
       </div>
     </div>
     
@@ -2023,12 +2024,12 @@
   <ons-page>
     <div class="background" style="background-color: #E8F6FD;"></div>
     <div id="questionVue" v-cloak class="question">
-      <button @click="showSkipModal = true" class="tutorial__skip">SKIP</button>
-      <div class="question__header">
+      <div class="question__header--yellow">
         <p class="question__theme">{{ theme }}</p>
+        <button @click="showSkipModal = true" class="tutorial__skip">SKIP</button>
         <div class="question__topbuttons">
-          <a @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png" alt="ヘルプボタン" height="30px"></a>
           <a @click="interruptionButtonClick"><img src="./images/各種ボタン/break_ボタン.png" alt="中断ボタン" height="30px"></a>
+          <a @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png" alt="ヘルプボタン" height="30px"></a>
         </div>
       </div>
       <div v-for="item in items" class="items">
@@ -2037,16 +2038,16 @@
         <p>{{ item.answer }}</p>
       </div>
       <ons-icon class="down-arrow" icon="fa-arrow-down" v-show="qa.num != 1"></ons-icon>
-      <img src="images/チュートリアル_説明3-1.png" class="tutorial__question--que" v-show="qa.num == 2" width="122px">
+      <img src="images/チュートリアル/tutorial_explain6.png" class="tutorial__question--que" v-show="qa.num == 2" width="122px">
       <div class="question__writting">
         <a @click="onNumber" :class="numberClass">{{ qa.num }}</a>
         <p class="question__why">{{ qa.why }}<input class="question__question" v-show="qa.num >= 2" type="text" v-model="qa.question" :placeholder="placeholder_que">？</p>
         <textarea class="question__answer" v-model="qa.answer" :placeholder="placeholder_ans"></textarea>
       </div>
-      <img src="images/チュートリアル_説明2-1.png" class="tutorial__question--ans" v-show="qa.num == 1" width="250px">
-      <img src="images/チュートリアル_説明2-2.png" class="tutorial__question--tag" v-show="qa.num == 1" width="260px">
-      <img src="images/チュートリアル_説明3-2.png" class="tutorial__question--ans" v-show="qa.num == 2" width="253px">
-      <img src="images/チュートリアル_説明3-3.png" class="tutorial__question--tag" v-show="qa.num == 2" width="250px">
+      <img src="images/チュートリアル/tutorial_explain4.png" class="tutorial__question--ans" v-show="qa.num == 1" width="250px">
+      <img src="images/チュートリアル/tutorial_explain5.png" class="tutorial__question--tag" v-show="qa.num == 1" width="260px">
+      <img src="images/チュートリアル/tutorial_explain7.png" class="tutorial__question--ans" v-show="qa.num == 2" width="253px">
+      <img src="images/チュートリアル/tutorial_exolain8.png" class="tutorial__question--tag" v-show="qa.num == 2" width="250px">
       <div class="question__buttons">
         <a @click="nextButtonClick"><img src="./images/各種ボタン/next_ボタン.png" alt="Nextボタン"  width="90px"></a>
         <input type="image" src="./images/各種ボタン/finish_ボタン.png" v-show="qa.num >= 5" @click="finishButtonClick" style="margin-left: 20px;" width="75px">
@@ -2058,23 +2059,23 @@
       </div>
       <div class="overlay" v-show="show1Modal" @click="closeModal">
         <img class="tenchan__lefttop" src="images/チュートリアル_ウインク_キャラ.png">
-        <img class="tenchan__comment" src="images/吹き出し/チュートリアル_吹き出し(modal1).png">
+        <img class="tenchan__comment" src="images/チュートリアル/modal1.png">
       </div>
       <div class="overlay" v-show="show2Modal" @click="closeModal">
         <img class="tenchan__lefttop" src="images/分析中_キャラ.png">
-        <img class="tenchan__comment" src="images/吹き出し/チュートリアル_吹き出し(modal2).png">
+        <img class="tenchan__comment" src="images/チュートリアル/modal2.png">
       </div>
       <div class="overlay" v-show="show3Modal" @click="closeModal">
         <img class="tenchan__lefttop" src="images/分析中_キャラ.png">
-        <img class="tenchan__comment" src="images/吹き出し/チュートリアル_吹き出し(modal3).png">
+        <img class="tenchan__comment" src="images/チュートリアル/modal3.png">
       </div>
       <div class="overlay" v-show="show4Modal" @click="closeModal">
         <img class="tenchan__lefttop" src="images/チュートリアル_キリッと_キャラ.png">
-        <img class="tenchan__comment" src="images/吹き出し/チュートリアル_吹き出し(modal4).png">
+        <img class="tenchan__comment" src="images/チュートリアル/modal4.png">
       </div>
       <div class="overlay" v-show="show5Modal" @click="closeModal">
         <img class="tenchan__lefttop" src="images/チュートリアル_疲れた_キャラ.png">
-        <img class="tenchan__comment" src="images/吹き出し/チュートリアル_吹き出し(modal5).png">
+        <img class="tenchan__comment" src="images/チュートリアル/modal5.png">
       </div>
       <skip-modal v-if="showSkipModal" @close="showSkipModal = false"></skip-modal>
     </div>
