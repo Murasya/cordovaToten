@@ -5,6 +5,18 @@
     top: 18vh;
     left: 50vw;
   }
+  &__analyze1 {
+    height: 10vh;
+    position: absolute;
+    top: 25vh;
+    right: 20vw;
+  }
+  &__analyze2 {
+    position: absolute;
+    width: 20vw;
+    top: 54vh;
+    left: 10vw;
+  }
 }
 .tutorial__skip {
   position: absolute;
@@ -16,12 +28,6 @@
   background-color: rgba(219, 219, 219, 1);
   color: rgba(106, 106, 106, 1);
   z-index: 10;
-}
-.tutorial__analyze {
-  height: 130px;
-  position: absolute;
-  top: 430px;
-  right: 20px;
 }
 .tutorial__question--ans {
   position: relative;

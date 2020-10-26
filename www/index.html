@@ -45,7 +45,7 @@
   <script type="text/javascript" src="js/slick.min.js"></script>
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="category_tutorial.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="analyze_tutorial.html"></ons-navigator>
 </body>
 </html>
 
@@ -1228,30 +1228,38 @@
 <template id="analyze_tutorial.html">
   <ons-page id="analyze">
     <div class="background analyze__background"></div>
-    <div class="content">
-      <div id="analyzeVue" v-cloak class="analyze">
-        <img class="tenchan__lefttop" src="./images/分析中_キャラ.png">
-        <button @click="showSkipModal = true" class="tutorial__skip">SKIP</button>
-        <img class="tenchan__comment" src="images/吹き出し/チュートリアル_吹き出し(analyze_tutorial).png">
-        <input class="analyze__thema" type="text" v-model="theme" placeholder="英会話を学びたい">
-        <div>
-          <select v-model="cat[0]" class="analyze__category">
-            <option value="">タグ</option>
-            <option v-for="n in categories" :value="n">{{ n }}</option>
-          </select>
-          <select v-model="cat[1]" class="analyze__category">
-            <option value="">タグ</option>
-            <option v-for="n in categories" :value="n">{{ n }}</option>
-          </select>
-          <select v-model="cat[2]" class="analyze__category">
-            <option value="">タグ</option>
-            <option v-for="n in categories" :value="n">{{ n }}</option>
-          </select>
+    <div class="analyze">
+      <div id="analyzeVue" v-cloak>
+        <div class="analyze__header--yellow">
+          <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
+          <a class="analyze__help-button" @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png"></a>
         </div>
-        <img class="tutorial__analyze" src="images/チュートリアル_説明1.png">
-        <button @click="nextButtonClick" class="analyze__next-button">これを分析！</button>
-        <a @click="helpButtonClick" class="analyze__help-button"><img src="./images/各種ボタン/help_ボタン.png" alt="ヘルプボタン" width="30px"></a>
-        <skip-modal v-if="showSkipModal" @close="showSkipModal = false"></skip-modal>
+        <div>
+          <img class="analyze__tenchan" src="images/分析カテゴリ追加時_素材/analyze_character.png">
+        </div>
+        <img class="tutorial__analyze1" src="images/チュートリアル/tutorial_explain2.png">
+        <div class="analyze__main">
+          <input class="analyze__theme" type="text" v-model="theme" placeholder="英会話を学びたい">
+          <hr class="analyze__hr--yellow">
+          <p class="analyze__exp">＊タグを選んでください(最大3つまで)</p>
+          <div class="analyze__tag-container">
+            <select v-model="cat[0]" class="analyze__tag">
+              <option value="">タグ</option>
+              <option v-for="n in categories" :value="n">{{ n }}</option>
+            </select>
+            <select v-model="cat[1]" class="analyze__tag">
+              <option value="">タグ</option>
+              <option v-for="n in categories" :value="n">{{ n }}</option>
+            </select>
+            <select v-model="cat[2]" class="analyze__tag">
+              <option value="">タグ</option>
+              <option v-for="n in categories" :value="n">{{ n }}</option>
+            </select>
+          </div>
+          <button @click="nextButtonClick" class="analyze__next-button">これを分析！</button>
+          <img class="tutorial__analyze2" src="images/チュートリアル/tutorial_explain3.png">
+        </div>
+        <my-toolbar></my-toolbar>
       </div>
     </div>
     
