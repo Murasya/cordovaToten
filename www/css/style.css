@@ -126,7 +126,7 @@ header {
 }
 
 /* ready */
-#readyVue {
+/* #readyVue {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -162,7 +162,7 @@ header {
 #readyVue .skip {
   background-color: rgba(131, 131, 131, 1);
   color: #FFF;
-}
+} */
 
 
 /* finish_tutorial */

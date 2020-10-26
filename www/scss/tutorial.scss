@@ -5,25 +5,22 @@
   border-radius: 8pt;
   border: none;
   height: 30px;
-  background-color: #dbdbdb;
-  color: #6a6a6a;
+  background-color: rgba(219, 219, 219, 1);
+  color: rgba(106, 106, 106, 1);
   z-index: 10;
 }
-
 .tutorial__analyze {
   height: 130px;
   position: absolute;
   top: 430px;
   right: 20px;
 }
-
 .tutorial__question--ans {
   position: relative;
   top: -10pt;
   left: 20%;
   z-index: 30;
 }
-
 .tutorial__question--que {
   display: block;
   position: absolute;
@@ -31,7 +28,6 @@
   right: 30px;
   z-index: 30;
 }
-
 .tutorial__question--tag {
   display: block;
   position: relative;
@@ -39,17 +35,13 @@
   top: -80pt;
   z-index: 30;
 }
-
 .tutorial__result--suc {
   position: relative;
   top: -30pt;
   left: 30%;
 }
-
 .tutorial__result--tweet {
   position: relative;
   top: -30pt;
   left: 80pt;
 }
-
-/*# sourceMappingURL=tutorial.css.map */

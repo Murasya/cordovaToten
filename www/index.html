@@ -295,6 +295,55 @@
       <div class="category__triangle"></div>
       <button class="category__go">決 定</button>
       <div id="categoryVue">
+        <div class="overlay__tutorial--bg" v-show="overlay">
+          <a class="overlay__str--left" @click="goLeft" v-show="!overlay0"><</a>
+          <div class="overlay__tutorial--main" v-show="overlay0">
+            <div class="overlay__tutorial--header">
+              <div class="overlay__str--step">STEP 1</div>
+              <div class="overlay__str--step-content">分析カテゴリを選ぶ</div>
+            </div>
+            ▼<span class="overlay__str--step1">分析する内容に合わせて選択</span>▼
+            <div class="overlay__tutorial--step1">
+              <div class="overlay__str--yellow">取り組みたいこと<br>叶えたいこと</div>
+              <div class="overlay__str--pink">趣味<br>好きなこと</div>
+              <div class="overlay__str--blue">タスク</div>
+              <div class="overlay__str--green">過去の体験・経験</div>
+            </div>
+          </div>
+          <div class="overlay__tutorial--main" v-show="overlay1">
+            <div class="overlay__tutorial--header">
+              <div class="overlay__str--step">STEP 2</div>
+              <div class="overlay__str--step-content">テーマを決め、タグをつける</div>
+            </div>
+            <span class="overlay__str--step1">分析したいことを入力</span>
+            <div class="overlay__str--step2">英会話を学びたい, アニメが好き など<br>自分なりにテーマ設定をしましょう！</div>
+            <div class="overlay__tutorial--tri"></div>
+            <span class="overlay__str--step1">テーマに合わせてタグをつける</span>
+            <div class="overlay__str--step2">夢, 勉強, 人間関係 など<br>最大3つまで選ぶことができます！</div>
+          </div>
+          <div class="overlay__tutorial--main" v-show="overlay2">
+            <div class="overlay__tutorial--header">
+              <div class="overlay__str--step">STEP 3</div>
+              <div class="overlay__str--step-content">分析&記録する</div>
+            </div>
+            <div class="overlay__str--red">\ 目指すは5回以上! /</div>
+            <span class="overlay__str--step1">分析してテーマを深掘り</span>
+            <div class="overlay__str--step2">テーマについて「なぜ？」と自問自答！<br>その回答内容が、自分の内面/外面の<br>どちらについてなのかも考えましょう。</div>
+            <div class="overlay__tutorial--tri"></div>
+            <span class="overlay__str--step1">分析の結果を記録する</span>
+            <div class="overlay__str--step2">分析について振り返り、記録しましょう！</div>
+          </div>
+          <div class="overlay__tutorial--main" v-show="overlay3">
+            <img class="overlay__tutorial--img" src="images/チュートリアルスタート_キャラ.png">
+            <div class="overlay__str--step4">今からボクと一緒に、<br>"分析" の練習をしてみるテン！<br>準備はいいテン？</div>
+            <div>
+              <button class="overlay__tutorial--yes" @click="onButton">YES!</button>
+              <button class="overlay__tutorial--skip" @click="skipModal = true">SKIP</button>
+            </div>
+            <skip-modal v-if="skipModal" @close="skipModal = false"></skip-modal>
+          </div>
+          <a class="overlay__str--right" @click="goRight" v-show="!overlay3">></a>
+        </div>
         <my-toolbar></my-toolbar>
       </div>
     </div>
@@ -355,16 +404,56 @@
           el: '#categoryVue',
           data: {
             tutorialFinish: localStorage.getItem("tutorial_finished"),
+            overlay: false,
+            overlay0: false,
             overlay1: false,
             overlay2: false,
             overlay3: false,
-            overlay4: false,
+            skipModal: false,
           },
           created: function() {
             if(!(this.tutorialFinish)) {
-              
+              this.overlay = true;
+              this.overlay0 = true;
             }
-          }
+          },
+          methods: {
+            goLeft: function() {
+              console.log("goleft");
+              if(this.overlay1) {
+                this.overlay1 = false;
+                this.overlay0 = true;
+              } else if(this.overlay2) {
+                this.overlay2 = false;
+                this.overlay1 = true;
+              } else if(this.overlay3) {
+                this.overlay3 = false;
+                this.overlay2 = true;
+              } else if(this.overlay4) {
+                this.overlay4 = false;
+                this.overlay3 = true;
+              }
+            },
+            goRight: function() {
+              console.log("goright");
+              if(this.overlay0) {
+                this.overlay0 = false;
+                this.overlay1 = true;
+              } else if(this.overlay1) {
+                this.overlay1 = false;
+                this.overlay2 = true;
+              } else if(this.overlay2) {
+                this.overlay2 = false;
+                this.overlay3 = true;
+              } else if(this.overlay3) {
+                this.overlay3 = false;
+                this.overlay4 = true;
+              }
+            },
+            onButton: function() {
+              document.getElementById("myNavigator").pushPage("analyze_tutorial.html");
+            },
+          },
         });
       }
     </script>
@@ -2035,34 +2124,6 @@
           }
         });
       }
-    </script>
-  </ons-page>
-</template>
-
-<template id="ready.html">
-  <ons-page>
-    <div id="readyVue">
-      <img src="images/チュートリアルスタート_キャラ.png">
-      <p>今からボクと一緒に、<br>"分析" の練習をしてみるテン！<br><b>準備はいいテン？</b></p>
-      <div>
-        <button @click="onButton" class="yes">YES!</button>
-        <button @click="showModal = true" class="skip">SKIP</button>
-      </div>
-      <skip-modal v-if="showModal" @close="showModal = false"></skip-modal>
-    </div>
-    
-    <script>
-      var vm = new Vue({
-        el: '#readyVue',
-        data: {
-          showModal: false,
-        },
-        methods: {
-          onButton: function() {
-            document.getElementById("myNavigator").pushPage("analyze_tutorial.html");
-          },
-        }
-      });
     </script>
   </ons-page>
 </template>
