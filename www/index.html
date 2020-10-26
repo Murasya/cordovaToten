@@ -45,7 +45,7 @@
   <script type="text/javascript" src="js/slick.min.js"></script>
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="question_tutorial.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="result_tutorial.html"></ons-navigator>
 </body>
 </html>
 
@@ -166,7 +166,7 @@
             },
             goTutorial: function() {
               hBanner();
-              document.getElementById("myNavigator").pushPage('explain.html');
+              document.getElementById("myNavigator").pushPage('category_tutorial.html');
             },
             goAnalyze: function() {
               document.getElementById("myNavigator").resetToPage('analyze.html');
@@ -2524,7 +2524,7 @@
     <div class="background" style="background-color: #E8F6FD;"></div>
     <div id="result_t" class="result" v-cloak>
       <p class="result__theme">{{ theme }}</p>
-      <span class="result__category">勉強 スキルアップ</span>
+      <span class="result__category--yellow">勉強　スキルアップ　</span>
       <div v-for="(value, index) in questions" class="items">
         <p :class='tags[index] == "out" ? "lightBlue" : "blue"'>{{ index+1 }}</p>
         <p>{{ questions[index] }}</p>
@@ -2537,7 +2537,7 @@
         <option value="いいえ">いいえ</option>
         <option value="どちらともいえない">どちらともいえない</option>
       </select>
-      <img src="images/チュートリアル_説明4.png" width="90pt" class="tutorial__result--suc">
+      <img src="images/チュートリアル/tutorial_explain9.png" width="90pt" class="tutorial__result--suc">
       <button class="result__savebtn" @click="saveButtonClick">完了</button>
       <!--
       <a class="result__tweetbtn"><ons-icon icon="fa-twitter"></ons-icon> Tweet</button></a>
@@ -2545,7 +2545,7 @@
       -->
       <div class="overlay" v-show="showModal" @click="closeModal">
         <img class="tenchan__lefttop" src="images/分析中_キャラ.png">
-        <img class="tenchan__comment" src="images/吹き出し/チュートリアル_吹き出し(modal6).png">
+        <img class="tenchan__comment" src="images/チュートリアル/modal6.png">
       </div>
     </div>
     <script>
