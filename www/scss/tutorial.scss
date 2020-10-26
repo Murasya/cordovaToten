@@ -1,3 +1,11 @@
+.tutorial {
+  &__category {
+    height: 15vh;
+    position: absolute;
+    top: 18vh;
+    left: 50vw;
+  }
+}
 .tutorial__skip {
   position: absolute;
   top: 20px;

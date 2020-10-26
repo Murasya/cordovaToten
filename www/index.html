@@ -45,7 +45,7 @@
   <script type="text/javascript" src="js/slick.min.js"></script>
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="category_tutorial.html"></ons-navigator>
 </body>
 </html>
 
@@ -451,8 +451,117 @@
               }
             },
             onButton: function() {
-              document.getElementById("myNavigator").pushPage("analyze_tutorial.html");
+              document.getElementById("myNavigator").resetToPage("category_tutorial.html");
             },
+          },
+        });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="category_tutorial.html">
+  <ons-page>
+    <div class="background" style="background-color: #E8F6FD"></div>
+    <div class="category">
+      <img class="tenchan__lefttop" src="./images/分析中_キャラ.png">
+      <div class="category__title">▶︎<u>分析カテゴリ</u><span>を選ぶテン！</span></div>
+      <img class="tutorial__category" src="images/チュートリアル/tutorial_explain1.png">
+      <ul class="category__slider">
+        <li class="category__item" id="future">
+          <div class="category__header--yellow">
+            <span class="category__header-title">取り組みたいこと<br>叶えたいこと</span>
+          </div>
+          <div class="category__li">
+            ●留学したい<br>
+            ●インターンに行きたい<div class="category__nado">など</div>
+          </div>
+          <a class="category__link" id="future_detail_btn">詳しい説明</a>
+        </li>
+        <li class="category__item category__non-active" id="hobby">
+          <div class="category__header--pink">
+            <span class="category__header-title">趣味・好きなこと</span>
+          </div>
+          <div class="category__li">
+            ●テニスが好き<br>
+            ●古書店に行くのが好き<div class="category__nado">など</div>
+          </div>
+          <a class="category__link" id="hobby_detail_btn">詳しい説明</a>
+        </li>
+        <li class="category__item category__non-active" id="task">
+          <div class="category__header--blue">
+            <span class="category__header-title">タスク</span>
+          </div>
+          <div class="category__li">
+            ●マニュアルを作成する<br>
+            ●レポートを作成する<div class="category__nado">など</div>
+          </div>
+          <a class="category__link" id="task_detail_btn">詳しい説明</a>
+        </li>
+        <li class="category__item category__non-active" id="experience">
+          <div class="category__header--green">
+            <span class="category__header-title">過去の体験・経験</span>
+          </div>
+          <div class="category__li">
+            ●アルバイトで接客に力を入れた<br>
+            ●イメチェンした<div class="category__nado">など</div>
+          </div>
+          <a class="category__link" id="exp_detail_btn">詳しい説明</a>
+        </li>
+      </ul>
+      <div class="category__triangle"></div>
+      <button class="category__go">決 定</button>
+    </div>
+    <script>
+      ons.getScriptPage().onShow = function () {
+        toolbar_active = 0;
+        $('.category__slider').slick('setPosition');
+        setTimeout(function() {
+          $('.category__slider').css('opacity', 1);
+        },100);
+        $(".category__slider").on('beforeChange', function(){
+          $('.slick-current').removeClass('category__active');
+        });
+        $('.category__slider').on('afterChange', function(){
+          $('.slick-current').addClass('category__active');
+        });
+        $("#future_detail_btn").on("click", function() {
+          ons.notification.toast("「取り組みたいこと/叶えたいこと」を選んで決定ボタンを押してください", {timeout: 2000, animation: "fall"});
+        });
+        $("#hobby_detail_btn").on("click", function() {
+          ons.notification.toast("「取り組みたいこと/叶えたいこと」を選んで決定ボタンを押してください", {timeout: 2000, animation: "fall"});
+        });
+        $("#task_detail_btn").on("click", function() {
+          ons.notification.toast("「取り組みたいこと/叶えたいこと」を選んで決定ボタンを押してください", {timeout: 2000, animation: "fall"});
+        });
+        $("#exp_detail_btn").on("click", function() {
+          ons.notification.toast("「取り組みたいこと/叶えたいこと」を選んで決定ボタンを押してください", {timeout: 2000, animation: "fall"});
+        });
+        $(".category__go").on("click", function() {
+          if($("#future").hasClass("slick-active")) {
+            document.querySelector("#myNavigator").pushPage("analyze_tutorial.html");
+            $('.category__slider').css('opacity', 0);
+          } else {
+            ons.notification.toast("「取り組みたいこと/叶えたいこと」を選んで決定ボタンを押してください", {timeout: 2000, animation: "fall"});
+          }
+        });
+      }
+      ons.getScriptPage().onInit = function() {
+        $(".category__slider").on('init', function(){
+          $('.slick-current').addClass('category__active');
+        });
+        $(".category__slider").slick({
+          centerMode: true,
+          centerPadding: "70px",
+          arrows: false,
+          focusOnSelect: true,
+          accessibility: false,
+        });
+        new Vue({
+          el: '#categoryVue',
+          data: {
+          },
+          methods: {
           },
         });
       }
