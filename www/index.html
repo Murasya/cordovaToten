@@ -45,7 +45,7 @@
   <script type="text/javascript" src="js/slick.min.js"></script>
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="result_tutorial.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
 </body>
 </html>
 
@@ -1414,20 +1414,19 @@
     <div class="background" style="background-color: #F7F7F7;"></div>
     <div id="feedback" v-cloak>
       <div class="feedback__head">
-        <a class="feedback__cancel" @click="popBack"><ons-icon icon="fa-chevron-left"></ons-icon> キャンセル</a>
-        <h1 class="feedback__head--h1">フィードバック</h1>
+        <a class="feedback__cancel" @click="popBack"><ons-icon icon="fa-chevron-left"></ons-icon> キャンセル</a>  
       </div>
+      <div class="feedback__head--h1">フィードバック</div>
       <form class="feedback__form">
-        <p class="feedback__exp">サービス・使い方に関して気になることや改善すべき点に<br>ついて、下記フォームへご記入ください。</p>    
+        <p class="feedback__exp">サービスに関して気になることや改善すべき点に<br>ついて、簡単な説明を入力してください。</p>    
         <textarea class="feedback__textarea" v-model="text"></textarea>
         <button class="feedback__submit" @click="sendMail">送信</button>
       </form>
       <div class="feedback__overlay" v-show="showModal" @click="closeModal">
-        <div>
-          <a @click="closeModal"><ons-icon icon="fa-window-close"></ons-icon></a>
-          <h2>ありがとうございます。</h2>
-          <p>フィードバックを送信しました。</p>
-        </div>
+        <a class="feedback__overlay--close" @click="closeModal"><ons-icon icon="fa-window-close"></ons-icon></a>
+        <div class="feedback__overlay--thx">ありがとうございます!</div>
+        <div class="feedback__overlay--send">フィードバックを送信しました。</div>
+        <div class="feedback__overlay--img"><img src="images/チュートリアル/thankyou_character.png"></div>
       </div>
     </div>
     <script>
@@ -1440,7 +1439,7 @@
           },
           methods: {
             popBack: function() {
-              document.getElementById("myNavigator").popPage();
+              document.getElementById("myNavigator").resetToPage('index.html');
             },
             closeModal: function() {
               this.showModal = false;

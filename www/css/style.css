@@ -125,46 +125,6 @@ header {
   padding: 8px 16px 9px 16px;
 }
 
-/* ready */
-/* #readyVue {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  text-align: center;
-  background-color: #E8F6FD;
-}
-#readyVue img {
-  width: 170pt;
-  margin-bottom: 30pt;
-}
-#readyVue p {
-  width: 100%;
-  background-color: #FFF;
-  color: #484848;
-  line-height: 24pt;
-  padding: 21pt 0;
-  margin: 0;
-}
-#readyVue button {
-  width: 85px;
-  height: 36px;
-  border-radius: 8pt;
-  border: none;
-  font-size: 14pt;
-  margin: 26pt 10px 0;
-}
-#readyVue .yes {
-  background-color: rgba(224, 131, 110, 1);
-  color: #FFF;
-}
-#readyVue .skip {
-  background-color: rgba(131, 131, 131, 1);
-  color: #FFF;
-} */
-
-
 /* finish_tutorial */
 #finish_tutorial {
   display: flex;

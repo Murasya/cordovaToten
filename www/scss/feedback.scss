@@ -3,12 +3,10 @@
   padding: 24pt 24pt 23pt;
   box-shadow: 0pt 3pt 6pt rgba(0, 0, 0, 0.16);
 }
-
 .feedback__cancel {
   font-size: 12pt;
   color: #FFF;
 }
-
 .feedback__head--h1 {
   color: #5A5A5A;
   font-size: 22px;
@@ -18,7 +16,6 @@
   padding: 5vh;
   font-weight: bold;
 }
-
 .feedback__form {
   display: flex;
   flex-direction: column;
@@ -26,32 +23,28 @@
   align-items: center;
   padding: 0 10pt;
 }
-
 .feedback__exp {
   font-size: 11px;
   text-align: left;
   margin-top: 36pt;
 }
-
 .feedback__textarea {
   padding: 10pt;
   border-radius: 15pt;
-  border: solid 0.5pt #afafaf;
+  border: solid 0.5pt rgba(175, 175, 175, 1);
   height: 200pt;
   width: 80%;
   margin-top: 10pt;
 }
-
 .feedback__submit {
   color: #FFF;
   font-size: 14px;
-  background-color: #727272;
+  background-color: rgba(114, 114, 114, 1);
   border-radius: 7px;
   padding: 8px 50px;
   margin-top: 30px;
   font-weight: bold;
 }
-
 .feedback__overlay {
   z-index: 99;
   position: fixed;
@@ -65,36 +58,30 @@
   justify-content: flex-end;
   flex-direction: column;
 }
-
 .feedback__overlay--close {
   align-self: flex-end;
   text-align: right;
   margin: 10vh 10vw 21vh;
 }
-
 .feedback__overlay--thx {
   font-size: 22pt;
   color: #FFF;
   margin: 3vh;
   font-weight: bold;
 }
-
 .feedback__overlay--send {
   font-size: 11pt;
   color: #FFF;
   margin-bottom: 30pt;
 }
-
 .feedback__overlay--img {
   width: 100vw;
   height: 40vh;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(256,256,256,0.15);
   display: flex;
   justify-content: center;
   align-items: center;
+  img {
+    width: 80vw;
+  }
 }
-.feedback__overlay--img img {
-  width: 80vw;
-}
-
-/*# sourceMappingURL=feedback.css.map */
