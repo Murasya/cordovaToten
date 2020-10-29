@@ -5,7 +5,7 @@
   left: 50vw;
 }
 .tutorial__analyze1 {
-  height: 10vh;
+  height: 80px;
   position: absolute;
   top: 25vh;
   right: 20vw;
@@ -22,7 +22,7 @@
   right: 25vw;
   border-radius: 8pt;
   border: none;
-  height: 30px;
+  height: 4vh;
   background-color: #dbdbdb;
   color: #6a6a6a;
   z-index: 10;
@@ -33,7 +33,7 @@
   right: 20vw;
   border-radius: 8pt;
   border: none;
-  height: 30px;
+  height: 4vh;
   background-color: #dbdbdb;
   color: #6a6a6a;
   z-index: 10;

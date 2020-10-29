@@ -817,11 +817,11 @@
                 return;
               }
               if (this.category.length == 0) {
-                ons.notification.toast('カテゴリを1～3つ選択してください', {timeout: 2000, animation: "fall"});
+                ons.notification.toast('タグを1～3つ選択してください', {timeout: 2000, animation: "fall"});
                 return;
               }
               if (this.existsSameValue(this.category)) {
-                ons.notification.toast('同じカテゴリが選択されています', {timeout: 2000, animation: "fall"});
+                ons.notification.toast('同じタグが選択されています', {timeout: 2000, animation: "fall"});
                 return;
               }
               qAndA.questions.push("取り組みたいこと/叶えたいこと");
@@ -941,11 +941,11 @@
                 return;
               }
               if (this.category.length == 0) {
-                ons.notification.toast('カテゴリを1～3つ選択してください', {timeout: 2000, animation: "fall"});
+                ons.notification.toast('タグを1～3つ選択してください', {timeout: 2000, animation: "fall"});
                 return;
               }
               if (this.existsSameValue(this.category)) {
-                ons.notification.toast('同じカテゴリが選択されています', {timeout: 2000, animation: "fall"});
+                ons.notification.toast('同じタグが選択されています', {timeout: 2000, animation: "fall"});
                 return;
               }
               qAndA.questions.push("趣味・好きなこと");
@@ -1074,11 +1074,11 @@
                 return;
               }
               if (this.category.length == 0) {
-                ons.notification.toast('カテゴリを1～3つ選択してください', {timeout: 2000, animation: "fall"});
+                ons.notification.toast('タグを1～3つ選択してください', {timeout: 2000, animation: "fall"});
                 return;
               }
               if (this.existsSameValue(this.category)) {
-                ons.notification.toast('同じカテゴリが選択されています', {timeout: 2000, animation: "fall"});
+                ons.notification.toast('同じタグが選択されています', {timeout: 2000, animation: "fall"});
                 return;
               }
               qAndA.questions.push("過去の体験・経験");
@@ -1194,11 +1194,11 @@
                 return;
               }
               if (this.category.length == 0) {
-                ons.notification.toast('カテゴリを1～3つ選択してください', {timeout: 2000, animation: "fall"});
+                ons.notification.toast('タグを1～3つ選択してください', {timeout: 2000, animation: "fall"});
                 return;
               }
               if (this.existsSameValue(this.category)) {
-                ons.notification.toast('同じカテゴリが選択されています', {timeout: 2000, animation: "fall"});
+                ons.notification.toast('同じタグが選択されています', {timeout: 2000, animation: "fall"});
                 return;
               }
               qAndA.questions.push("タスク");
@@ -1328,7 +1328,7 @@
                 localStorage.setItem('tutorial_finished', false);
                 return ;
               }
-              ons.notification.toast('「勉強」と「スキルアップ」のカテゴリを選んで下さい', {timeout: 2000, animation: "fall"});
+              ons.notification.toast('「勉強」と「スキルアップ」のタグを選んで下さい', {timeout: 2000, animation: "fall"});
             },
             helpButtonClick: function() {
               ons.notification.toast('チュートリアルではヘルプを表示できません', {timeout: 1000, animation: "fall"});
@@ -2058,7 +2058,7 @@
       <img src="images/チュートリアル/tutorial_exolain8.png" class="tutorial__question--tag" v-show="qa.num == 2" width="250px">
       <div class="question__buttons">
         <a @click="nextButtonClick"><img src="./images/各種ボタン/next_ボタン.png" alt="Nextボタン"  width="90px"></a>
-        <input type="image" src="./images/各種ボタン/finish_ボタン.png" v-show="qa.num >= 5" @click="finishButtonClick" style="margin-left: 20px;" width="75px">
+        <input type="image" src="./images/チュートリアル/tutorial_charcter._comment10png.png" v-show="qa.num >= 5" @click="finishButtonClick" style="margin-left: 20px;" width="75px">
       </div>
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
         <p class="overlay__save--string">分析を中断しますか？</p>
@@ -2153,6 +2153,10 @@
               ons.notification.toast('チュートリアルではヘルプを表示できません', {timeout: 1000, animation: "fall"});
             },
             nextButtonClick: function() {
+              if(this.qa.num >= 5) {
+                ons.notification.toast( "FINISH!ボタンを押してください", {timeout: 1000, animation: 'fall'});
+                return;
+              }
               if(this.qa.num == 1) {
                 if(this.qa.answer != "英語が話せたら留学生と話せるから") {
                   ons.notification.toast( "「英語が話せたら留学生と話せるから」と入力しよう", {timeout: 1000, animation: 'fall'});

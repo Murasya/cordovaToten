@@ -1,8 +1,9 @@
 .category__title {
   font-size: 17px;
   background-color: #E8E8E8;
-  padding: 10vh 0 5vh 50vw;
+  padding: 10vh 0 5vh 48vw;
   margin-bottom: 15vh;
+  white-space: nowrap;
 }
 .category__title u {
   text-decoration: none;
