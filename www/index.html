@@ -249,7 +249,7 @@
     <div class="background" style="background-color: #E8F6FD"></div>
     <div class="category">
       <img class="tenchan__lefttop" src="./images/分析中_キャラ.png">
-      <div class="category__title">▶︎<u>分析カテゴリ</u><span>を選ぶテン！</span></div>
+      <div class="category__title">▶︎<u>分析カテゴリ</u><span class="category__title--span">を選ぶテン！</span></div>
       <ul class="category__slider">
         <li class="category__item" id="future">
           <div class="category__header--yellow">
@@ -465,7 +465,7 @@
     <div class="background" style="background-color: #E8F6FD"></div>
     <div class="category">
       <img class="tenchan__lefttop" src="./images/分析中_キャラ.png">
-      <div class="category__title">▶︎<u>分析カテゴリ</u><span>を選ぶテン！</span></div>
+      <div class="category__title"><span class="tutorial__analyze--title">▶︎</span><u>分析カテゴリ</u><span class="category__title--span">を選ぶテン！</span></div>
       <img class="tutorial__category" src="images/チュートリアル/tutorial_explain1.png">
       <ul class="category__slider">
         <li class="category__item" id="future">
@@ -597,12 +597,17 @@
         ・楽器を練習したい<br><br>
         ・フランス語をもっと勉強したい<span class="cat-detail__nado">など</span>
       </div>
-      <button class="cat-detail__more">もっと見る</button>
+      <button class="cat-detail__more" @click="goMore">もっと見る</button>
     </div>
     <script>
       ons.getScriptPage().onInit = function() {
         new Vue({
           el: "#category_future",
+          methods: {
+            goMore: function() {
+              window.open("https://noteappm.wixsite.com/examples", "_self", "location=yes");
+            },
+          }
         });
       }
     </script>
@@ -633,12 +638,17 @@
         ・ものづくりが好き<br><br>
         ・アニメの〇〇〇が好き<span class="cat-detail__nado">など</span>
       </div>
-      <button class="cat-detail__more">もっと見る</button>
+      <button class="cat-detail__more" @click="goMore">もっと見る</button>
     </div>
     <script>
       ons.getScriptPage().onInit = function() {
         new Vue({
           el: "#category_hobby",
+          methods: {
+            goMore: function() {
+              window.open("https://noteappm.wixsite.com/examples", "_self", "location=yes");
+            },
+          }
         });
       }
     </script>
@@ -675,12 +685,17 @@
         ・高校を中退した<br><br>
         ・イメチェンした<span class="cat-detail__nado">など</span>
       </div>
-      <button class="cat-detail__more">もっと見る</button>
+      <button class="cat-detail__more" @click="goMore">もっと見る</button>
     </div>
     <script>
       ons.getScriptPage().onInit = function() {
         new Vue({
           el: "#category_experience",
+          methods: {
+            goMore: function() {
+              window.open("https://noteappm.wixsite.com/examples", "_self", "location=yes");
+            },
+          }
         });
       }
     </script>
@@ -717,12 +732,17 @@
         ・就活をする<br><br>
         ・節約する<span class="cat-detail__nado">など</span>
       </div>
-      <button class="cat-detail__more">もっと見る</button>
+      <button class="cat-detail__more" @click="goMore">もっと見る</button>
     </div>
     <script>
       ons.getScriptPage().onInit = function() {
         new Vue({
           el: "#category_task",
+          methods: {
+            goMore: function() {
+              window.open("https://noteappm.wixsite.com/examples", "_self", "location=yes");
+            },
+          }
         });
       }
     </script>
@@ -1259,7 +1279,7 @@
               <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
-            <select v-model="cat[2]" class="analyze__tag">
+            <select v-model="cat[2]" class="analyze__tag" disabled>
               <option value="">タグ</option>
               <option v-for="n in categories" :value="n">{{ n }}</option>
             </select>
@@ -1429,7 +1449,7 @@
       <form class="feedback__form">
         <p class="feedback__exp">サービスに関して気になることや改善すべき点に<br>ついて、簡単な説明を入力してください。</p>    
         <textarea class="feedback__textarea" v-model="text"></textarea>
-        <button class="feedback__submit" @click="sendMail">送信</button>
+        <input type="button" value="送信" class="feedback__submit" @click="send"></input>
       </form>
       <div class="feedback__overlay" v-show="showModal" @click="closeModal">
         <a class="feedback__overlay--close" @click="closeModal"><ons-icon icon="fa-window-close"></ons-icon></a>
@@ -1453,7 +1473,7 @@
             closeModal: function() {
               this.showModal = false;
             },
-            sendMail: function() {
+            send: function() {
               createFeedback(this.text);
               this.showModal = true;
             }
@@ -1820,7 +1840,8 @@
         </div>
         <div class="overlay" v-show="showModal1" @click="closeModal">
           <img class="tenchan__lefttop" src="images/分析中_キャラ.png">
-          <img class="tenchan__comment" src="images/分析カテゴリ追加時_素材/comment1.png">
+          <img v-if="color == 'future'" class="tenchan__comment" src="images/分析カテゴリ追加時_素材/comment1.png">
+          <img v-else class="tenchan__comment" src="images/分析カテゴリ追加時_素材/comment1-2.png">
         </div>
         <div class="overlay" v-show="showModal2" @click="closeModal">
           <img class="tenchan__lefttop" src="images/分析中_キャラ2.png">
@@ -1890,6 +1911,7 @@
               answer: "",
               tag: "",
             },
+            color: qAndA.color,
             showSavingModal: false,
             showModal1: false,
             showModal2: false,
@@ -2395,7 +2417,7 @@
         <option>いいえ</option>
         <option>どちらともいえない</option>
       </select>
-      <select v-else class="result__success">
+      <select v-else class="result__success" disabled>
         <option>{{ success }}</option>
       </select>
       <div class="result__btns" v-show="recode == false">
@@ -2549,7 +2571,7 @@
         <option value="いいえ">いいえ</option>
         <option value="どちらともいえない">どちらともいえない</option>
       </select>
-      <img src="images/チュートリアル/tutorial_explain9.png" width="90pt" class="tutorial__result--suc">
+      <img src="images/チュートリアル/tutorial_explain9.png" class="tutorial__result--suc">
       <button class="result__savebtn" @click="saveButtonClick">完了</button>
       <!--
       <a class="result__tweetbtn"><ons-icon icon="fa-twitter"></ons-icon> Tweet</button></a>

@@ -8,7 +8,7 @@
 .result__theme {
   margin-top: 5vh;
   margin-left: 5vw;
-  font-size: 17px;
+  font-size: 23px;
   font-weight: 700;
   color: #818181;
   align-self: flex-start;
@@ -16,10 +16,9 @@
 .result .result__category, .result .result__category--yellow, .result .result__category--blue, .result .result__category--green, .result .result__category--pink {
   display: inline-block;
   color: #FFF;
-  padding: 5px 0 5px 10px;
+  padding: 5px 0 5px 15px;
   border-radius: 5px;
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 15px;
   align-self: flex-start;
   margin: 0 0 3vh 5vw;
 }
@@ -71,6 +70,7 @@
   border-width: 0.23px;
   background-color: #FFF;
   padding: 0.5em 40px 0.5em 1em;
+  appearance: none;
   text-align: left;
   background-image: linear-gradient(45deg, transparent 50%, #FFF 50%), linear-gradient(135deg, #FFF 50%, transparent 50%), linear-gradient(to right, #797979, #797979);
   background-position: calc(100% - 15px) calc(1em + 2px), calc(100% - 10px) calc(1em + 2px), 100% 0;

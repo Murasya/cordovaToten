@@ -2,7 +2,7 @@
   &__category {
     height: 15vh;
     position: absolute;
-    top: 18vh;
+    top: 17vh;
     left: 50vw;
   }
   &__analyze1 {
@@ -16,6 +16,10 @@
     width: 20vw;
     top: 54vh;
     left: 10vw;
+  }
+  &__analyze--title {
+    color: #ED6A4C;
+    font-size: 17px;
   }
   &__skip {
     position: absolute;
@@ -63,8 +67,9 @@
 }
 .tutorial__result--suc {
   position: relative;
-  top: -30pt;
-  left: 30%;
+  height: 80px;
+  top: -60px;
+  left: 35vw;
 }
 .tutorial__result--tweet {
   position: relative;

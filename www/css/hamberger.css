@@ -95,7 +95,7 @@
   color: #4B4B4B;
 }
 .acd-check:checked + .acd-label + .acd-content {
-  height: 80pt;
+  height: 100pt;
   opacity: 1;
   padding-left: 10pt;
   visibility: visible;

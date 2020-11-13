@@ -2,11 +2,10 @@
   position: absolute;
   top: -10vh;
   left: -30vw;
-  height: 35vh;
   width: 75vw;
 }
 .tenchan__comment {
-  width: 60vw;
+  width: 80vw;
   text-align: center;
   display: block;
   margin: 25vh auto 0;

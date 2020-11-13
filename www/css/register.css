@@ -48,6 +48,15 @@
   color: #FFF;
   font-weight: bold;
 }
+.register__already {
+  border-radius: 5pt;
+  border: none;
+  background-color: #ED6A4C;
+  font-size: 13px;
+  padding: 3px 10px;
+  color: #FFF;
+  margin-top: 2vh;
+}
 .register__birthday {
   display: flex;
   flex-direction: row;
