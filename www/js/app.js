@@ -154,7 +154,7 @@ function getQuestionAndAnswer(limit = 100) {
   return array;
 }
 
-function updateData(qAndA) {
+function updateData(qAndA, func) {
   db.collection("questionAndAnswer").doc(qAndA.id).set({
     questions: qAndA.questions,
     answers: qAndA.answers,
@@ -169,6 +169,7 @@ function updateData(qAndA) {
     color: qAndA.color,
   }).then(function() {
     console.log("Document successfully updated!");
+    func();
   });
 }
 

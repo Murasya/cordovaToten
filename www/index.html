@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/archive.css">
   <link rel="stylesheet" href="css/explain.css">
+  <link rel="stylesheet" href="css/edit.css">
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
 
@@ -163,6 +164,7 @@
                   }
                 });
               }
+              toolbar_active = 2;
             },
             goTutorial: function() {
               hBanner();
@@ -2432,6 +2434,7 @@
       <span :class="headerClass">
         <span v-for="n in category">{{ n }}&emsp;</span>
       </span>
+      <a v-show="recode" class="result__edit" @click="goEdit"><img  src="images/分析カテゴリ追加時_素材/edit_object.png" height="30px"></a>
       <div v-for="index in answers.length-1" class="items">
         <p :class='tags[index-1] == "" ? defoClass : (tags[index-1] == "out" ? lightClass : blueClass)'>{{ index }}</p>
         <p>{{ questions[index] }}</p>
@@ -2540,6 +2543,13 @@
               updateData(qAndA);
               myNavigator.resetToPage('index.html');
               sInt();
+            },
+            goEdit: function() {
+              myNavigator.pushPage('edit.html', {
+                data: {
+                  qAndA: qAndA,
+                }
+              })
             },
             onTweet: function() {
               if (this.memo == "") {
@@ -2717,6 +2727,146 @@
             }
           });
         }
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="edit.html">
+  <ons-page>
+    <div class="background" style="background-color: #E8F6FD;"></div>
+    <div id="edit" class="edit" v-cloak>
+      <p class="edit__theme">{{ theme }}</p>
+      <span :class="headerClass">
+        <span v-for="n in category">{{ n }}&emsp;</span>
+      </span>
+      <a class="edit__comp" @click="goComp"><img  src="images/分析カテゴリ追加時_素材/edit-finish_object.png" height="30px"></a>
+      <div class="edit__writting" v-for="qa in data" :key="qa.num">
+        <a @click="onNumber(qa.num)" :class="numberClass[qa.num-1]">{{ qa.num }}</a>
+        <p class="question__why">{{ qa.why }}<input class="question__question" v-show="qa.num >= 2" type="text" v-model="qa.question">？</p>
+        <textarea v-model="qa.answer" class="question__answer"></textarea>
+      </div>
+      <textarea class="edit__memo" v-model="memo" placeholder="振り返りを入力"></textarea>
+      <p style="font-size: 11pt; color: #767676; margin-top: 30px;">分析はうまくいった？</p>
+      <select v-model="success" class="edit__success">
+        <option>はい</option>
+        <option>いいえ</option>
+        <option>どちらともいえない</option>
+      </select>
+      <!--<a @click="onTweet" class="result__tweetbtn"><ons-icon icon="fa-twitter"></ons-icon> Tweet</a>
+      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
+      <my-toolbar></my-toolbar>
+    </div>
+  
+    <script>
+      var myNavigator = document.querySelector('#myNavigator');
+      ons.getScriptPage().onInit = function() {
+        var qAndA = myNavigator.topPage.data.qAndA;
+        var why = "";
+        var items = [];
+        switch(qAndA.color) {
+          case "future":
+            why = "なぜ取り組みたい/叶えたい";
+            break;
+          case "hobby":
+            why = "なぜ好きなの";
+            break;
+          case "task":
+            why = "なぜ取り組まなければならない";
+            break;
+          case "experience":
+            why = "なぜ取り組んだの";
+            break;
+          default:
+            why = "なぜ取り組みたい/叶えたい";
+            break;
+        };
+        for(i=1; i<qAndA.answers.length; i++) {
+          items.push({
+            num: i,
+            why: why,
+            question: qAndA.questions[i].substring(2,qAndA.questions[i].length-1),
+            answer: qAndA.answers[i],
+            tag: qAndA.tags[i-1]
+          });
+          why = "なぜ";
+        }
+        var numberClass = [];
+        items.forEach(e => {
+          if(e.tag == "in") {
+            numberClass.push("blue");
+          } else {
+            numberClass.push("lightBlue");
+          }
+        });
+        vm = new Vue({
+          el: '#edit',
+          data: {
+            data: items,
+            theme: qAndA.answers[0],
+            category: qAndA.category,
+            memo: qAndA.memo,
+            success: qAndA.success,
+            color: qAndA.color,
+            headerClass: "",
+            tweet: {
+              text: "",
+              url: "http://toten.html.xdomain.jp/",
+            },
+            numberClass: numberClass,
+          },
+          created: function() {
+            switch(this.color) {
+              case "future":
+                this.headerClass = "edit__category--yellow";
+                break;
+              case "hobby":
+                this.headerClass = "edit__category--pink";
+                break;
+              case "task":
+                this.headerClass = "edit__category--blue";
+                break;
+              case "experience":
+                this.headerClass = "edit__category--green";
+                break;
+              default:
+                this.headerClass = "edit__category";
+                break;
+            }
+          },
+          methods: {
+            onNumber: function(ii) {
+              var i = parseInt(ii,10)-1;
+              if(this.numberClass[i] == "blue") {
+                this.numberClass.splice(i, 1, "lightBlue");
+                this.data[i].tag = "out";
+              } else if (this.numberClass[i] == "lightBlue") {
+                this.numberClass.splice(i, 1, "blue");
+                this.data[i].tag = "in";
+              }
+            },
+            goComp: function() {
+              qAndA.questions = [qAndA.questions[0]];
+              qAndA.answers = [qAndA.answers[0]];
+              qAndA.tags = [];
+              this.data.forEach(e => {
+                qAndA.questions.push("なぜ"+e.question+"?");
+                qAndA.answers.push(e.answer);
+                qAndA.tags.push(e.tag);
+              });
+              qAndA.memo = this.memo;
+              qAndA.success = this.success;
+              updateData(qAndA, function(){
+                myNavigator.resetToPage("result.html",{
+                  data: {
+                    qAndA: qAndA,
+                    recode: true,
+                  }
+                })
+              });
+            }
+          }
+        });
       }
     </script>
   </ons-page>
