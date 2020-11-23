@@ -7,6 +7,7 @@
     display: block;
     width: 90%;
     margin: 12px auto 0;
+    position: relative;
   }
   %__time {
     font-size: 10px;
@@ -46,9 +47,81 @@
     background-color: #E8F6FD;
     border-radius: 0 5px 5px 5px;
   }
+  &__trash {
+    height: 19px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
   &__hr {
     position: relative;
     bottom: 17px;
     margin: 0 21px;
+  }
+  &__overlay {
+    z-index: 101;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(55, 107, 152, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+    &--close {
+      align-self: flex-end;
+      text-align: right;
+      margin: 10vh 10vw 21vh;
+    }
+    &--thx {
+      font-size: 18pt;
+      color: #FFF;
+      margin: 3vh;
+      font-weight: bold;
+    }
+    &--send {
+      font-size: 11pt;
+      color: #FFF;
+      margin-bottom: 5vh;
+      text-align: center;
+    }
+    &--img {
+      width: 100vw;
+      height: 35vh;
+      background-color: rgba(256,256,256,0.15);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 80vw;
+      }
+    }
+    &--btns {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-bottom: 10vh;
+    }
+    &--yes {
+      background-color: #E0836E;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      padding: 0.2em;
+      width: 80px;
+      margin-right: 5vw;
+    }
+    &--no {
+      background-color: #FFFFFF;
+      color: #474645;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      padding: 0.2em;
+      width: 80px;
+    }
   }
 }

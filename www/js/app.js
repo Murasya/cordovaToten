@@ -119,7 +119,7 @@ function setNewData(qAndA) {
 function getQuestionAndAnswer(limit = 100) {
   var user = firebase.auth().currentUser;
   var array = [];
-  console.log("startQandA");
+  console.log("getQuestionAndAnswer");
   db.collection("questionAndAnswer")
     .where("uid", "==", user.uid)
     .where("complete", "==", true)
@@ -175,6 +175,7 @@ function updateData(qAndA) {
 function getIncomplete() {
   var user = firebase.auth().currentUser;
   var array = [];
+  console.log("getIncomplete")
   db.collection("questionAndAnswer")
     .where("uid", "==", user.uid)
     .where("complete", "==", false)

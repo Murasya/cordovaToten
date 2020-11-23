@@ -1671,7 +1671,7 @@
         <button class="recode__tab--saving" @click="onSavingButton" :style="tabActive ? nonActiveTab2 : activeTab2">セーブ中</button>
       </div>
       <div class="archive" id="GD">
-        <a v-for="data in arr" class="archive__data" @click="onDataButton(data)">
+        <div v-for="data in arr" class="archive__data" @click="onDataButton(data)">
           <span :class="data.color=='hobby'?'archive__time--pink':
                         (data.color=='future'?'archive__time--yellow':
                         (data.color=='task'?'archive__time--blue':
@@ -1680,8 +1680,18 @@
             {{ data.timestamp.getFullYear() }}/{{ ('0'+(data.timestamp.getMonth()+1)).slice(-2) }}/{{ data.timestamp.getDate() }}
           </span>
           <p class="archive__p">{{ data.answers[0] }}</p>
+          <img v-show="!tabActive" class="archive__trash" @click.stop="onDeleteBtn(data)" src="images/分析カテゴリ追加時_素材/trash_object.png">
           <hr class="archive__hr">
-        </a>
+        </div>
+      </div>
+      <div class="archive__overlay" v-show="showModal" @click="closeModal">
+        <div class="archive__overlay--thx">本当に削除しますか？</div>
+        <div class="archive__overlay--send">削除した分析データ(あなたの思考回路)を<br>後から戻すことはできません。</div>
+        <div class="archive__overlay--btns">
+          <button class="archive__overlay--yes" @click="onYes">はい</button>
+          <button class="archive__overlay--no">いいえ</button>
+        </div>
+        <div class="archive__overlay--img"><img src="images/分析カテゴリ追加時_素材/trash_character.png"></div>
       </div>
       <my-toolbar></my-toolbar>
     </div>
@@ -1694,6 +1704,7 @@
           data: {
             arr: getQuestionAndAnswer(),
             tabActive: true,
+            showModal: false,
             activeTab1: {
               backgroundColor: "#FFF",
               width: "70pt",
@@ -1725,6 +1736,7 @@
               color: "#FFF",
             },
             timeClass: "recode__time",
+            data: null,
           },
           methods: {
             onArchiveButton: function() {
@@ -1751,6 +1763,22 @@
                   }
                 })
               }
+            },
+            onDeleteBtn: function(data) {
+              this.showModal = true;
+              this.data = data;
+            },
+            onYes: function() {
+              //deleteData(this.data.id);
+              db.collection("questionAndAnswer").doc(this.data.id).delete().then(function() {
+                console.log("Document successfully deleted!");
+                vm.onSavingButton();
+              }).catch(function(error) {
+                console.log("Error removing document: ", error);
+              });
+            },
+            closeModal: function() {
+              this.showModal = false;
             },
           }
         });
