@@ -171,6 +171,7 @@
   overflow-y: scroll;
   box-sizing: border-box;
   white-space: pre-wrap;
+  color: #585858;
 }
 
 .down-arrow {

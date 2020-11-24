@@ -1682,7 +1682,7 @@
             {{ data.timestamp.getFullYear() }}/{{ ('0'+(data.timestamp.getMonth()+1)).slice(-2) }}/{{ data.timestamp.getDate() }}
           </span>
           <p class="archive__p">{{ data.answers[0] }}</p>
-          <img v-show="!tabActive" class="archive__trash" @click.stop="onDeleteBtn(data)" src="images/分析カテゴリ追加時_素材/trash_object.png">
+          <img class="archive__trash" @click.stop="onDeleteBtn(data)" src="images/分析カテゴリ追加時_素材/trash_object.png">
           <hr class="archive__hr">
         </div>
       </div>
@@ -2548,7 +2548,8 @@
               myNavigator.pushPage('edit.html', {
                 data: {
                   qAndA: qAndA,
-                }
+                },
+                animation: "fade",
               })
             },
             onTweet: function() {
