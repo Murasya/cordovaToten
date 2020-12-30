@@ -1,8 +1,10 @@
 .tenchan__lefttop {
   position: absolute;
   top: -10vh;
-  left: -30vw;
-  width: 75vw;
+  left: -120px;
+  height: 40vh;
+  max-height: 250px;
+  max-width: calc(120px + 45vw);
 }
 .tenchan__comment {
   width: 80vw;

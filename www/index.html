@@ -288,7 +288,7 @@
             <span class="category__header-title">過去の体験・経験</span>
           </div>
           <div class="category__li">
-            ●アルバイトで接客に力を入れた<br>
+            ●バイトで接客に力を入れた<br>
             ●イメチェンした<div class="category__nado">など</div>
           </div>
           <a class="category__link" id="exp_detail_btn">詳しい説明</a>
@@ -397,10 +397,27 @@
         });
         $(".category__slider").slick({
           centerMode: true,
-          centerPadding: "70px",
           arrows: false,
           focusOnSelect: true,
           accessibility: false,
+          centerPadding: "5vw",
+          slidesToShow: 3,
+          responsive: [
+            {
+              breakpoint: 768,
+              settings: {
+                centerPadding: "25vw",
+                slidesToShow: 1
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                centerPadding: "60px",
+                slidesToShow: 1
+              }
+            }
+          ]
         });
         new Vue({
           el: '#categoryVue',

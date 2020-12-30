@@ -41,9 +41,9 @@
       "cordova-plugin-statusbar": {}
     },
     "platforms": [
-      "browser",
       "ios",
-      "android"
+      "android",
+      "browser"
     ]
   }
 }

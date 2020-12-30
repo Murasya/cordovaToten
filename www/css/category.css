@@ -1,5 +1,5 @@
 .category__title {
-  font-size: 17px;
+  font-size: 1em;
   background-color: #E8E8E8;
   padding: 10vh 0 5vh 48vw;
   margin-bottom: 15vh;
@@ -11,7 +11,7 @@
   font-weight: 900;
 }
 .category__title--span {
-  font-size: 13px;
+  font-size: .8em;
   font-weight: bold;
 }
 .category__slider {
@@ -54,15 +54,15 @@
 .category__header-title {
   display: table-cell;
   vertical-align: middle;
-  font-size: 20px;
+  font-size: 1.2em;
   font-weight: bold;
 }
 .category__li {
   margin: 15px 15px 0;
-  font-size: 14px;
+  font-size: .8em;
 }
 .category__nado {
-  font-size: 10px;
+  font-size: .5em;
   text-align: right;
 }
 .category__link {
@@ -71,17 +71,18 @@
   text-decoration-color: #EB775D;
   display: block;
   margin: 20px;
+  font-size: .8em;
 }
 .category__go {
   background-color: #ED6A4C;
   border-radius: 10px;
-  font-size: 15px;
+  font-size: 1em;
   border: none;
   color: #FFF;
   padding: 9px 30px;
   font-weight: bold;
   display: block;
-  margin: 10px auto 0;
+  margin: 10px auto 60px;
 }
 .category__triangle {
   border-top: 60px solid #DEEFF7;
