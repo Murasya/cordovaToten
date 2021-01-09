@@ -35,6 +35,9 @@
   <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+  <!-- firebaseUI -->
+  <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth__ja.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
   <!-- Vue.js-->
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script src="js/app.js"></script>
@@ -211,6 +214,8 @@
         <button @click="onGoogleAccount" class="google_login"><ons-icon icon="fa-google"></ons-icon> Googleアカウントでサインイン</button> -->
       </div>
       <a class="account__forgot-pass" @click="onForgotPassword">パスワードを忘れた場合</a>
+      <!-- <div id="firebaseui-auth-container"></div>
+      <div id="loader">Loading...</div> -->
     </div>
     <script>
       ons.getScriptPage().onInit = function() {
@@ -241,6 +246,9 @@
             }
           }
         });
+      }
+      ons.getScriptPage().onShow = function() {
+        // ui.start('#firebaseui-auth-container', uiConfig);
       }
     </script>
   </ons-page>
@@ -1842,6 +1850,7 @@
               auth.sendPasswordResetEmail(email).then(function() {
                 document.getElementById('myNavigator').pushPage('mail_sent.html');
               }).catch(function(error) {
+                ons.notification.toast('このメールアドレスは存在しません', { timeout: 1000, animation: 'fall'});
                 console.log(error);
               });
             }

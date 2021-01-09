@@ -9,12 +9,34 @@ var firebaseConfig = {
   appId: "1:880930415021:web:b8b953caf0be5d7fba8124",
   measurementId: "G-7XR2D45DM6"
 };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-var db = firebase.firestore();
 
+// firebase ui
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
+var uiConfig = {
+  callbacks: {
+    signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+      ons.notification.toast('ログイン成功', { timeout: 1000, animation: 'fall'});
+      return true;
+    },
+    signInSuccessUrl: "https://www.google.com",
+    uiShown: function() {
+      document.getElementById('loader').style.display = 'none';
+    }
+  },
+  signInOptions: [
+    {
+      provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    }
+  ],
+};
+
+// database
+var db = firebase.firestore();
 localStorage.setItem("tutorial_finished", true);
 
 function QAndA(
