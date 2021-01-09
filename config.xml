@@ -4,7 +4,7 @@
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
-    <author email="noteappm@gmail.com" href="https://noteappm.wixsite.com/toten-online"></author>
+    <author email="noteappm@gmail.com" href="https://noteappm.wixsite.com/toten-online" />
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -19,12 +19,6 @@
     <preference name="StatusBarBackgroundColor" value="#ED6A4C" />
     <platform name="android">
         <allow-intent href="market:*" />
-        <!-- <splash src="res/screen/android/splash_ldpi.9@0.75x.png" density="land-ldpi"/>
-        <splash src="res/screen/android/splash_mdpi.9.png" density="land-mdpi"/>
-        <splash src="res/screen/android/splash_hdpi.9@1.5x.png" density="land-hdpi"/>
-        <splash src="res/screen/android/splash_xhdpi.9@2x.png" density="land-xhdpi"/>
-        <splash src="res/screen/android/splash_xxhdpi.9@3x.png" density="land-xxhdpi"/>
-        <splash src="res/screen/android/splash_xxxhdpi.9@4x.png" density="land-xxxhdpi"/> -->
         <preference name="android-targetSdkVersion" value="29" />
     </platform>
     <platform name="ios">
@@ -51,30 +45,25 @@
         <icon height="50" src="res/icon/ios/icon-50.png" width="50" />
         <icon height="100" src="res/icon/ios/icon-50@2x.png" width="100" />
         <icon height="1024" src="res/icon/ios/icon-1024.png" width="1024" />
-        <splash width="320" height="480" src="res/screen/ios/ios_splash_320_480.png" />
-        <splash width="640" height="960" src="res/screen/ios/ios_splash_640_960.png" />
-        <splash width="640" height="1136" src="res/screen/ios/ios_splash_640_1136.png" />
-        <splash width="750" height="1334" src="res/screen/ios/ios_splash_750_1334.png" />
-        <splash width="828"  height="1792" src="res/screen/ios/ios_splash_828_1792.png" />
-        <splash width="1125" height="2436" src="res/screen/ios/ios_splash_1125_2436.png" />
-        <splash width="1242" height="2208" src="res/screen/ios/ios_splash_1242_2208.png" />
-        <splash width="1242" height="2688" src="res/screen/ios/ios_splash_1242_2688.png" />
-        <splash width="2208" height="1242" src="res/screen/ios/ios_splash_2208_1242.png" />
-        <splash width="2436" height="1125" src="res/screen/ios/ios_splash_2436_1125.png" />
-        
-        <!-- <config-file parent="GADApplicationIdentifier" target="*-Info.plist">
-            <string>ca-app-pub-8657757436017103~8650036392</string>
-        </config-file> -->
-        <config-file target="*-Info.plist" parent="GADApplicationIdentifier">
+        <splash height="480" src="res/screen/ios/ios_splash_320_480.png" width="320" />
+        <splash height="960" src="res/screen/ios/ios_splash_640_960.png" width="640" />
+        <splash height="1136" src="res/screen/ios/ios_splash_640_1136.png" width="640" />
+        <splash height="1334" src="res/screen/ios/ios_splash_750_1334.png" width="750" />
+        <splash height="1792" src="res/screen/ios/ios_splash_828_1792.png" width="828" />
+        <splash height="2436" src="res/screen/ios/ios_splash_1125_2436.png" width="1125" />
+        <splash height="2208" src="res/screen/ios/ios_splash_1242_2208.png" width="1242" />
+        <splash height="2688" src="res/screen/ios/ios_splash_1242_2688.png" width="1242" />
+        <splash height="1242" src="res/screen/ios/ios_splash_2208_1242.png" width="2208" />
+        <splash height="1125" src="res/screen/ios/ios_splash_2436_1125.png" width="2436" />
+        <config-file parent="GADApplicationIdentifier" target="*-Info.plist">
             <string>ca-app-pub-8657757436017103~8650036392</string>
         </config-file>
-        <config-file target="*-Info.plist" parent="GADIsAdManagerApp">
-            <true/>
+        <config-file parent="GADIsAdManagerApp" target="*-Info.plist">
+            <true />
         </config-file>
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-splashscreen" spec="~5.0.4" />
-    <plugin name="cordova-plugin-wkwebview-engine" spec="~1.2.1" />
     <plugin name="cordova-plugin-x-socialsharing" spec="~5.6.8" />
     <plugin name="cordova-plugin-inappbrowser" spec="~4.0.0" />
     <plugin name="cordova-plugin-safariviewcontroller" spec="~1.6.0" />

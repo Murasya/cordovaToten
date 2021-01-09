@@ -1,0 +1,60 @@
+.mailChange__input {
+  padding: 1em;
+  border-radius: 2em;
+  display: block;
+  margin: 8px auto;
+  width: 70vw;
+}
+.mailChange__str {
+  color: #818181;
+  margin: 5vh 0 0 15vw;
+}
+.mailChange hr {
+  margin: 5vh auto;
+  width: 80vw;
+}
+.mailChange__str2 {
+  color: #525252;
+  margin: 0 15vw;
+}
+.mailChange__send {
+  background-color: #ED6A4C;
+  border: none;
+  color: #FFFFFF;
+  display: block;
+  padding: .5em 2em;
+  margin: 3vh auto;
+  border-radius: 1em;
+}
+.mailChange__str3 {
+  color: #525252;
+  text-align: center;
+}
+.mailChange__sent {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(55, 107, 152, 0.85);
+  position: absolute;
+  top: 0;
+}
+.mailChange__batsu {
+  margin: 10vh 80vw;
+  font-size: 3em;
+  color: #FFF;
+}
+.mailChange__square {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 3em;
+  text-align: center;
+}
+.mailChange__str4 {
+  font-size: 1.7em;
+  color: #FFF;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+.mailChange__str5 {
+  color: #FFF;
+}
+
+/*# sourceMappingURL=mailChange.css.map */

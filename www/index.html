@@ -27,6 +27,8 @@
   <link rel="stylesheet" href="css/archive.css">
   <link rel="stylesheet" href="css/explain.css">
   <link rel="stylesheet" href="css/edit.css">
+  <link rel="stylesheet" href="css/myPage.css">
+  <link rel="stylesheet" href="css/mailChange.css">
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
 
@@ -49,7 +51,7 @@
   <script type="text/javascript" src="js/slick.min.js"></script>
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="myPage.html"></ons-navigator>
 </body>
 </html>
 
@@ -76,6 +78,7 @@
               <a @click="urlClick">利用規約</a>
               <a @click="urlClick">プライバシー<br>ポリシー</a>
               <a @click="goFeedback">フィードバック</a>
+              <a @click="goMyPage">マイページ</a>
               <a @click="goTutorial">チュートリアル</a>
             </div>
             <a @click="logoutButtonClick" class="signout">SIGN OUT</a>
@@ -180,6 +183,10 @@
               hBanner();
               document.getElementById("myNavigator").pushPage('feedback.html');
             },
+            goMyPage: function() {
+              hBanner();
+              document.getElementById("myNavigator").pushPage('myPage.html');
+            },
             urlClick: function() {
               window.open("https://noteappm.wixsite.com/policies", "_self", "location=yes");
             }
@@ -195,6 +202,116 @@
             vue.currentUser = null;
           }
         });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="myPage.html">
+  <ons-page>
+    <div id="myPage" class="myPage">
+      <div class="myPage__header">
+        <a class="myPage__cancel" @click="popBack"><ons-icon icon="fa-chevron-left"></ons-icon> キャンセル</a>
+      </div>
+      <div>
+        <ons-list>
+          <ons-list-item tappable modifier="chevron" @click="mailChange">
+            メールアドレス/ソーシャルログインの変更
+          </ons-list-item>
+          <ons-list-item tappable modifier="chevron">
+            ログインパスワードの変更
+          </ons-list-item>
+        </ons-list>
+      </div>
+    </div>
+    <script>
+      ons.getScriptPage().onInit = function() {
+        new Vue({
+          el: "#myPage",
+          methods: {
+            popBack: function() {
+              document.getElementById('myNavigator').popPage();
+            },
+            mailChange: function() {
+              document.getElementById('myNavigator').pushPage("mailChange.html");
+            }
+          }
+        });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id='mailChange.html'>
+  <ons-page>
+    <div id='mailChange' class='mailChange'>
+      <div class="myPage__header">
+        <a class="myPage__cancel" @click="popBack"><ons-icon icon="fa-chevron-left"></ons-icon> キャンセル</a>
+      </div>
+      <div class="mailChange__str">現在のメールアドレス</div>
+      <input class="mailChange__input" type="email" v-model="current_email" placeholder="メールアドレス">
+      <hr>
+      <div class="mailChange__str2">＊新しいメールアドレスを入力するか、新たに連携するサービスを選んでください。</div>
+      <div class="mailChange__str">新しいメールアドレス</div>
+      <input class="mailChange__input" type="email" v-model="new_email" placeholder="メールアドレス">
+      <input class="mailChange__input" type="email" v-model="check_email" placeholder="確認(同じアドレスを入力してください)">
+      <button class="mailChange__send" @click="send_mail">認証メールを送信</button>
+      <div class="mailChange__str3">または</div>
+
+      <div class="mailChange__sent" v-show="overlay" @click="finish">
+        <div class="mailChange__batsu">×</div>
+        <div class="mailChange__square">
+          <div class="mailChange__str4">メールを送信しました</div>
+          <div class="mailChange__str5">受信メールをご確認ください</div>
+        </div>
+      </div>
+      <!-- <div id="firebaseui-auth-container"></div>
+      <div id="loader">Loading...</div> -->
+    </div>
+    <script>
+      ons.getScriptPage().onInit = function() {
+        new Vue({
+          el: '#mailChange',
+          data: {
+            current_email: "",
+            new_email: "",
+            check_email: "",
+            user: firebase.auth().currentUser,
+            overlay: false,
+          },
+          methods: {
+            popBack: function() {
+              document.getElementById('myNavigator').popPage();
+            },
+            send_mail: function() {
+              if(this.new_email !== this.check_email) {
+                ons.notification.toast('確認メールアドレスが違います', {timeout: 1000, animation: "fall"});
+                return;
+              }
+              if(this.new_email == "") {
+                ons.notification.toast('新しいメールアドレスを入力してください', {timeout: 1000, animation: "fall"});
+                return;
+              }
+              if(user) {
+                if(user.email != this.current_email) {
+                  ons.notification.toast('現在のメールアドレスが違います', {timeout: 1000, animation: "fall"});
+                  return ;
+                }
+                user.updateEmail(this.new_email).then(function() {
+                  this.overlay = true;
+                }).catch(function(error) {
+                  // An error happened.
+                });
+              }
+            },
+            finish: function() {
+              document.getElementById("myNavigator").resetToPage('index.html');
+            }
+          }
+        });
+      }
+      ons.getScriptPage().onShow = function() {
+        // ui.start('#firebaseui-auth-container', uiConfig);
       }
     </script>
   </ons-page>

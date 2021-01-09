@@ -1,0 +1,61 @@
+.mailChange {
+
+  &__input {
+    padding: 1em;
+    border-radius: 2em;
+    display: block;
+    margin: 8px auto;
+    width: 70vw;
+  }
+  &__str {
+    color: #818181;
+    margin: 5vh 0 0 15vw;
+  }
+  hr {
+    margin: 5vh auto;
+    width: 80vw;
+  }
+  &__str2 {
+    color: #525252;
+    margin: 0 15vw;
+  }
+  &__send {
+    background-color: #ED6A4C;
+    border: none;
+    color: #FFFFFF;
+    display: block;
+    padding: .5em 2em;
+    margin: 3vh auto;
+    border-radius: 1em;
+  }
+  &__str3 {
+    color: #525252;
+    text-align: center;
+  }
+  &__sent {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba($color: #376B98, $alpha: 0.85);
+    position: absolute;
+    top: 0;
+  }
+  &__batsu {
+    margin: 10vh 80vw;
+    font-size: 3em;
+    color: #FFF;
+  }
+  &__square {
+    background-color: rgba($color: #FFFFFF, $alpha: 0.15);
+    padding: 3em;
+    text-align: center;
+  }
+  &__str4 {
+    font-size: 1.7em;
+    color: #FFF;
+    font-weight: bold;
+    margin-bottom: 1em;
+  }
+  &__str5 {
+    color: #FFF;
+  }
+}
