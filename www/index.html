@@ -51,7 +51,7 @@
   <script type="text/javascript" src="js/slick.min.js"></script>
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="myPage.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
 </body>
 </html>
 
@@ -218,7 +218,7 @@
           <ons-list-item tappable modifier="chevron" @click="mailChange">
             メールアドレス/ソーシャルログインの変更
           </ons-list-item>
-          <ons-list-item tappable modifier="chevron">
+          <ons-list-item tappable modifier="chevron" @click="passChange">
             ログインパスワードの変更
           </ons-list-item>
         </ons-list>
@@ -234,6 +234,9 @@
             },
             mailChange: function() {
               document.getElementById('myNavigator').pushPage("mailChange.html");
+            },
+            passChange: function() {
+              document.getElementById('myNavigator').pushPage("passChange.html");
             }
           }
         });
@@ -292,15 +295,22 @@
                 ons.notification.toast('新しいメールアドレスを入力してください', {timeout: 1000, animation: "fall"});
                 return;
               }
-              if(user) {
-                if(user.email != this.current_email) {
+              if(this.user) {
+                if(this.user.email != this.current_email) {
                   ons.notification.toast('現在のメールアドレスが違います', {timeout: 1000, animation: "fall"});
                   return ;
                 }
-                user.updateEmail(this.new_email).then(function() {
-                  this.overlay = true;
+                hoge = this;
+                this.user.updateEmail(this.new_email).then(function() {
+                  hoge.user.sendEmailVerification().then(function() {
+                    hoge.overlay = true;
+                  }).catch(function(error) {
+                    ons.notification.toast(error.message, {timeout: 5000, animation: "fall"});
+                    return;
+                  });
                 }).catch(function(error) {
-                  // An error happened.
+                  ons.notification.toast(error.message, {timeout: 5000, animation: "fall"});
+                  return;
                 });
               }
             },
@@ -312,6 +322,80 @@
       }
       ons.getScriptPage().onShow = function() {
         // ui.start('#firebaseui-auth-container', uiConfig);
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id='passChange.html'>
+  <ons-page>
+    <div id='passChange' class='mailChange'>
+      <div class="myPage__header">
+        <a class="myPage__cancel" @click="popBack"><ons-icon icon="fa-chevron-left"></ons-icon> 設定へ</a>
+      </div>
+      <div class="mailChange__str">現在のパスワード</div>
+      <input class="mailChange__input" type="password" v-model="current_password" placeholder="パスワード">
+      <div class="mailChange__str">新しいパスワード</div>
+      <input class="mailChange__input" type="password" v-model="new_password" placeholder="パスワード">
+      <input class="mailChange__input" type="password" v-model="check_password" placeholder="確認(同じパスワードを入力してください)">
+      <button class="mailChange__send" @click="changePass">パスワードを変更</button>
+      <div class="mailChange__sent" v-show="overlay" @click="finish">
+        <div class="mailChange__batsu">×</div>
+        <div class="mailChange__square">
+          <div class="mailChange__str4">パスワードを変更しました</div>
+        </div>
+      </div>
+    </div>
+    <script>
+      ons.getScriptPage().onInit = function() {
+        new Vue({
+          el: '#passChange',
+          data: {
+            current_password: "",
+            new_password: "",
+            check_password: "",
+            user: firebase.auth().currentUser,
+            overlay: false,
+          },
+          methods: {
+            popBack: function() {
+              document.getElementById('myNavigator').popPage();
+            },
+            changePass: function() {
+              if(this.new_password !== this.check_password) {
+                ons.notification.toast('確認パスワードが違います', {timeout: 1000, animation: "fall"});
+                return;
+              }
+              if(this.new_password == "") {
+                ons.notification.toast('新しいパスワードを入力してください', {timeout: 1000, animation: "fall"});
+                return;
+              }
+              if(this.user) {
+                const vue = this;
+                const credential = firebase.auth.EmailAuthProvider.credential(vue.user.email, vue.current_password);
+                // ユーザ再認証
+                vue.user.reauthenticateWithCredential(credential).then(function() {
+                  // 再認証成功
+                  vue.user.updatePassword(vue.new_password).then(function() {
+                    // パスワードアップデート成功
+                    vue.overlay = true;
+                  }).catch(function(error) {
+                    // パスワードアップデート失敗
+                    ons.notification.toast(error.message, {timeout: 5000, animation: "fall"});
+                    return;
+                  });
+                }).catch(function(error) {
+                  // 再認証失敗
+                  ons.notification.toast('現在のパスワードが違います', {timeout: 5000, animation: "fall"});
+                  return;
+                });
+              }
+            },
+            finish: function() {
+              document.getElementById("myNavigator").resetToPage('index.html');
+            }
+          }
+        });
       }
     </script>
   </ons-page>
