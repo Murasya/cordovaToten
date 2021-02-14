@@ -73,12 +73,14 @@ function User(
   birthday=new Date(),
   sex="",
   occupation="",
+  isResearchAccept=false,
 ) {
   this.uid = uid;
   this.email = email;
   this.birthday = birthday;
   this.sex = sex;
   this.occupation = occupation;
+  this.isResearchAccept = isResearchAccept;
 }
 
 function setNewData(qAndA) {
@@ -105,37 +107,6 @@ function setNewData(qAndA) {
   });
   return id;
 }
-
-// function getQuestionAndAnswer(limit = 100) {
-//   var user = firebase.auth().currentUser;
-//   var array = [];
-//   console.log("startQandA");
-//   db.collection("questionAndAnswer")
-//     .where("uid", "==", user.uid)
-//     .where("complete", "==", true)
-//     .orderBy("timestamp", "desc")
-//     .limit(limit)
-//     .get().then((querySnapshot) => {
-//       querySnapshot.forEach((doc) => {
-//         var qAndA = new QAndA(
-//           doc.data().questions,
-//           doc.data().answers,
-//           doc.data().tags,
-//           doc.data().uid,
-//           doc.data().public,
-//           doc.data().memo,
-//           doc.data().timestamp.toDate(),
-//           doc.data().complete,
-//           doc.data().category,
-//           doc.data().success,
-//           doc.id,
-//         );
-//         array.push(qAndA);
-//       });
-//   });
-//   console.log(array);
-//   return array;
-// }
 
 // エラーハンドリングの追加（動くかはわからん...）
 function getQuestionAndAnswer(limit = 100) {
@@ -254,6 +225,7 @@ function setNewUser(user) {
     sex: user.sex,
     occupation: user.occupation,
     birthday: user.birthday,
+    isResearchAccept: user.isResearchAccept,
   }).then(function(doc) {
     console.log('Document written with ID: ', doc.id);
   }).catch(function(error) {

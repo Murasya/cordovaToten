@@ -2551,14 +2551,14 @@
         <input class="register__input" type="email" id="email_register" v-model="email" placeholder="入力してください">
         <p class="register__title">パスワード</p>
         <input class="register__input" type="password" id="password_register" v-model="password" placeholder="入力してください">
-        <p class="register__title">性別</p>
+        <p class="register__title">性別(任意)</p>
         <select v-model="sex">
           <option disabled>性別</option>
           <option value="男">男</option>
           <option value="女">女</option>
           <option value="その他">その他</option>
         </select>
-        <p class="register__title">生年月日</p>
+        <p class="register__title">生年月日(任意)</p>
         <div class="register__birthday">
           <select v-model="year" @change="get_days">
             <option disabled>年</option>
@@ -2571,11 +2571,15 @@
             <option v-for="n in days_max" :value="n">{{ n }}</option>
           </select>日
         </div>
-        <p class="register__title">職業</p>
+        <p class="register__title">職業(任意)</p>
         <select v-model="occupation">
           <option disabled>職業</option>
           <option v-for="n in occupation_list" :value="n">{{ n }}</option>
         </select>
+      </div>
+      <div class="register__check">
+        <label for="isTermsAccept"><input type="checkbox" id="isTermsAccept" v-model="isTermsAccept">利用規約とプライバシーポリシーに同意する</label>
+        <label for="isResearchAccept"><input type="checkbox" id="isResearchAccept" v-model="isResearchAccept">教育や心理学等の研究に使用しても構いません(任意)</label>
       </div>
       <div class="register__btns">
         <button @click="onRegister" class="register__send-btn">仮登録メールを送信</button>
@@ -2609,15 +2613,20 @@
               "パート・アルバイト",
               "無職",
               "その他",
-            ]
+            ],
+            isTermsAccept: false,
+            isResearchAccept: false,
           },
           created: function() {
             this.get_days();
           },
           methods: {
             onRegister: function() {
+              if(!this.isTermsAccept) {
+                ons.notification.toast('利用規約とプライバシーポリシーに同意してください', {timeout: 1000, animation: 'fall'});
+              }
               var day = new Date(this.year, this.month-1, this.day);
-              var user = new User("", this.email, day, this.sex, this.occupation);
+              var user = new User("", this.email, day, this.sex, this.occupation, this.isResearchAccept);
               firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
                 .then(function(result) {
                   user.uid = result.user.uid;

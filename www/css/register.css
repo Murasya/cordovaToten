@@ -69,5 +69,12 @@
   align-items: center;
   margin: 20pt 50pt 0;
 }
+.register__check {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 20px 50px;
+}
 
 /*# sourceMappingURL=register.css.map */
