@@ -113,3 +113,5 @@ $RECYCLE.BIN/
 # scss
 *.map
 www/.sass-cache
+GoogleService-Info.plist
+google-services.json

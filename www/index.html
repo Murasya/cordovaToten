@@ -259,7 +259,7 @@
       <input class="mailChange__input" type="email" v-model="new_email" placeholder="メールアドレス">
       <input class="mailChange__input" type="email" v-model="check_email" placeholder="確認(同じアドレスを入力してください)">
       <button class="mailChange__send" @click="send_mail">認証メールを送信</button>
-      <div class="mailChange__str3">または</div>
+      <!-- <div class="mailChange__str3">または</div> -->
 
       <div class="mailChange__sent" v-show="overlay" @click="finish">
         <div class="mailChange__batsu">×</div>
@@ -2542,7 +2542,6 @@
     <div id="register" class="register" v-cloak>
       <a @click="document.getElementById('myNavigator').popPage()" style="align-self: flex-start;background-color: #B1B1B1;display: block; padding: 20px; color: #FFF;"><ons-icon icon="fa-chevron-left"></ons-icon> キャンセル</a>
       <ul class="register__explain">
-        <li class="register__explain-item">アカウント登録を行うことにより、<a @click="urlClick" class="register__link">利用規約</a>・<a @click="urlClick" class="register__link">プライバシーポリシー</a>に同意したものとみなします。</li><br>
         <li class="register__explain-item">メールアドレスおよび連携サービスのDMにアプリ改善のためのアンケート等をお送りする場合がございます。あらかじめご了承ください。</li><br>
         <li class="register__explain-item">性別・生年月日・職業は記入必須ではありません。</li>
       </ul>
@@ -2578,8 +2577,8 @@
         </select>
       </div>
       <div class="register__check">
-        <label for="isTermsAccept"><input type="checkbox" id="isTermsAccept" v-model="isTermsAccept">利用規約とプライバシーポリシーに同意する</label>
-        <label for="isResearchAccept"><input type="checkbox" id="isResearchAccept" v-model="isResearchAccept">教育や心理学等の研究に使用しても構いません(任意)</label>
+        <label for="isTermsAccept"><input type="checkbox" id="isTermsAccept" v-model="isTermsAccept">(必須)<a @click="urlClick" class="register__link">利用規約</a>と<a @click="urlClick" class="register__link">プライバシーポリシー</a>に同意する</label>
+        <label for="isResearchAccept"><input type="checkbox" id="isResearchAccept" v-model="isResearchAccept">(任意)教育や心理学等の研究に使用しても構いません</label>
       </div>
       <div class="register__btns">
         <button @click="onRegister" class="register__send-btn">仮登録メールを送信</button>
