@@ -1,5 +1,8 @@
+.category {
+  font-size: 2vh;
+}
 .category__title {
-  font-size: 4vw;
+  font-size: 1em;
   background-color: #E8E8E8;
   padding: 10vh 0 5vh 48vw;
   margin-bottom: 15vh;
@@ -30,7 +33,6 @@
   box-shadow: 0px 3px 4px #657D9529;
   transform: scale(0.8);
   transition: .3s ease;
-  font-size:3.5vw;
 }
 .category .category__header--yellow, .category .category__header--pink, .category .category__header--blue, .category .category__header--green {
   display: table;
@@ -38,7 +40,7 @@
   color: #FFF;
   border-radius: 15px 15px 0 0;
   width: 100%;
-  height: 100px;
+  height: 13vh;
 }
 .category__header--yellow {
   background-color: #F4BC3E;
@@ -63,7 +65,7 @@
   font-size: .8em;
 }
 .category__nado {
-  font-size: .5em;
+  font-size: .8em;
   text-align: right;
 }
 .category__link {
@@ -86,7 +88,7 @@
   margin: 10px auto 60px;
 }
 .category__triangle {
-  border-top: 9vh solid #DEEFF7;
+  border-top: 60px solid #DEEFF7;
   border-right: 19.5vw solid transparent;
   border-left: 19.5vw solid transparent;
   margin: 0 30vw;
