@@ -19,7 +19,8 @@
     <preference name="StatusBarBackgroundColor" value="#ED6A4C" />
     <platform name="android">
         <allow-intent href="market:*" />
-        <preference name="android-targetSdkVersion" value="29" />
+        <preference name="android-minSdkVersion" value="22" />
+        <preference name="android-targetSdkVersion" value="28" />
     </platform>
     <platform name="ios">
         <preference name="WKWebViewOnly" value="true" />
