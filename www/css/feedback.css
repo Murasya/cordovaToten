@@ -1,3 +1,7 @@
+.feedback {
+  font-size: 2vh;
+}
+
 .feedback__head {
   background-color: #727272;
   padding: 15px;
@@ -5,13 +9,13 @@
 }
 
 .feedback__cancel {
-  font-size: 15px;
+  font-size: 1em;
   color: #FFF;
 }
 
 .feedback__head--h1 {
   color: #5A5A5A;
-  font-size: 22px;
+  font-size: 1.5em;
   text-align: center;
   background-color: #E8E8E8;
   border-radius: 0 0 50vw 50vw / 0 0 36px 36px;
@@ -22,16 +26,17 @@
 .feedback__form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding: 20px;
   height: calc(100vh - 150px);
 }
 
 .feedback__exp {
-  font-size: 11px;
+  font-size: 1em;
   text-align: left;
   margin: 0;
+  padding: 3vh 8vw;
 }
 
 .feedback__textarea {
@@ -41,11 +46,12 @@
   height: 200pt;
   width: 80%;
   margin-top: 10pt;
+  font-size: 1em;
 }
 
 .feedback__submit {
   color: #FFF;
-  font-size: 14px;
+  font-size: 1.3em;
   background-color: #727272;
   border-radius: 7px;
   padding: 8px 50px;

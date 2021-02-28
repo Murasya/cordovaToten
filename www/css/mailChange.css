@@ -1,9 +1,13 @@
+.mailChange {
+  font-size: 2vh;
+}
 .mailChange__input {
   padding: 1em;
   border-radius: 2em;
   display: block;
   margin: 8px auto;
   width: 70vw;
+  font-size: .7em;
 }
 .mailChange__str {
   color: #818181;
@@ -25,6 +29,7 @@
   padding: .5em 2em;
   margin: 3vh auto;
   border-radius: 1em;
+  font-size: 1em;
 }
 .mailChange__str3 {
   color: #525252;
