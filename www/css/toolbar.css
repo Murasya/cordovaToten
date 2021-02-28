@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  height: 60px;
+  height: 9vh;
 }
 .my-toolbar .my-toolbar__item, .my-toolbar .my-toolbar__item--active {
   display: flex;
@@ -39,7 +39,7 @@
 }
 .my-toolbar__logo {
   margin: 0 auto;
-  height: 30px;
+  height: 4.5vh;
 }
 
 /*# sourceMappingURL=toolbar.css.map */
