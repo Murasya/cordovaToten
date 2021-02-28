@@ -1,5 +1,5 @@
 .category__title {
-  font-size: 1em;
+  font-size: 4vw;
   background-color: #E8E8E8;
   padding: 10vh 0 5vh 48vw;
   margin-bottom: 15vh;
@@ -30,6 +30,7 @@
   box-shadow: 0px 3px 4px #657D9529;
   transform: scale(0.8);
   transition: .3s ease;
+  font-size:3.5vw;
 }
 .category .category__header--yellow, .category .category__header--pink, .category .category__header--blue, .category .category__header--green {
   display: table;
@@ -85,7 +86,7 @@
   margin: 10px auto 60px;
 }
 .category__triangle {
-  border-top: 60px solid #DEEFF7;
+  border-top: 9vh solid #DEEFF7;
   border-right: 19.5vw solid transparent;
   border-left: 19.5vw solid transparent;
   margin: 0 30vw;
