@@ -472,6 +472,16 @@
           </div>
           <a class="category__link" id="future_detail_btn">詳しい説明</a>
         </li>
+        <li class="category__item" id="jobhunting">
+          <div class="category__header--purple">
+            <span class="category__header-title">＜ 就活生向け ＞<br>ガクチカ</span>
+          </div>
+          <div class="category__li">
+            ●アルバイトで接客に力を入れた<br>
+            ●サークル合宿を取りまとめた<div class="category__nado">など</div>
+          </div>
+          <a class="category__link" id="jobhunting_detail_btn">詳しい説明</a>
+        </li>
         <li class="category__item category__non-active" id="hobby">
           <div class="category__header--pink">
             <span class="category__header-title">趣味・好きなこと</span>
@@ -587,6 +597,10 @@
           document.querySelector("#myNavigator").pushPage("category_experience.html");
           $('.category__slider').css('opacity', 0);
         });
+        $("#jobhunting_detail_btn").on("click", function() {
+          document.querySelector("#myNavigator").pushPage("category_jobhunting.html");
+          $('.category__slider').css('opacity', 0);
+        });
         $(".category__go").on("click", function() {
           if($("#future").hasClass("slick-active")) {
             document.querySelector("#myNavigator").pushPage("analyze_future.html");
@@ -594,6 +608,8 @@
             document.querySelector("#myNavigator").pushPage("analyze_hobby.html");
           } else if($("#task").hasClass("slick-active")) {
             document.querySelector("#myNavigator").pushPage("analyze_task.html");
+          } else if($("#jobhunting").hasClass("slick-active")){
+            document.querySelector("#myNavigator").pushPage("analyze_jobhunting.html");
           } else {
             document.querySelector("#myNavigator").pushPage("analyze_experience.html");
           }
@@ -801,10 +817,10 @@
   <ons-page>
     <div class="background" style="background-color: #FFF"></div>
     <div id="category_future">
-      <div class="cat-detail__header--yellow">
+      <div class="cat-detail__header">
         <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
       </div>
-      <div class="cat-detail__title">
+      <div class="cat-detail__title--yellow">
         取り組みたいこと<br>叶えたいこと
       </div>
       <div class="cat-detail__exp">今後取り組みたいこと、叶えたいこと、やってみたいことなどについて分析するカテゴリです。</div>
@@ -846,10 +862,10 @@
   <ons-page>
     <div class="background" style="background-color: #FFF"></div>
     <div id="category_hobby">
-      <div class="cat-detail__header--pink">
+      <div class="cat-detail__header">
         <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
       </div>
-      <div class="cat-detail__title">
+      <div class="cat-detail__title--pink">
         趣味・好きなこと
       </div>
       <div class="cat-detail__exp">自分の趣味や好きな物事、趣向などについて分析するカテゴリです。</div>
@@ -887,10 +903,10 @@
   <ons-page>
     <div class="background" style="background-color: #FFF"></div>
     <div id="category_experience">
-      <div class="cat-detail__header--green">
+      <div class="cat-detail__header">
         <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
       </div>
-      <div class="cat-detail__title">
+      <div class="cat-detail__title--green">
         過去の体験・経験
       </div>
       <div class="cat-detail__exp">
@@ -934,10 +950,10 @@
   <ons-page>
     <div class="background" style="background-color: #FFF"></div>
     <div id="category_task">
-      <div class="cat-detail__header--blue">
+      <div class="cat-detail__header">
         <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
       </div>
-      <div class="cat-detail__title">
+      <div class="cat-detail__title--blue">
         タスク
       </div>
       <div class="cat-detail__exp">
@@ -970,6 +986,48 @@
             goMore: function() {
               window.open("https://noteappm.wixsite.com/examples", "_self", "location=yes");
             },
+          }
+        });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="category_jobhunting.html">
+  <ons-page>
+    <div class="background" style="background-color: #FFF"></div>
+    <div id="category_jobhunting">
+      <div class="cat-detail__header">
+        <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
+      </div>
+      <div class="cat-detail__title--purple">
+        ＜ 就活生向け ＞<br>ガクチカ
+      </div>
+      <div class="cat-detail__exp">
+        就活でよく問われる「学生時代に力を入れたこと」(=通称ガクチカ)について、出来事の整理→分析→ガクチカ作成まで、一貫してサポートするカテゴリです。
+      </div>
+      <hr class="cat-detail__hr--green">
+      <div class="cat-detail__midashi">1. 出来事整理 編</div>
+      <div class="cat-detail__frame">
+        学生時代に頑張ったことを洗い出し、「いつ」「どこで」などの基本的な事柄を整理します。
+      </div>
+      <div class="cat-detail__midashi">2. なぜなぜ分析 編</div>
+      <div class="cat-detail__frame">
+        その頑張ったことに基づいて、自問自答をします。その結果から、自分の強みや工夫したポイントなどを考えます。
+      </div>
+      <div class="cat-detail__midashi">3. ガクチカ準備 編</div>
+      <div class="cat-detail__frame">
+        出来事整理となぜなぜ分析の結果を参考に、ガクチカを書いていきます。フォーマットに当てはめるだけなので、初めてでも安心です。
+      </div>
+      <div class="cat-detail__triangle"></div>
+      <div class="cat-detail__str1">自己分析に基づいたガクチカの土台が完成!</div>
+      <div class="cat-detail__str2">さらなる自己分析を重ねたり、表現を磨いたりして、<br>ハイレベルなガクチカを目指しましょう！</div>
+    </div>
+    <script>
+      ons.getScriptPage().onInit = function() {
+        new Vue({
+          el: "#category_jobhunting",
+          methods: {
           }
         });
       }
@@ -1454,6 +1512,139 @@
               qAndA.uid = firebase.auth().currentUser.uid;
               qAndA.category = this.category;
               qAndA.color = "task";
+              qAndA.id = setNewData(qAndA);
+              localStorage.setItem("tutorial_finished", "true");
+              hBanner();
+              document.querySelector('#myNavigator').replacePage('start.html', {
+                data: {
+                  qAndA: qAndA
+                }
+              });
+            },
+            helpButtonClick: function() {
+              document.getElementById('myNavigator').pushPage('help.html');
+            },
+            closeModal: function() {
+              this.showHelpModal = false;
+            },
+            existsSameValue: function(a) {
+              var s = new Set(a);
+              return s.size != a.length;
+            }
+          }
+        });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="analyze_jobhunting.html">
+  <ons-page>
+    <div class="background analyze__background"></div>
+    <div class="analyze">
+      <div id="analyzeVue" v-cloak>
+        <div class="analyze__header--green">
+          <a @click="document.getElementById('myNavigator').popPage()"><img src="images/分析カテゴリ追加時_素材/analyze_back-category.png"></a>
+          <a class="analyze__help-button" @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png"></a>
+        </div>
+        <div>
+          <img class="analyze__tenchan" src="images/分析カテゴリ追加時_素材/analyze_character.png">
+        </div>
+        <div class="analyze__main">
+          <input class="analyze__theme" type="text" v-model="theme" placeholder="過去の体験・経験">
+          <hr class="analyze__hr--green">
+          <p class="analyze__exp">＊タグを選んでください(最大3つまで)</p>
+          <div class="analyze__tag-container">
+            <select v-model="cat[0]" class="analyze__tag">
+              <option value="">タグ</option>
+              <option v-for="n in categories" :value="n">{{ n }}</option>
+            </select>
+            <select v-model="cat[1]" class="analyze__tag">
+              <option value="">タグ</option>
+              <option v-for="n in categories" :value="n">{{ n }}</option>
+            </select>
+            <select v-model="cat[2]" class="analyze__tag">
+              <option value="">タグ</option>
+              <option v-for="n in categories" :value="n">{{ n }}</option>
+            </select>
+          </div>
+          <button @click="nextButtonClick" class="analyze__next-button">これを分析！</button>
+        </div>
+        <my-toolbar></my-toolbar>
+      </div>
+    </div>
+    
+    <script>
+      ons.getScriptPage().onInit = function () {
+        sBanner();
+        var qAndA = new QAndA();
+        var vm_a = new Vue({
+          el: '#analyzeVue',
+          data: {
+            theme: "",
+            category: [],
+            cat: [
+              "",
+              "",
+              "",
+            ],
+            categories: [
+              "就活・転職",
+              "自己整理",
+              "記録目的",
+              "嬉しかったこと",
+              "感謝したこと",
+              "満足していること",
+              "勇気を出したこと",
+              "気持ちよかったこと",
+              "笑ったこと",
+              "感動したこと",
+              "癒されたこと",
+              "胸に響いたこと",
+              "悲しかったこと",
+              "つらかったこと",
+              "嫌だったこと",
+              "後悔していること",
+              "恨んでいること",
+              "傷ついたこと",
+              "病んだこと",
+              "怒ったこと",
+              "我慢したこと",
+              "驚いたこと",
+              "苦労したこと",
+              "悩んだこと",
+              "原体験となったこと",
+              "自信になったこと",
+              "興味をもったこと",
+              "印象に残ったこと",
+              "その他",
+            ],
+          },
+          methods: {
+            nextButtonClick: function() {
+              this.category = [];
+              for(var i=0; i<3; i++) {
+                if(this.cat[i] != "") {
+                  this.category.push(this.cat[i]);
+                }
+              }
+              if (this.theme == "") {
+                ons.notification.toast('テーマが入力されていません', {timeout: 2000, animation: "fall"});
+                return;
+              }
+              if (this.category.length == 0) {
+                ons.notification.toast('タグを1～3つ選択してください', {timeout: 2000, animation: "fall"});
+                return;
+              }
+              if (this.existsSameValue(this.category)) {
+                ons.notification.toast('同じタグが選択されています', {timeout: 2000, animation: "fall"});
+                return;
+              }
+              qAndA.questions.push("過去の体験・経験");
+              qAndA.answers.push(this.theme);
+              qAndA.uid = firebase.auth().currentUser.uid;
+              qAndA.category = this.category;
+              qAndA.color = "experience";
               qAndA.id = setNewData(qAndA);
               localStorage.setItem("tutorial_finished", "true");
               hBanner();
