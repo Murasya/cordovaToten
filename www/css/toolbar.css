@@ -18,9 +18,11 @@
   flex-direction: column;
   width: 60px;
   padding-top: 5px;
+  height: 100%;
+  justify-content: center;
 }
 .my-toolbar__item {
-  border-top: solid 3px #FFF;
+  border-top: solid 3px rgba(255, 255, 255, 0);
 }
 .my-toolbar__item--active {
   border-top: solid 3px #ED6A4C;
@@ -39,7 +41,7 @@
 }
 .my-toolbar__logo {
   margin: 0 auto;
-  height: 3vh;
+  height: 3.5vh;
 }
 
 /*# sourceMappingURL=toolbar.css.map */
