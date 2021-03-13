@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="css/edit.css">
   <link rel="stylesheet" href="css/myPage.css">
   <link rel="stylesheet" href="css/mailChange.css">
+  <link rel="stylesheet" href="css/jobhunting_memo1.css">
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
 
@@ -51,7 +52,7 @@
   <script type="text/javascript" src="js/slick.min.js"></script>
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="jobhunting_memo1.html"></ons-navigator>
 </body>
 </html>
 
@@ -609,7 +610,7 @@
           } else if($("#task").hasClass("slick-active")) {
             document.querySelector("#myNavigator").pushPage("analyze_task.html");
           } else if($("#jobhunting").hasClass("slick-active")){
-            document.querySelector("#myNavigator").pushPage("analyze_jobhunting.html");
+            document.querySelector("#myNavigator").pushPage("jobhunting_memo1.html");
           } else {
             document.querySelector("#myNavigator").pushPage("analyze_experience.html");
           }
@@ -2323,6 +2324,9 @@
           case "experience":
             why = "なぜ取り組んだの";
             break;
+          case "jobhunting":
+            why = "なぜ取り組んだの";
+            break;
           default:
             why = "なぜ取り組みたい/叶えたい";
             break;
@@ -2382,6 +2386,9 @@
                 break;
               case "experience":
                 this.headerClass = "question__header--green";
+                break;
+              case "jobhunting":
+                this.headerClass = "question__header--purple";
                 break;
               default:
                 this.headerClass = "question__header";
@@ -3292,6 +3299,309 @@
                 })
               });
             }
+          }
+        });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="jobhunting_memo1.html">
+  <ons-page>
+    <div class="page__background" style="background-color: #FFFFFF;"></div>
+    <div id="jobhunting_memo1" class="jobhunting_memo1" v-cloak>
+      <div class="jobhunting_memo1__header">
+        <span>▼</span>時期ごとに頑張ったことを記入しよう
+        <img src="images/各種ボタン/break_ボタン.png" @click="openModal">
+      </div>
+      <!-- 大学１〜４ -->
+      <div class="jobhunting_memo1__folder" v-for="item in defo_memo" :key="item.header">
+        <div class="jobhunting_memo1__folder--header1"><input type="text" v-model="item.header" readonly></div>
+        <div class="jobhunting_memo1__folder--content">
+          <div>1.<input type="text" placeholder="ああああああああああ" v-model="item.content1"></div>
+          <div>2.<input type="text" v-model="item.content2"></div>
+          <div>3.<input type="text" v-model="item.content3"></div>
+        </div>
+      </div>
+      <!-- 追加 -->
+      <div class="jobhunting_memo1__folder" v-for="(item, index) in memo" :key="item.header">
+        <div class="jobhunting_memo1__folder--header2"><input type="text" v-model="item.header" placeholder="学年/時期を入力"></div>
+        <div class="jobhunting_memo1__folder--content">
+          <button class="jobhunting_memo1__x" @click="removeMemo(index)">×</button>
+          <div>1.<input type="text" placeholder="ああああああああああ" v-model="item.content1"></div>
+          <div>2.<input type="text" v-model="item.content2"></div>
+          <div>3.<input type="text" v-model="item.content3"></div>
+        </div>
+      </div>
+      <div class="jobhunting_memo1__btn">
+        <a @click="addMemo"><img src="images/2021_02_25_新素材/jobhunting_memo1_add.png"></a>
+        <button @click="nextButton">次へ</button>
+      </div>
+      <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
+        <p class="overlay__save--string">保存して中断しますか？</p>
+        <p>中断後はアーカイブから再開できます。</p>
+        <div>
+          <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
+          <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      var myNavigator = document.querySelector('#myNavigator');
+      ons.getScriptPage().onInit = function() {
+        new Vue({
+          el: '#jobhunting_memo1',
+          data: {
+            showSavingModal: false,
+            defo_memo: [
+              {
+                header: "大学1年生",
+                content1: "",
+                content2: "",
+                content3: "",
+              },
+              {
+                header: "大学2年生",
+                content1: "",
+                content2: "",
+                content3: "",
+              },
+              {
+                header: "大学3年生",
+                content1: "",
+                content2: "",
+                content3: "",
+              },
+              {
+                header: "大学4年生",
+                content1: "",
+                content2: "",
+                content3: "",
+              }
+            ],
+            memo: [],
+          },
+          methods: {
+            addMemo: function() {
+              this.memo.push({header: "", content1: "", content2: "", content3: ""});
+            },
+            removeMemo: function(num) {
+              this.memo.splice(num,1);
+            },
+            openModal: function() {
+              this.showSavingModal = true;
+            },
+            nextButton: function() {
+              var id = uniqueId();
+              console.log("id:"+id);
+              WellPoint(id, this.defo_memo.concat(this.memo));
+              myNavigator.pushPage('jobhunting_memo3.html');
+              // TODO: データベース挿入
+            },
+            savingButton: function() {
+              var id = uniqueId();
+              console.log("id:"+id);
+              WellPoint(id, this.defo_memo.concat(this.memo));
+              // TODO: データベース挿入
+              myNavigator.pushPage('index.html');
+            },
+            closeModal: function() {
+              this.showSavingModal = false;
+            }
+          }
+        });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="jobhunting_memo3.html">
+  <ons-page>
+    <div class="page__background" style="background-color: #FFFFFF;"></div>
+    <div id="jobhunting_memo3" class="jobhunting_memo1" v-cloak>
+      <div class="jobhunting_memo1__header">
+        <span>▼</span>一番思い入れのある出来事を選ぼう
+        <img src="images/各種ボタン/break_ボタン.png" @click="openModal">
+      </div>
+      <div class="jobhunting_memo1__folder" v-for="item in memo" :key="item.header">
+        <div class="jobhunting_memo1__folder--header1"><input type="text" v-model="item.header" readonly></div>
+        <div class="jobhunting_memo1__folder--content">
+          <div v-if="item.content1 != ''">
+            <input type="radio" :id="item.content1" :value="item.content1" v-model="picked">
+            <label :for="item.content1">{{ item.content1 }}</label>
+            <hr>
+          </div>
+          <div v-if="item.content2 != ''">
+            <input type="radio" :id="item.content2" :value="item.content2" v-model="picked">
+            <label :for="item.content2">{{ item.content2 }}</label>
+            <hr>
+          </div>
+          <div v-if="item.content3 != ''">
+            <input type="radio" :id="item.content3" :value="item.content3" v-model="picked">
+            <label :for="item.content3">{{ item.content3 }}</label>
+            <hr>
+          </div>
+        </div>
+      </div>
+      <div class="jobhunting_memo1__btn">
+        <button @click="nextButton">この出来事に決定</button>
+      </div>
+      <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
+        <p class="overlay__save--string">保存して中断しますか？</p>
+        <p>中断後はアーカイブから再開できます。</p>
+        <div>
+          <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
+          <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      var myNavigator = document.querySelector('#myNavigator');
+      ons.getScriptPage().onInit = function() {
+        new Vue({
+          el: '#jobhunting_memo3',
+          data: {
+            showSavingModal: false,
+            picked: "",
+            memo: [
+              {
+                header: "大学1年生",
+                content1: "あ",
+                content2: "",
+                content3: "",
+              },
+              {
+                header: "大学2年生",
+                content1: "え",
+                content2: "お",
+                content3: "",
+              },
+              {
+                header: "大学3年生",
+                content1: "き",
+                content2: "く",
+                content3: "け",
+              },
+              {
+                header: "大学4年生",
+                content1: "こ",
+                content2: "さ",
+                content3: "し",
+              }
+            ],
+          },
+          methods: {
+            openModal: function() {
+              this.showSavingModal = true;
+            },
+            nextButton: function() {
+              // TODO: データベース
+              myNavigator.pushPage('jobhunting_memo4.html');
+            },
+            savingButton: function() {
+              // TODO: データベース
+              myNavigator.pushPage('index.html');
+            },
+            closeModal: function() {
+              this.showSavingModal = false;
+            }
+          }
+        });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="jobhunting_memo4.html">
+  <ons-page>
+    <div class="page__background" style="background-color: #FFFFFF;"></div>
+    <div id="jobhunting_memo4" class="jobhunting_memo1">
+      <!-- header -->
+      <div class="jobhunting_memo1__header">
+        <span>▼</span>選んだ出来事について整理しよう
+        <img src="images/各種ボタン/break_ボタン.png" @click="openModal">
+      </div>
+      <!-- title -->
+      <div class="jobhunting_memo1__5w-title">
+        {{ title }}
+      </div>
+      <!-- contents -->
+      <div class="jobhunting_memo1__5w">
+        <div class="jobhunting_memo1__5w-contents">
+          <p>いつからいつごろの出来事？</p>
+          <textarea v-model="when"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>どこで？</p>
+          <textarea v-model="where"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>だれと？(自分の立場も合わせて書こう！)</p>
+          <textarea v-model="who"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>何を？</p>
+          <textarea v-model="what"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>どのように？</p>
+          <textarea v-model="how"></textarea>
+        </div>
+      </div>
+      <!-- button -->
+      <div class="jobhunting_memo1__btn">
+        <button @click="nextButton">整理できた！</button>
+      </div>
+      <div class="overlay__save" v-show="showSavingModal" @click="closeModal"> <!-- modal -->
+        <p class="overlay__save--string">保存して中断しますか？</p>
+        <p>中断後はアーカイブから再開できます。</p>
+        <div>
+          <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
+          <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      var myNavigator = document.querySelector('#myNavigator');
+      ons.getScriptPage().onInit = function() {
+        var qAndA = new QAndA();
+        new Vue({
+          el: '#jobhunting_memo4',
+          data: {
+            title: "あああああああ",
+            when: "",
+            where: "",
+            who: "",
+            what: "",
+            how: "",
+            showSavingModal: false,
+          },
+          methods: {
+            openModal: function() {
+              this.showSavingModal = true;
+            },
+            closeModal: function() {
+              this.showSavingModal = false;
+            },
+            nextButton: function() {
+              // TODO: データベース
+              qAndA.questions.push("ガクチカ");
+              qAndA.answers.push(this.title);
+              qAndA.uid = firebase.auth().currentUser.uid;
+              qAndA.category = [];
+              qAndA.color = "jobhunting";
+              qAndA.id = setNewData(qAndA);
+              localStorage.setItem("tutorial_finished", "true");
+              myNavigator.replacePage('start.html', {
+                data: {
+                  qAndA: qAndA
+                }
+              });
+            },
+            savingButton: function() {
+              // TODO: データベース
+              myNavigator.pushPage('index.html');
+            },
           }
         });
       }

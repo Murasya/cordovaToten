@@ -1,3 +1,4 @@
+
 // Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: "AIzaSyBida9QeFpWHZcexb8Wby3XYRMCNib-BaY",
@@ -68,12 +69,12 @@ function QAndA(
 }
 
 function User(
-  uid="",
-  email="",
-  birthday=new Date(),
-  sex="",
-  occupation="",
-  isResearchAccept=false,
+  uid="", // String
+  email="", // String
+  birthday=new Date(),  // Date
+  sex="", // String
+  occupation="",  // String
+  isResearchAccept=false, // boolean
 ) {
   this.uid = uid;
   this.email = email;
@@ -81,6 +82,40 @@ function User(
   this.sex = sex;
   this.occupation = occupation;
   this.isResearchAccept = isResearchAccept;
+}
+
+function WellPoint(
+  analyzeid="", // String
+  contents={}, // {title, content1, content2, content3}
+) {
+  this.analyzeid = analyzeid;
+  this.contents = contents;
+}
+
+function setNewWellPoint(wellPoint) {
+  var id = "";
+  db.collection("wellPoint").add({
+    analyzeid: wellPoint.analyzeid,
+    contents: wellPoint.contents,
+  }).then(function(docRef) {
+    console.log('Document written with ID: ', docRef.id);
+    id = docRef.id;
+    localStorage.setItem("documentID", id);
+  }).catch(function(error) {
+    console.log('Error adding document: ', error);
+    id = error;
+  });
+  return id;
+}
+
+function updateWellPoint(wellPoint, func) {
+  db.collection("questionAndAnswer").doc(wellPoint.id).set({
+    analyzeid: wellPoint.analyzeid,
+    contents: wellPoint.contents,
+  }).then(function() {
+    console.log("Document successfully updated!");
+    func();
+  });
 }
 
 function setNewData(qAndA) {
@@ -232,6 +267,12 @@ function setNewUser(user) {
     console.log('Error adding document: ', error);
   });
 }
+
+var uniqueId = function(digits) {
+  var strong = typeof digits !== 'undefined' ? digits : 1000;
+  return Date.now().toString(16) + Math.floor(strong * Math.random()).toString(16);
+};
+
 
 Vue.component("skip-modal", {
   template: `
