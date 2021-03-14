@@ -9,7 +9,7 @@
   margin: 12px auto 0;
   position: relative;
 }
-.archive .archive__time, .archive .archive__time--yellow, .archive .archive__time--blue, .archive .archive__time--pink, .archive .archive__time--green {
+.archive .archive__time, .archive .archive__time--yellow, .archive .archive__time--blue, .archive .archive__time--pink, .archive .archive__time--green, .archive .archive__time--purple {
   font-size: 10px;
   padding: 3px 21px;
   border-radius: 5px 5px 0 0;
@@ -32,6 +32,10 @@
 }
 .archive__time--green {
   background-color: #6EB161;
+  color: #FFF;
+}
+.archive__time--purple {
+  background-color: #8E6FD3;
   color: #FFF;
 }
 .archive__p {

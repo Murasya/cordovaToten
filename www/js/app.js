@@ -182,7 +182,7 @@ function getQuestionAndAnswer(limit = 100) {
   return array;
 }
 
-function updateData(qAndA, func) {
+function updateData(qAndA, func = function() {}) {
   db.collection("questionAndAnswer").doc(qAndA.id).set({
     questions: qAndA.questions,
     answers: qAndA.answers,

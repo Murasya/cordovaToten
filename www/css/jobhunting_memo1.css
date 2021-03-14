@@ -6,6 +6,9 @@
   font-weight: bold;
   display: flex;
   align-items: center;
+  position: fixed;
+  width: 90vw;
+  top: 0;
 }
 .jobhunting_memo1__header span {
   color: #ED6A4C;
@@ -69,6 +72,7 @@
   border: solid 1px #D9D9D9;
   border-radius: 10px;
   padding: 2vw;
+  margin-top: calc(5vh + 2em);
 }
 .jobhunting_memo1__5w-title {
   background-color: #E8F6FD;
@@ -93,8 +97,47 @@
   width: 85vw;
   font-size: 1em;
 }
+.jobhunting_memo1__5w-gakuchika {
+  background-color: #E8F6FD;
+  padding: 1vw;
+  margin-bottom: 1vh;
+}
+.jobhunting_memo1__5w-gakuchika p {
+  margin: 0;
+  font-size: .7em;
+  color: #4B4B4B;
+  font-weight: bold;
+}
+.jobhunting_memo1__5w-gakuchika textarea {
+  border: none;
+  background-color: transparent;
+  width: 85vw;
+  font-size: 1em;
+}
+.jobhunting_memo1__5w-number {
+  color: #818181;
+  font-size: .7em;
+  text-align: right;
+}
+.jobhunting_memo1__5w-total {
+  color: #4B4B4B;
+  font-size: .7em;
+  text-align: right;
+  font-weight: bold;
+}
+.jobhunting_memo1__memo {
+  border-top: none;
+  border-right: none;
+  border-left: solid 1px #ED6A4C;
+  border-bottom: solid 1px #ED6A4C;
+  display: block;
+  width: 80vw;
+  margin: 2vh 10vw;
+  height: 5em;
+  font-size: 1em;
+}
 .jobhunting_memo1__btn {
-  margin: 5vh;
+  margin: 5vh 0 7em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -118,6 +161,53 @@
   background: none;
   position: relative;
   left: 73vw;
+}
+.jobhunting_memo1__show-result--off {
+  text-align: center;
+  font-weight: bold;
+  color: #818181;
+  padding: 1em 0 2em;
+  border-top: solid 1px #00000029;
+  border-radius: 10px 10px 0 0;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  background-color: #FFF;
+  z-index: 100;
+}
+.jobhunting_memo1__show-result--off img {
+  width: 5vw;
+  display: block;
+  margin: 0 auto;
+}
+.jobhunting_memo1__show-result--on {
+  text-align: center;
+  font-weight: bold;
+  color: #818181;
+  padding: 1em 0 2em;
+  border-top: solid 1px #00000029;
+  border-radius: 10px 10px 0 0;
+  position: fixed;
+  top: calc(5vh + 1em);
+  width: 100vw;
+  background-color: #FFF;
+  z-index: 100;
+}
+.jobhunting_memo1__show-result--on img {
+  width: 5vw;
+  display: block;
+  margin: 0 auto;
+  transform: rotate(180deg);
+}
+.jobhunting_memo1__result--on {
+  position: fixed;
+  top: calc(5vh + 5em);
+  width: 100vw;
+  height: 80vh;
+  overflow-y: auto;
+}
+.jobhunting_memo1__result--off {
+  display: none;
 }
 
 /*# sourceMappingURL=jobhunting_memo1.css.map */

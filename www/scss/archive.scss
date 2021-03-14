@@ -37,6 +37,11 @@
       background-color: #6EB161;
       color: #FFF;
     }
+    &--purple {
+      @extend %__time;
+      background-color: #8E6FD3;
+      color: #FFF;
+    }
   }
   &__p {
     position: relative;

@@ -53,7 +53,7 @@
   <script type="text/javascript" src="js/slick.min.js"></script>
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="jobhunting_memo1.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="jobhunting_gakuchika.html"></ons-navigator>
 </body>
 </html>
 
@@ -110,7 +110,8 @@
                         (data.color=='future'?'archive__time--yellow':
                         (data.color=='task'?'archive__time--blue':
                         (data.color=='experience'?'archive__time--green':
-                        'archive__time')))">
+                        (data.color=='jobhunting'?'archive__time--purple':
+                        'archive__time'))))">
                   {{ data.timestamp.getFullYear() }}/{{ ('0'+(data.timestamp.getMonth()+1)).slice(-2) }}/{{ data.timestamp.getDate() }}
                 </span>
                 <p class="archive__p">{{ data.answers[0] }}</p>
@@ -2105,7 +2106,8 @@
                         (data.color=='future'?'archive__time--yellow':
                         (data.color=='task'?'archive__time--blue':
                         (data.color=='experience'?'archive__time--green':
-                        'archive__time')))">
+                        (data.color=='jobhunting'?'archive__time--purple':
+                        'archive__time'))))">
             {{ data.timestamp.getFullYear() }}/{{ ('0'+(data.timestamp.getMonth()+1)).slice(-2) }}/{{ data.timestamp.getDate() }}
           </span>
           <p class="archive__p">{{ data.answers[0] }}</p>
@@ -2873,7 +2875,7 @@
     <div class="background" style="background-color: #E8F6FD;"></div>
     <div id="resultVue" class="result" v-cloak>
       <p class="result__theme">{{ theme }}</p>
-      <span :class="headerClass">
+      <span :class="headerClass" v-if="category.length">
         <span v-for="n in category">{{ n }}&emsp;</span>
       </span>
       <a v-show="recode" class="result__edit" @click="goEdit"><img  src="images/分析カテゴリ追加時_素材/edit_object.png" height="30px"></a>
@@ -2882,8 +2884,12 @@
         <p>{{ questions[index] }}</p>
         <p>{{ answers[index] }}</p>
       </div>
-      <textarea class="result__memo" v-model="memo" v-if="recode == false" placeholder="振り返りを入力"></textarea>
-      <div v-else class="result__memo--readonly">{{ memo }}</div>
+      <!-- memo -->
+      <div v-if="color !== 'jobhunting'">
+        <textarea class="result__memo" v-model="memo" v-if="recode == false" placeholder="振り返りを入力"></textarea>
+        <div v-else class="result__memo--readonly">{{ memo }}</div>
+      </div>
+      <!-- success -->
       <p style="font-size: 11pt; color: #767676; margin-top: 30px;">分析はうまくいった？</p>
       <select v-model="success" v-if="recode == false" class="result__success">
         <option>はい</option>
@@ -2971,7 +2977,7 @@
               document.getElementById('myNavigator').pushPage('help.html');
             },
             saveButtonClick: function() {
-              if (this.memo == "") {
+              if (this.memo == "" && this.color != 'jobhunting') {
                 ons.notification.toast("分析結果を振り返って今後に活かしましょう", {timeout: 1000, animation: "fall"});
                 return;
               }
@@ -3412,7 +3418,7 @@
               console.log("id:"+id);
               WellPoint(id, this.defo_memo.concat(this.memo));
               // TODO: データベース挿入
-              myNavigator.pushPage('index.html');
+              myNavigator.resetToPage('index.html');
             },
             closeModal: function() {
               this.showSavingModal = false;
@@ -3509,7 +3515,7 @@
             },
             savingButton: function() {
               // TODO: データベース
-              myNavigator.pushPage('index.html');
+              myNavigator.resetToPage('index.html');
             },
             closeModal: function() {
               this.showSavingModal = false;
@@ -3609,8 +3615,318 @@
             },
             savingButton: function() {
               // TODO: データベース
-              myNavigator.pushPage('index.html');
+              myNavigator.resetToPage('index.html');
             },
+          }
+        });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="jobhunting_analyze.html">
+  <ons-page>
+    <div class="page__background" style="background-color: #FFFFFF;"></div>
+    <div id="jobhunting_analyze" class="jobhunting_memo1">
+      <!-- header -->
+      <div class="jobhunting_memo1__header">
+        <span>▼</span>分析の結果を参考に考えてみよう
+        <img src="images/各種ボタン/break_ボタン.png" @click="openModal">
+      </div>
+      <!-- contents -->
+      <div class="jobhunting_memo1__5w">
+        <div class="jobhunting_memo1__5w-contents">
+          <p>あなたの強みはどこにありそう？</p>
+          <textarea v-model="contents[0]"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>あなたの強みはどんなことに活かせそう？</p>
+          <textarea v-model="contents[1]"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>この出来事の中で大切だった・大事にしていたことは?</p>
+          <textarea v-model="contents[2]"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>一番工夫したポイントは？</p>
+          <textarea v-model="contents[3]"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>この出来事で悪かったことは?</p>
+          <textarea v-model="contents[4]"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>今回の分析で考えたりていないことは?</p>
+          <textarea v-model="contents[5]"></textarea>
+        </div>
+      </div>
+      <!-- memo -->
+      <textarea placeholder="フリーメモ" class="jobhunting_memo1__memo"></textarea>
+      <!-- button -->
+      <div class="jobhunting_memo1__btn">
+        <button @click="nextButton">考えられた！</button>
+      </div>
+      <!-- result -->
+      <div :class="showResultClass ? 'jobhunting_memo1__show-result--on' : 'jobhunting_memo1__show-result--off'" @click="showResult">
+        <img src="images/2021_02_25_新素材/jobhunting_ポップアップ.png">
+        分析の結果
+      </div>
+      <div class="result" style="background-color: #E8F6FD;" :class="showResultClass ? 'jobhunting_memo1__result--on' : 'jobhunting_memo1__result--off'">
+        <p class="result__theme">{{ theme }}</p>
+        <div v-for="index in answers.length-1" class="items">
+          <p :class='tags[index-1] == "" ? defoClass : (tags[index-1] == "out" ? lightClass : blueClass)'>{{ index }}</p>
+          <p>{{ questions[index] }}</p>
+          <p>{{ answers[index] }}</p>
+        </div>
+      </div>
+      <!-- savingModal -->
+      <div class="overlay__save" v-show="showSavingModal" @click="closeModal"> <!-- modal -->
+        <p class="overlay__save--string">保存して中断しますか？</p>
+        <p>中断後はアーカイブから再開できます。</p>
+        <div>
+          <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
+          <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      var myNavigator = document.querySelector('#myNavigator');
+      ons.getScriptPage().onInit = function() {
+        var qAndA = new QAndA();
+        new Vue({
+          el: '#jobhunting_analyze',
+          data: {
+            contents: [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+            ],
+            showSavingModal: false,
+            theme: "ああああああ",
+            questions: [
+              "なぜ取り組んだの",
+              "あああ",
+              "いいい",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+            ],
+            answers: [
+              "あああ",
+              "いいい",
+              "ううう",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+            ],
+            tags: [
+              "in",
+              "in",
+              "out",
+              "in",
+              "in",
+              "out",
+              "in",
+              "in",
+              "out",
+              "in",
+              "in",
+              "out",
+            ],
+            defoClass: "defo",
+            lightClass: "lightBlue",
+            blueClass: "blue",
+            showResultClass: false,
+            
+          },
+          methods: {
+            openModal: function() {
+              this.showSavingModal = true;
+            },
+            closeModal: function() {
+              this.showSavingModal = false;
+            },
+            nextButton: function() {
+              // TODO: データベース
+              myNavigator.pushPage('jobhunting_gakuchika.html');
+            },
+            savingButton: function() {
+              // TODO: データベース
+              myNavigator.resetToPage('index.html');
+            },
+            showResult: function() {
+              this.showResultClass = !this.showResultClass;
+            }
+          }
+        });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="jobhunting_gakuchika.html">
+  <ons-page>
+    <div class="page__background" style="background-color: #FFFFFF;"></div>
+    <div id="jobhunting_gakuchika" class="jobhunting_memo1">
+      <!-- header -->
+      <div class="jobhunting_memo1__header">
+        <span>▼</span>ガクチカを書いてみよう
+        <img src="images/各種ボタン/break_ボタン.png" @click="openModal">
+      </div>
+      <!-- contents -->
+      <div class="jobhunting_memo1__5w">
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>結論 ＜どんなことをしたのか＞</p>
+          <textarea v-model="contents[0]"></textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ contents[0].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>背景 ＜どんな状況だったのか＞</p>
+          <textarea v-model="contents[1]"></textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ contents[1].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>課題 ＜何を解決すべきと捉えたのか＞</p>
+          <textarea v-model="contents[2]"></textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ contents[2].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>解決策 ＜課題をどのように工夫して解決したのか＞</p>
+          <textarea v-model="contents[3]"></textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ contents[3].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>まとめ ＜出来事を通して、自分はどんな人と言えるか＞</p>
+          <textarea v-model="contents[4]"></textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ contents[4].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-total">TOTAL[{{ contents[0].length + contents[1].length + contents[2].length + contents[3].length + contents[4].length }}]</div>
+      </div>
+      <!-- button -->
+      <div class="jobhunting_memo1__btn">
+        <button @click="nextButton">完了</button>
+      </div>
+      <!-- TODO:出来事整理とか全部載せる -->
+      <!-- result -->
+      <div :class="showResultClass ? 'jobhunting_memo1__show-result--on' : 'jobhunting_memo1__show-result--off'" @click="showResult">
+        <img src="images/2021_02_25_新素材/jobhunting_ポップアップ.png">
+        出来事整理｜分析｜考察
+      </div>
+      <div class="result" style="background-color: #E8F6FD;" :class="showResultClass ? 'jobhunting_memo1__result--on' : 'jobhunting_memo1__result--off'">
+        <p class="result__theme">{{ theme }}</p>
+        <div v-for="index in answers.length-1" class="items">
+          <p :class='tags[index-1] == "" ? defoClass : (tags[index-1] == "out" ? lightClass : blueClass)'>{{ index }}</p>
+          <p>{{ questions[index] }}</p>
+          <p>{{ answers[index] }}</p>
+        </div>
+      </div>
+      <!-- savingModal -->
+      <div class="overlay__save" v-show="showSavingModal" @click="closeModal"> <!-- modal -->
+        <p class="overlay__save--string">保存して中断しますか？</p>
+        <p>中断後はアーカイブから再開できます。</p>
+        <div>
+          <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
+          <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      var myNavigator = document.querySelector('#myNavigator');
+      ons.getScriptPage().onInit = function() {
+        var qAndA = new QAndA();
+        new Vue({
+          el: '#jobhunting_gakuchika',
+          data: {
+            contents: [
+              "",
+              "",
+              "",
+              "",
+              "",
+            ],
+            showSavingModal: false,
+            theme: "ああああああ",
+            questions: [
+              "なぜ取り組んだの",
+              "あああ",
+              "いいい",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+            ],
+            answers: [
+              "あああ",
+              "いいい",
+              "ううう",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+              "aaa",
+            ],
+            tags: [
+              "in",
+              "in",
+              "out",
+              "in",
+              "in",
+              "out",
+              "in",
+              "in",
+              "out",
+              "in",
+              "in",
+              "out",
+            ],
+            defoClass: "defo",
+            lightClass: "lightBlue",
+            blueClass: "blue",
+            showResultClass: false,
+            
+          },
+          methods: {
+            openModal: function() {
+              this.showSavingModal = true;
+            },
+            closeModal: function() {
+              this.showSavingModal = false;
+            },
+            nextButton: function() {
+              // TODO: データベース
+              myNavigator.resetToPage('index.html');
+            },
+            savingButton: function() {
+              // TODO: データベース
+              myNavigator.resetToPage('index.html');
+            },
+            showResult: function() {
+              this.showResultClass = !this.showResultClass;
+            }
           }
         });
       }
