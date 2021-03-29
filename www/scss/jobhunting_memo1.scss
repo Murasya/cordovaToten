@@ -98,6 +98,10 @@
         background-color: transparent;
         width: 85vw;
         font-size: 1em;
+
+        &:read-only {
+          color: #585858;
+        }
       }
     }
     &-gakuchika {
@@ -167,42 +171,43 @@
     position: relative;
     left: 73vw;
   }
+  %show-result {
+    text-align: center;
+    font-weight: bold;
+    color: #818181;
+    padding: 1em 0 1em;
+    border-top: solid 1px #00000029;
+    border-radius: 10px 10px 0 0;
+    position: fixed;
+    width: 100vw;
+    background-color: #FFF;
+    z-index: 100;
+    font-size: 1em;
+  }
   &__show-result {
     &--off {
-      text-align: center;
-      font-weight: bold;
-      color: #818181;
-      padding: 1em 0 2em;
-      border-top: solid 1px #00000029;
-      border-radius: 10px 10px 0 0;
-      position: fixed;
+      @extend %show-result;
       bottom: 0;
-      width: 100vw;
-      background-color: #FFF;
-      z-index: 100;
       img {
-        width: 5vw;
+        width: 8vw;
         display: block;
-        margin: 0 auto;
+        margin: 0 auto 1em;
+      }
+      button {
+        font-size: 1em;
       }
     }
     &--on {
-      text-align: center;
-      font-weight: bold;
-      color: #818181;
-      padding: 1em 0 2em;
-      border-top: solid 1px #00000029;
-      border-radius: 10px 10px 0 0;
-      position: fixed;
+      @extend %show-result;
       top: calc(5vh + 1em);
-      width: 100vw;
-      background-color: #FFF;
-      z-index: 100;
       img {
-        width: 5vw;
+        width: 8vw;
         display: block;
-        margin: 0 auto;
+        margin: 0 auto 1em;
         transform: rotate(180deg);
+      }
+      button {
+        font-size: 1em;
       }
     }
   }

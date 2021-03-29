@@ -51,6 +51,10 @@
   <link href="js/slick.css" rel="stylesheet" type="text/css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script type="text/javascript" src="js/slick.min.js"></script>
+
+  <!-- swiper -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 </head>
 <body>
   <ons-navigator swapable id="myNavigator" page="jobhunting_gakuchika.html"></ons-navigator>
@@ -3797,17 +3801,17 @@
         </div>
         <div class="jobhunting_memo1__5w-gakuchika">
           <p>背景 ＜どんな状況だったのか＞</p>
-          <textarea v-model="contents[1]"></textarea>
+          <textarea v-model="contents[1]" placeholder="人数/役職/目標/期間などについて説明しよう"></textarea>
           <div class="jobhunting_memo1__5w-number">[{{ contents[1].length }}]</div>
         </div>
         <div class="jobhunting_memo1__5w-gakuchika">
           <p>課題 ＜何を解決すべきと捉えたのか＞</p>
-          <textarea v-model="contents[2]"></textarea>
+          <textarea v-model="contents[2]" placeholder="困難だったこと/問題だったことや、そう考えた理由を書こう。"></textarea>
           <div class="jobhunting_memo1__5w-number">[{{ contents[2].length }}]</div>
         </div>
         <div class="jobhunting_memo1__5w-gakuchika">
           <p>解決策 ＜課題をどのように工夫して解決したのか＞</p>
-          <textarea v-model="contents[3]"></textarea>
+          <textarea v-model="contents[3]" placeholder="↑を解決するために行った取り組みや、なぜそうしたのかを書こう。"></textarea>
           <div class="jobhunting_memo1__5w-number">[{{ contents[3].length }}]</div>
         </div>
         <div class="jobhunting_memo1__5w-gakuchika">
@@ -3821,13 +3825,42 @@
       <div class="jobhunting_memo1__btn">
         <button @click="nextButton">完了</button>
       </div>
-      <!-- TODO:出来事整理とか全部載せる -->
       <!-- result -->
-      <div :class="showResultClass ? 'jobhunting_memo1__show-result--on' : 'jobhunting_memo1__show-result--off'" @click="showResult">
-        <img src="images/2021_02_25_新素材/jobhunting_ポップアップ.png">
-        出来事整理｜分析｜考察
+      <div :class="showResultClass ? 'jobhunting_memo1__show-result--on' : 'jobhunting_memo1__show-result--off'">
+        <img @click="showResult" src="images/2021_02_25_新素材/jobhunting_ポップアップ.png">
+        <button @click="showContent(0)">出来事整理</button>｜<button @click="showContent(1)">分析</button>｜<button @click="showContent(2)">考察</button>
       </div>
-      <div class="result" style="background-color: #E8F6FD;" :class="showResultClass ? 'jobhunting_memo1__result--on' : 'jobhunting_memo1__result--off'">
+      
+      <!-- 出来事整理 -->
+      <div class="jobhunting_memo1" :class="contentClass0 ? 'jobhunting_memo1__result--on' : 'jobhunting_memo1__result--off'" style="background-color: #FFF;">
+        <div class="jobhunting_memo1__5w-title">
+          {{ theme }}
+        </div>
+        <div class="jobhunting_memo1__5w">
+          <div class="jobhunting_memo1__5w-contents">
+            <p>いつからいつごろの出来事？</p>
+            <textarea v-model="when" readonly></textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>どこで？</p>
+            <textarea v-model="where" readonly></textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>だれと？(自分の立場も合わせて書こう！)</p>
+            <textarea v-model="who" readonly></textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>何を？</p>
+            <textarea v-model="what" readonly></textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>どのように？</p>
+            <textarea v-model="how" readonly></textarea>
+          </div>
+        </div>
+      </div>
+      <!-- 分析 -->
+      <div class="result" style="background-color: #E8F6FD;" :class="contentClass1 ? 'jobhunting_memo1__result--on' : 'jobhunting_memo1__result--off'">
         <p class="result__theme">{{ theme }}</p>
         <div v-for="index in answers.length-1" class="items">
           <p :class='tags[index-1] == "" ? defoClass : (tags[index-1] == "out" ? lightClass : blueClass)'>{{ index }}</p>
@@ -3835,8 +3868,41 @@
           <p>{{ answers[index] }}</p>
         </div>
       </div>
+      <!-- 考察 -->
+      <div class="jobhunting_memo1" :class="contentClass2 ? 'jobhunting_memo1__result--on' : 'jobhunting_memo1__result--off'" style="background-color: #FFF;">
+        <div class="jobhunting_memo1__5w-title">
+          {{ theme }}
+        </div>
+        <div class="jobhunting_memo1__5w">
+          <div class="jobhunting_memo1__5w-contents">
+            <p>あなたの強みはどこにありそう？</p>
+            <textarea v-model="contents2[0]" readonly></textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>あなたの強みはどんなことに活かせそう？</p>
+            <textarea v-model="contents2[1]" readonly></textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>この出来事の中で大切だった・大事にしていたことは?</p>
+            <textarea v-model="contents2[2]" readonly></textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>一番工夫したポイントは？</p>
+            <textarea v-model="contents2[3]" readonly></textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>この出来事で悪かったことは?</p>
+            <textarea v-model="contents2[4]" readonly></textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>今回の分析で考えたりていないことは?</p>
+            <textarea v-model="contents2[5]" readonly></textarea>
+          </div>
+        </div>
+      </div>
+
       <!-- savingModal -->
-      <div class="overlay__save" v-show="showSavingModal" @click="closeModal"> <!-- modal -->
+      <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
         <p class="overlay__save--string">保存して中断しますか？</p>
         <p>中断後はアーカイブから再開できます。</p>
         <div>
@@ -3847,13 +3913,14 @@
     </div>
     <script>
       var myNavigator = document.querySelector('#myNavigator');
+      const mainTheme = "ああああああああ";
       ons.getScriptPage().onInit = function() {
         var qAndA = new QAndA();
         new Vue({
           el: '#jobhunting_gakuchika',
           data: {
             contents: [
-              "",
+              mainTheme + "に取り組みました。",
               "",
               "",
               "",
@@ -3907,7 +3974,22 @@
             lightClass: "lightBlue",
             blueClass: "blue",
             showResultClass: false,
-            
+            when: "あああ",
+            where: "いいい",
+            who: "ううう",
+            what: "えええ",
+            how: "おおお",
+            contentClass0: false,
+            contentClass1: false,
+            contentClass2: false,
+            contents2: [
+              "あああ",
+              "いいい",
+              "ううう",
+              "えええ",
+              "おおお",
+              "かかか",
+            ]
           },
           methods: {
             openModal: function() {
@@ -3925,7 +4007,40 @@
               myNavigator.resetToPage('index.html');
             },
             showResult: function() {
-              this.showResultClass = !this.showResultClass;
+              if(this.showResultClass){
+                this.showResultClass = false;
+                this.contentClass0 = false;
+                this.contentClass1 = false;
+                this.contentClass2 = false;
+              } else {
+                this.showResultClass = true;
+                this.contentClass0 = false;
+                this.contentClass1 = true;
+                this.contentClass2 = false;
+              }
+            },
+            showContent: function(num) {
+              this.showResultClass = true;
+              switch(num) {
+                case 0:
+                  console.log("0");
+                  this.contentClass0 = true;
+                  this.contentClass1 = false;
+                  this.contentClass2 = false;
+                  break;
+                case 1:
+                console.log("1");
+                  this.contentClass0 = false;
+                  this.contentClass1 = true;
+                  this.contentClass2 = false;
+                  break;
+                case 2:
+                console.log("2");
+                  this.contentClass0 = false;
+                  this.contentClass1 = false;
+                  this.contentClass2 = true;
+                  break;
+              }
             }
           }
         });

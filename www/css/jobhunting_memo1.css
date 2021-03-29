@@ -97,6 +97,9 @@
   width: 85vw;
   font-size: 1em;
 }
+.jobhunting_memo1__5w-contents textarea:read-only {
+  color: #585858;
+}
 .jobhunting_memo1__5w-gakuchika {
   background-color: #E8F6FD;
   padding: 1vw;
@@ -162,42 +165,41 @@
   position: relative;
   left: 73vw;
 }
-.jobhunting_memo1__show-result--off {
+.jobhunting_memo1 .jobhunting_memo1__show-result--off, .jobhunting_memo1 .jobhunting_memo1__show-result--on {
   text-align: center;
   font-weight: bold;
   color: #818181;
-  padding: 1em 0 2em;
+  padding: 1em 0 1em;
   border-top: solid 1px #00000029;
   border-radius: 10px 10px 0 0;
   position: fixed;
-  bottom: 0;
   width: 100vw;
   background-color: #FFF;
   z-index: 100;
+  font-size: 1em;
+}
+.jobhunting_memo1__show-result--off {
+  bottom: 0;
 }
 .jobhunting_memo1__show-result--off img {
-  width: 5vw;
+  width: 8vw;
   display: block;
-  margin: 0 auto;
+  margin: 0 auto 1em;
+}
+.jobhunting_memo1__show-result--off button {
+  font-size: 1em;
 }
 .jobhunting_memo1__show-result--on {
-  text-align: center;
-  font-weight: bold;
-  color: #818181;
-  padding: 1em 0 2em;
-  border-top: solid 1px #00000029;
-  border-radius: 10px 10px 0 0;
-  position: fixed;
   top: calc(5vh + 1em);
-  width: 100vw;
-  background-color: #FFF;
-  z-index: 100;
 }
 .jobhunting_memo1__show-result--on img {
-  width: 5vw;
+  width: 8vw;
   display: block;
-  margin: 0 auto;
+  margin: 0 auto 1em;
   transform: rotate(180deg);
+}
+.jobhunting_memo1__show-result--on button {
+  font-size: 1em;
 }
 .jobhunting_memo1__result--on {
   position: fixed;
