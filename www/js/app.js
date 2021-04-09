@@ -67,7 +67,6 @@ function QAndA(
   this.id = id;
   this.color = color;
 }
-
 function User(
   uid="", // String
   email="", // String
@@ -83,42 +82,215 @@ function User(
   this.occupation = occupation;
   this.isResearchAccept = isResearchAccept;
 }
-
 function WellPoint(
+  id="",
   analyzeid="", // String
-  contents={}, // {title, content1, content2, content3}
+  contents=[], // {header, content1, content2, content3}の配列
+  useNumber=null, // Number
 ) {
+  this.id = id;
+  this.analyzeid = analyzeid;
+  this.contents = contents;
+  this.useNumber = useNumber;
+}
+function MyEvent(
+  id="",
+  analyzeid="", // String
+  when="",
+  where="",
+  who="",
+  what="",
+  how="",
+) {
+  this.id = id;
+  this.analyzeid = analyzeid;
+  this.when = when;
+  this.where = where;
+  this.who = who;
+  this.what = what;
+  this.how = how;
+}
+function Consideration(
+  id="",
+  analyzeid="", // String
+  contents=[], // Array(String)
+) {
+  this.id = id;
+  this.analyzeid = analyzeid;
+  this.contents = contents;
+}
+function Gakuchika(
+  id="",
+  analyzeid="", // String
+  contents=[], // Array(String)
+) {
+  this.id = id;
   this.analyzeid = analyzeid;
   this.contents = contents;
 }
 
-function setNewWellPoint(wellPoint) {
+function setNewGakuchika(gakuchika) {
   var id = "";
-  db.collection("wellPoint").add({
-    analyzeid: wellPoint.analyzeid,
-    contents: wellPoint.contents,
+  db.collection("gakuchika").add({
+    analyzeid: gakuchika.analyzeid,
+    contents: gakuchika.contents,
   }).then(function(docRef) {
     console.log('Document written with ID: ', docRef.id);
     id = docRef.id;
-    localStorage.setItem("documentID", id);
   }).catch(function(error) {
     console.log('Error adding document: ', error);
     id = error;
   });
   return id;
 }
-
-function updateWellPoint(wellPoint, func) {
-  db.collection("questionAndAnswer").doc(wellPoint.id).set({
-    analyzeid: wellPoint.analyzeid,
-    contents: wellPoint.contents,
+function updateGakuchika(gakuchika, func=function(){}) {
+  db.collection("consideration").doc(gakuchika.id).set({
+    analyzeid: gakuchika.analyzeid,
+    contents: gakuchika.contents,
   }).then(function() {
     console.log("Document successfully updated!");
     func();
   });
 }
-
-function setNewData(qAndA) {
+function setNewConsideration(consideration) {
+  var id = "";
+  db.collection("consideration").add({
+    analyzeid: consideration.analyzeid,
+    contents: consideration.contents,
+  }).then(function(docRef) {
+    console.log('Document written with ID: ', docRef.id);
+    id = docRef.id;
+  }).catch(function(error) {
+    console.log('Error adding document: ', error);
+    id = error;
+  });
+  return id;
+}
+function updateConsideration(consideration, func=function(){}) {
+  db.collection("consideration").doc(consideration.id).set({
+    analyzeid: consideration.analyzeid,
+    contents: consideration.contents,
+  }).then(function() {
+    console.log("Document successfully updated!");
+    func();
+  });
+}
+function getConsiderationFromAnalyzeid(analyzeid) {
+  var array = [new Consideration()];
+  db.collection("consideration")
+    .where("analyzeid", "==", analyzeid)
+    .get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        var consideration = new Consideration(
+          doc.id,
+          doc.data().analyzeid,
+          doc.data().contents,
+        );
+        array.splice(0, 1 ,consideration);
+      });
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("errorCode: ", errorCode);
+      console.log("errorMessage: ", errorMessage);
+   	});
+  return array;
+}
+function setNewMyEvent(event) {
+  var id = "";
+  db.collection("event").add({
+    analyzeid: event.analyzeid,
+    when: event.when,
+    where: event.where,
+    who: event.who,
+    what: event.what,
+    how: event.how,
+  }).then(function(docRef) {
+    console.log('Document written with ID: ', docRef.id);
+    id = docRef.id;
+  }).catch(function(error) {
+    console.log('Error adding document: ', error);
+    id = error;
+  });
+  return id;
+}
+function updateMyEvent(event, func=function(){}) {
+  db.collection("event").doc(event.id).set({
+    analyzeid: event.analyzeid,
+    when: event.when,
+    where: event.where,
+    who: event.who,
+    what: event.what,
+    how: event.how,
+  }).then(function() {
+    console.log("Document successfully updated!");
+    func();
+  });
+}
+function getMyEventFromAnalyzeid(analyzeid, func=function(){}) {
+  var array = [new MyEvent()];
+  db.collection("event")
+    .where("analyzeid", "==", analyzeid)
+    .get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        var event = new MyEvent(
+          doc.id,
+          doc.data().analyzeid,
+          doc.data().when,
+          doc.data().where,
+          doc.data().who,
+          doc.data().what,
+          doc.data().how,
+        );
+        array.splice(0, 1, event);
+        func(event);
+      });
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("errorCode: ", errorCode);
+      console.log("errorMessage: ", errorMessage);
+   	});
+  return array;
+}
+function setNewWellPoint(wellPoint, func=function(){}) {
+  var id = "";
+  if(!wellPoint.analyzeid) {
+    var qa = new QAndA();
+    qa.color = "jobhunting";
+    qa.uid = firebase.auth().currentUser.uid;
+    setNewData(qa, function(id){
+      qa.id = id;
+      wellPoint.analyzeid = qa.id;
+    });
+  }
+  db.collection("wellPoint").add({
+    analyzeid: wellPoint.analyzeid,
+    contents: wellPoint.contents,
+    useNumber: wellPoint.useNumber,
+  }).then(function(docRef) {
+    console.log('Document written with ID: ', docRef.id);
+    id = docRef.id;
+    func(id);
+  }).catch(function(error) {
+    console.log('Error adding document: ', error);
+    id = error;
+  });
+  return id;
+}
+function updateWellPoint(wellPoint, func=function(){}) {
+  db.collection("wellPoint").doc(wellPoint.id).set({
+    analyzeid: wellPoint.analyzeid,
+    contents: wellPoint.contents,
+    useNumber: wellPoint.useNumber,
+  }).then(function() {
+    console.log("Document successfully updated!");
+    func();
+  });
+}
+function setNewData(qAndA, func=function(){}) {
   var id = "";
   db.collection("questionAndAnswer").add({
     questions: qAndA.questions,
@@ -135,6 +307,7 @@ function setNewData(qAndA) {
   }).then(function(docRef) {
     console.log('Document written with ID: ', docRef.id);
     id = docRef.id;
+    func(id);
     localStorage.setItem("documentID", id);
   }).catch(function(error) {
     console.log('Error adding document: ', error);
@@ -142,8 +315,6 @@ function setNewData(qAndA) {
   });
   return id;
 }
-
-// エラーハンドリングの追加（動くかはわからん...）
 function getQuestionAndAnswer(limit = 100) {
   var user = firebase.auth().currentUser;
   var array = [];
@@ -178,10 +349,43 @@ function getQuestionAndAnswer(limit = 100) {
       console.log("errorCode: ", errorCode);
       console.log("errorMessage: ", errorMessage);
    	});
-  console.log(array);
   return array;
 }
-
+function getQuestionAndAnswerFromId(id, func=function(){}) {
+  var array = [new QAndA()];
+  db.collection("questionAndAnswer")
+    .doc(id)
+    .get().then((doc) => {
+      console.log(doc);
+      var qAndA = new QAndA(
+        doc.data().questions,
+        doc.data().answers,
+        doc.data().tags,
+        doc.data().uid,
+        doc.data().public,
+        doc.data().memo,
+        doc.data().timestamp.toDate(),
+        doc.data().complete,
+        doc.data().category,
+        doc.data().success,
+        doc.id,
+        doc.data().color,
+      );
+      array.splice(0, 1, qAndA);
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("errorCode: ", errorCode);
+      console.log("errorMessage: ", errorMessage);
+   	});
+    console.log("aaa");
+    return array;
+    // if(typeof qAndA !== "undefined") {
+    //   console.log("ccc");
+    //   return qAndA;
+    // }
+}
 function updateData(qAndA, func = function() {}) {
   db.collection("questionAndAnswer").doc(qAndA.id).set({
     questions: qAndA.questions,
@@ -199,6 +403,71 @@ function updateData(qAndA, func = function() {}) {
     console.log("Document successfully updated!");
     func();
   });
+}
+function getGakuchikaAll(analyzeid, func = function() {}) {
+  var qAndA, event, consideration;
+  db.collection("questionAndAnswer")
+    .doc(id).get().then((doc) => {
+      qAndA = new QAndA(
+        doc.data().questions,
+        doc.data().answers,
+        doc.data().tags,
+        doc.data().uid,
+        doc.data().public,
+        doc.data().memo,
+        doc.data().timestamp.toDate(),
+        doc.data().complete,
+        doc.data().category,
+        doc.data().success,
+        doc.id,
+        doc.data().color,
+      );
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("errorCode: ", errorCode);
+      console.log("errorMessage: ", errorMessage);
+   	});
+  db.collection("event")
+    .where("analyzeid", "==", analyzeid)
+    .get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        event = new MyEvent(
+          doc.id,
+          doc.data().analyzeid,
+          doc.data().when,
+          doc.data().where,
+          doc.data().who,
+          doc.data().what,
+          doc.data().how,
+        );
+      });
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("errorCode: ", errorCode);
+      console.log("errorMessage: ", errorMessage);
+    });
+  db.collection("consideration")
+    .where("analyzeid", "==", analyzeid)
+    .get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        consideration = new Consideration(
+          doc.id,
+          doc.data().analyzeid,
+          doc.data().contents,
+        );
+      });
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("errorCode: ", errorCode);
+      console.log("errorMessage: ", errorMessage);
+   	});
+  func(qAndA, event, consideration);
 }
 
 function getIncomplete() {
@@ -267,12 +536,6 @@ function setNewUser(user) {
     console.log('Error adding document: ', error);
   });
 }
-
-var uniqueId = function(digits) {
-  var strong = typeof digits !== 'undefined' ? digits : 1000;
-  return Date.now().toString(16) + Math.floor(strong * Math.random()).toString(16);
-};
-
 
 Vue.component("skip-modal", {
   template: `

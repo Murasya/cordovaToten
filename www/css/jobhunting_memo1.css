@@ -9,6 +9,7 @@
   position: fixed;
   width: 90vw;
   top: 0;
+  z-index: 100;
 }
 .jobhunting_memo1__header span {
   color: #ED6A4C;
@@ -16,6 +17,9 @@
 .jobhunting_memo1__header img {
   height: 1.5em;
   margin-left: auto;
+}
+.jobhunting_memo1__header--hide {
+  height: calc(5vh + 1.5em);
 }
 .jobhunting_memo1__folder {
   margin: 1vh 5vw;

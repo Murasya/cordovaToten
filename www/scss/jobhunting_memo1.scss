@@ -10,6 +10,7 @@
     position: fixed;
     width: 90vw;
     top: 0;
+    z-index: 100;
     span {
       color: #ED6A4C;
     }
@@ -17,10 +18,12 @@
       height: 1.5em;
       margin-left: auto;
     }
+    &--hide {
+      height: calc(5vh + 1.5em);
+    }
   }
   &__folder {
     margin: 1vh 5vw;
-
     &--header1 {
       background-color: #E8F6FD;
       padding: 5px 5vw;

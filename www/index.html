@@ -53,11 +53,11 @@
   <script type="text/javascript" src="js/slick.min.js"></script>
 
   <!-- swiper -->
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <!-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> -->
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="jobhunting_gakuchika.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
 </body>
 </html>
 
@@ -1035,8 +1035,8 @@
         出来事整理となぜなぜ分析の結果を参考に、ガクチカを書いていきます。フォーマットに当てはめるだけなので、初めてでも安心です。
       </div>
       <div class="cat-detail__triangle"></div>
-      <div class="cat-detail__str1">自己分析に基づいたガクチカの土台が完成!</div>
-      <div class="cat-detail__str2">さらなる自己分析を重ねたり、表現を磨いたりして、<br>ハイレベルなガクチカを目指しましょう！</div>
+      <div class="cat-detail__str3">自己分析に基づいたガクチカの土台が完成!</div>
+      <div class="cat-detail__str2">さらなる自己分析を重ねたり、表現を磨いたりして、ハイレベルなガクチカを目指しましょう！</div>
     </div>
     <script>
       ons.getScriptPage().onInit = function() {
@@ -2204,10 +2204,13 @@
               this.data = data;
             },
             onYes: function() {
-              //deleteData(this.data.id);
+              var t = this;
               db.collection("questionAndAnswer").doc(this.data.id).delete().then(function() {
                 console.log("Document successfully deleted!");
-                vm.onSavingButton();
+                if(t.tabActive)
+                  vm.onArchiveButton();
+                else
+                  vm.onSavingButton();
               }).catch(function(error) {
                 console.log("Error removing document: ", error);
               });
@@ -2993,7 +2996,15 @@
               qAndA.success = this.success;
               qAndA.complete = true;
               updateData(qAndA);
-              myNavigator.resetToPage('index.html');
+              if(qAndA.color == "jobhunting") {
+                myNavigator.pushPage('jobhunting_analyze.html', {
+                  data: {
+                    qAndA: qAndA,
+                  },
+                });
+              } else {
+                myNavigator.resetToPage('index.html');
+              }
               sInt();
             },
             goEdit: function() {
@@ -3333,6 +3344,7 @@
         <span>▼</span>時期ごとに頑張ったことを記入しよう
         <img src="images/各種ボタン/break_ボタン.png" @click="openModal">
       </div>
+      <div class="jobhunting_memo1__header--hide"></div>
       <!-- 大学１〜４ -->
       <div class="jobhunting_memo1__folder" v-for="item in defo_memo" :key="item.header">
         <div class="jobhunting_memo1__folder--header1"><input type="text" v-model="item.header" readonly></div>
@@ -3411,10 +3423,19 @@
               this.showSavingModal = true;
             },
             nextButton: function() {
-              var id = uniqueId();
-              console.log("id:"+id);
-              WellPoint(id, this.defo_memo.concat(this.memo));
-              myNavigator.pushPage('jobhunting_memo3.html');
+              const t = this;
+              var wp = new WellPoint();
+              console.log(t.defo_memo.concat(t.memo));
+              wp.contents = t.defo_memo.concat(t.memo);
+              setNewWellPoint(wp, function(id) {
+                wp.id = id;
+                myNavigator.pushPage('jobhunting_memo3.html', {
+                  data: {
+                    wp: wp,
+                  }
+                });
+              });
+              
               // TODO: データベース挿入
             },
             savingButton: function() {
@@ -3442,21 +3463,22 @@
         <span>▼</span>一番思い入れのある出来事を選ぼう
         <img src="images/各種ボタン/break_ボタン.png" @click="openModal">
       </div>
-      <div class="jobhunting_memo1__folder" v-for="item in memo" :key="item.header">
+      <div class="jobhunting_memo1__header--hide"></div>
+      <div class="jobhunting_memo1__folder" v-for="(item, index) in memo" :key="item.header">
         <div class="jobhunting_memo1__folder--header1"><input type="text" v-model="item.header" readonly></div>
         <div class="jobhunting_memo1__folder--content">
           <div v-if="item.content1 != ''">
-            <input type="radio" :id="item.content1" :value="item.content1" v-model="picked">
+            <input type="radio" :id="item.content1" :value="index*3" v-model="picked">
             <label :for="item.content1">{{ item.content1 }}</label>
             <hr>
           </div>
           <div v-if="item.content2 != ''">
-            <input type="radio" :id="item.content2" :value="item.content2" v-model="picked">
+            <input type="radio" :id="item.content2" :value="index*3 + 1" v-model="picked">
             <label :for="item.content2">{{ item.content2 }}</label>
             <hr>
           </div>
           <div v-if="item.content3 != ''">
-            <input type="radio" :id="item.content3" :value="item.content3" v-model="picked">
+            <input type="radio" :id="item.content3" :value="index*3 + 2" v-model="picked">
             <label :for="item.content3">{{ item.content3 }}</label>
             <hr>
           </div>
@@ -3477,37 +3499,14 @@
     <script>
       var myNavigator = document.querySelector('#myNavigator');
       ons.getScriptPage().onInit = function() {
+        var wp = myNavigator.topPage.data.wp;
+        console.log(wp);
         new Vue({
           el: '#jobhunting_memo3',
           data: {
             showSavingModal: false,
             picked: "",
-            memo: [
-              {
-                header: "大学1年生",
-                content1: "あ",
-                content2: "",
-                content3: "",
-              },
-              {
-                header: "大学2年生",
-                content1: "え",
-                content2: "お",
-                content3: "",
-              },
-              {
-                header: "大学3年生",
-                content1: "き",
-                content2: "く",
-                content3: "け",
-              },
-              {
-                header: "大学4年生",
-                content1: "こ",
-                content2: "さ",
-                content3: "し",
-              }
-            ],
+            memo: wp.contents,
           },
           methods: {
             openModal: function() {
@@ -3515,7 +3514,31 @@
             },
             nextButton: function() {
               // TODO: データベース
-              myNavigator.pushPage('jobhunting_memo4.html');
+              if(this.picked == null) {
+                ons.notification.toast('どれか一つを選択してください', {animation: 'fall', timeout: 1000});
+                return;
+              }
+              wp.useNumber = this.picked;
+              updateWellPoint(wp);
+              var theme = "";
+              const num = wp.useNumber / 3;
+              switch(wp.useNumber % 3) {
+                case 0:
+                  theme = wp.contents[num].content1;
+                  break;
+                case 1:
+                  theme = wp.contents[num].content2;
+                  break;
+                case 2:
+                  theme = wp.contents[num].content3;
+                  break;
+              }
+              myNavigator.pushPage('jobhunting_memo4.html', {
+                data: {
+                  theme: theme,
+                  analyzeid: wp.analyzeid,
+                }
+              });
             },
             savingButton: function() {
               // TODO: データベース
@@ -3540,6 +3563,7 @@
         <span>▼</span>選んだ出来事について整理しよう
         <img src="images/各種ボタン/break_ボタン.png" @click="openModal">
       </div>
+      <div class="jobhunting_memo1__header--hide"></div>
       <!-- title -->
       <div class="jobhunting_memo1__5w-title">
         {{ title }}
@@ -3583,11 +3607,12 @@
     <script>
       var myNavigator = document.querySelector('#myNavigator');
       ons.getScriptPage().onInit = function() {
-        var qAndA = new QAndA();
+        var theme = myNavigator.topPage.data.theme;
+        var analyzeid = myNavigator.topPage.data.analyzeid;
         new Vue({
           el: '#jobhunting_memo4',
           data: {
-            title: "あああああああ",
+            title: theme,
             when: "",
             where: "",
             who: "",
@@ -3603,13 +3628,22 @@
               this.showSavingModal = false;
             },
             nextButton: function() {
-              // TODO: データベース
+              var event = new MyEvent();
+              event.analyzeid = analyzeid;
+              event.when = this.when;
+              event.where = this.where;
+              event.who = this.who;
+              event.what = this.what;
+              event.how = this.how;
+              event.id = setNewMyEvent(event);
+              
+              var qAndA = new QAndA();
               qAndA.questions.push("ガクチカ");
               qAndA.answers.push(this.title);
               qAndA.uid = firebase.auth().currentUser.uid;
               qAndA.category = [];
               qAndA.color = "jobhunting";
-              qAndA.id = setNewData(qAndA);
+              qAndA.id = analyzeid;
               localStorage.setItem("tutorial_finished", "true");
               myNavigator.replacePage('start.html', {
                 data: {
@@ -3665,7 +3699,7 @@
         </div>
       </div>
       <!-- memo -->
-      <textarea placeholder="フリーメモ" class="jobhunting_memo1__memo"></textarea>
+      <textarea placeholder="フリーメモ" class="jobhunting_memo1__memo" v-model="memo"></textarea>
       <!-- button -->
       <div class="jobhunting_memo1__btn">
         <button @click="nextButton">考えられた！</button>
@@ -3696,7 +3730,9 @@
     <script>
       var myNavigator = document.querySelector('#myNavigator');
       ons.getScriptPage().onInit = function() {
-        var qAndA = new QAndA();
+        var consideration = new Consideration();
+        var qAndA = myNavigator.topPage.data.qAndA;
+        console.log(qAndA);
         new Vue({
           el: '#jobhunting_analyze',
           data: {
@@ -3709,54 +3745,15 @@
               "",
             ],
             showSavingModal: false,
-            theme: "ああああああ",
-            questions: [
-              "なぜ取り組んだの",
-              "あああ",
-              "いいい",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-            ],
-            answers: [
-              "あああ",
-              "いいい",
-              "ううう",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-            ],
-            tags: [
-              "in",
-              "in",
-              "out",
-              "in",
-              "in",
-              "out",
-              "in",
-              "in",
-              "out",
-              "in",
-              "in",
-              "out",
-            ],
+            theme: qAndA.answers[0],
+            questions: qAndA.questions,
+            answers: qAndA.answers,
+            tags: qAndA.tags,
+            memo: "",
             defoClass: "defo",
             lightClass: "lightBlue",
             blueClass: "blue",
             showResultClass: false,
-            
           },
           methods: {
             openModal: function() {
@@ -3767,7 +3764,16 @@
             },
             nextButton: function() {
               // TODO: データベース
-              myNavigator.pushPage('jobhunting_gakuchika.html');
+              consideration.analyzeid = qAndA.id;
+              consideration.contents = this.contents;
+              consideration.id = setNewConsideration(consideration);
+              qAndA.memo = this.memo;
+              updateData(qAndA);
+              myNavigator.pushPage('jobhunting_gakuchika.html', {
+                data: {
+                  id: qAndA.id,
+                }
+              });
             },
             savingButton: function() {
               // TODO: データベース
@@ -3834,69 +3840,69 @@
       <!-- 出来事整理 -->
       <div class="jobhunting_memo1" :class="contentClass0 ? 'jobhunting_memo1__result--on' : 'jobhunting_memo1__result--off'" style="background-color: #FFF;">
         <div class="jobhunting_memo1__5w-title">
-          {{ theme }}
+          {{ qAndA[0].answers[0] }}
         </div>
         <div class="jobhunting_memo1__5w">
           <div class="jobhunting_memo1__5w-contents">
             <p>いつからいつごろの出来事？</p>
-            <textarea v-model="when" readonly></textarea>
+            <textarea v-model="event[0].when" readonly></textarea>
           </div>
           <div class="jobhunting_memo1__5w-contents">
             <p>どこで？</p>
-            <textarea v-model="where" readonly></textarea>
+            <textarea v-model="event[0].where" readonly></textarea>
           </div>
           <div class="jobhunting_memo1__5w-contents">
             <p>だれと？(自分の立場も合わせて書こう！)</p>
-            <textarea v-model="who" readonly></textarea>
+            <textarea v-model="event[0].who" readonly></textarea>
           </div>
           <div class="jobhunting_memo1__5w-contents">
             <p>何を？</p>
-            <textarea v-model="what" readonly></textarea>
+            <textarea v-model="event[0].what" readonly></textarea>
           </div>
           <div class="jobhunting_memo1__5w-contents">
             <p>どのように？</p>
-            <textarea v-model="how" readonly></textarea>
+            <textarea v-model="event[0].how" readonly></textarea>
           </div>
         </div>
       </div>
       <!-- 分析 -->
       <div class="result" style="background-color: #E8F6FD;" :class="contentClass1 ? 'jobhunting_memo1__result--on' : 'jobhunting_memo1__result--off'">
-        <p class="result__theme">{{ theme }}</p>
-        <div v-for="index in answers.length-1" class="items">
-          <p :class='tags[index-1] == "" ? defoClass : (tags[index-1] == "out" ? lightClass : blueClass)'>{{ index }}</p>
-          <p>{{ questions[index] }}</p>
-          <p>{{ answers[index] }}</p>
+        <p class="result__theme">{{ qAndA[0].answers[0] }}</p>
+        <div v-for="index in qAndA[0].tags.length" class="items">
+          <p :class='qAndA[0].tags[index-1] == "" ? defoClass : (qAndA[0].tags[index-1] == "out" ? lightClass : blueClass)'>{{ index }}</p>
+          <p>{{ qAndA[0].questions[index] }}</p>
+          <p>{{ qAndA[0].answers[index] }}</p>
         </div>
       </div>
       <!-- 考察 -->
       <div class="jobhunting_memo1" :class="contentClass2 ? 'jobhunting_memo1__result--on' : 'jobhunting_memo1__result--off'" style="background-color: #FFF;">
         <div class="jobhunting_memo1__5w-title">
-          {{ theme }}
+          {{ qAndA[0].answers[0] }}
         </div>
         <div class="jobhunting_memo1__5w">
           <div class="jobhunting_memo1__5w-contents">
             <p>あなたの強みはどこにありそう？</p>
-            <textarea v-model="contents2[0]" readonly></textarea>
+            <textarea v-model="consideration[0].contents[0]" readonly></textarea>
           </div>
           <div class="jobhunting_memo1__5w-contents">
             <p>あなたの強みはどんなことに活かせそう？</p>
-            <textarea v-model="contents2[1]" readonly></textarea>
+            <textarea v-model="consideration[0].contents[1]" readonly></textarea>
           </div>
           <div class="jobhunting_memo1__5w-contents">
             <p>この出来事の中で大切だった・大事にしていたことは?</p>
-            <textarea v-model="contents2[2]" readonly></textarea>
+            <textarea v-model="consideration[0].contents[2]" readonly></textarea>
           </div>
           <div class="jobhunting_memo1__5w-contents">
             <p>一番工夫したポイントは？</p>
-            <textarea v-model="contents2[3]" readonly></textarea>
+            <textarea v-model="consideration[0].contents[3]" readonly></textarea>
           </div>
           <div class="jobhunting_memo1__5w-contents">
             <p>この出来事で悪かったことは?</p>
-            <textarea v-model="contents2[4]" readonly></textarea>
+            <textarea v-model="consideration[0].contents[4]" readonly></textarea>
           </div>
           <div class="jobhunting_memo1__5w-contents">
             <p>今回の分析で考えたりていないことは?</p>
-            <textarea v-model="contents2[5]" readonly></textarea>
+            <textarea v-model="consideration[0].contents[5]" readonly></textarea>
           </div>
         </div>
       </div>
@@ -3913,83 +3919,39 @@
     </div>
     <script>
       var myNavigator = document.querySelector('#myNavigator');
-      const mainTheme = "ああああああああ";
-      ons.getScriptPage().onInit = function() {
-        var qAndA = new QAndA();
-        new Vue({
+      //var id = myNavigator.topPage.data.id;
+      var id = 'eJ7lVVwlve65wc2NAmEY';
+
+      ons.getScriptPage().onShow = function() {
+        var vue = new Vue({
           el: '#jobhunting_gakuchika',
           data: {
             contents: [
-              mainTheme + "に取り組みました。",
+              "",
               "",
               "",
               "",
               "",
             ],
             showSavingModal: false,
-            theme: "ああああああ",
-            questions: [
-              "なぜ取り組んだの",
-              "あああ",
-              "いいい",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-            ],
-            answers: [
-              "あああ",
-              "いいい",
-              "ううう",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-              "aaa",
-            ],
-            tags: [
-              "in",
-              "in",
-              "out",
-              "in",
-              "in",
-              "out",
-              "in",
-              "in",
-              "out",
-              "in",
-              "in",
-              "out",
-            ],
+            qAndA: [],
+            event: [],
+            consideration: [],
             defoClass: "defo",
             lightClass: "lightBlue",
             blueClass: "blue",
             showResultClass: false,
-            when: "あああ",
-            where: "いいい",
-            who: "ううう",
-            what: "えええ",
-            how: "おおお",
             contentClass0: false,
             contentClass1: false,
             contentClass2: false,
-            contents2: [
-              "あああ",
-              "いいい",
-              "ううう",
-              "えええ",
-              "おおお",
-              "かかか",
-            ]
+          },
+          created: function() {
+            var t = this;
+            t.qAndA = getQuestionAndAnswerFromId(id);
+            t.event = getMyEventFromAnalyzeid(id);
+            t.consideration = getConsiderationFromAnalyzeid(id);
+            console.log(t.event);
+            setTimeout(function(){console.log(t.event)}, 5000);
           },
           methods: {
             openModal: function() {
@@ -4000,6 +3962,10 @@
             },
             nextButton: function() {
               // TODO: データベース
+              var gakuchika = new Gakuchika();
+              gakuchika.analyzeid = id;
+              gakuchika.contents = this.contents;
+              gakuchika.id = setNewGakuchika(gakuchika);
               myNavigator.resetToPage('index.html');
             },
             savingButton: function() {
