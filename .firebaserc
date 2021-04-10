@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "noteapp-90076",
+    "staging": "noteapp-90076"
+  }
+}

@@ -463,3 +463,4 @@ function dismissSafari() {
 //     main.style = 'height: ' + original_main_height + 'px;';
 //   });
 // }
+

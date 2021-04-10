@@ -53,6 +53,56 @@
 </head>
 <body>
   <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-remote-config.js"></script>
+  <script src="/__/firebase/8.3.1/firebase-app.js"></script>
+  <script src="/__/firebase/8.3.1/firebase-remote-config.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script>
+    //remote configのスクリプト
+    const remoteConfig = firebase.remoteConfig();
+  
+    remoteConfig.settings = {
+      minimumFetchIntervalMillis: 6000,
+    };
+  
+    remoteConfig.defaultConfig = ({
+      'welcome_message': 'Welcome',
+    });
+  
+    remoteConfig.ensureInitialized()
+    .then(() => {
+      console.log('Firebase Remote Config is initialized');
+      showWelcomeMessage();
+    })
+    .catch((err) => {
+      console.error('Firebase Remote Config failed to initialize', err);
+    });
+  
+    //firebaseからメッセージを取得しwelcome_messageに挿入
+    function showWelcomeMessage() {
+      const val = remoteConfig.getValue('welcome_message');
+      const welcome_element = document.getElementById('welcome_message');
+      welcome_element.innerText = val._value + ' (' + val._source + ')';
+    }
+
+    //メッセージをfetchしたら、showWelcomeMessageを発火
+    function fetchConfig() {
+      const welcome_element = document.getElementById('welcome_message');
+      //welcome_element.innerText = 'loading...';
+      remoteConfig.fetchAndActivate()
+        .then(() => {
+          showWelcomeMessage();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+
+    //画面が開いた時にfetchConfigを起動
+    window.onload = fetchConfig;
+
+  </script>
+
 </body>
 </html>
 
@@ -94,6 +144,15 @@
           </div>
           <div id="isSignIn" v-else>
             <a @click="goAnalyze"><img class="index__logo" src="./images/home_シンボル.png" alt="ロゴ"></a>
+            <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+              <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                <!-- remoteconfigのやつ -->
+                <div id="fetch_div">
+                  <h4>Welcome Message:</h4>
+                  <p id="welcome_message">loading...</p>
+                </div>
+              </div>
+            </div>
             <div class="snsButton__wrapper">
               <div class='snsButton__title'>
                 <p>公式Twitter, noteにて活用事例を紹介中！</p>
