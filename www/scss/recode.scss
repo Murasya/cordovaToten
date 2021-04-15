@@ -24,4 +24,13 @@
       font-size: 10pt;
     }
   }
+  &__topbtns {
+    background-color: #CCC;
+    button {
+      background: none;
+      img {
+        width: 1em;
+      }
+    }
+  }
 }

@@ -1,4 +1,3 @@
-
 // Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: "AIzaSyBida9QeFpWHZcexb8Wby3XYRMCNib-BaY",
@@ -40,32 +39,56 @@ var uiConfig = {
 var db = firebase.firestore();
 localStorage.setItem("tutorial_finished", true);
 
-function QAndA(
-  questions=[],
-  answers=[],
-  tags=[],
-  uid="",
-  public=false,
-  memo="",
-  timestamp=firebase.firestore.FieldValue.serverTimestamp(),
-  complete=false,
-  category=[],
-  success="",
-  id="",
-  color="",
-) {
-  this.questions = questions;
-  this.answers = answers;
-  this.tags = tags;
-  this.uid = uid;
-  this.public = public;
-  this.memo = memo;
-  this.timestamp = timestamp;
-  this.complete = complete;
-  this.category = category;
-  this.success = success;
-  this.id = id;
-  this.color = color;
+class QAndA {
+  constructor(questions=[], answers=[], tags=[], uid="", memo="", timestamp=new Date(), complete=false, category="", success="", id="", color="") {
+    this.questions = questions;
+    this.answers = answers;
+    this.tags = tags;
+    this.uid = uid;
+    this.memo = memo;
+    this.timestamp = timestamp;
+    this.complete = complete;
+    this.category = category;
+    this.success = success;
+    this.id = id;
+    this.color = color;
+  }
+  toString() {
+    return this.answers[0];
+  }
+}
+var qAndAConverter = {
+  toFirestore: function(qAndA) {
+    return {
+      questions: qAndA.questions,
+      answers: qAndA.answers,
+      tags: qAndA.tags,
+      uid: qAndA.uid,
+      memo: qAndA.memo,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      complete: qAndA.complete,
+      category: qAndA.category,
+      success: qAndA.success,
+      color: qAndA.color,
+    };
+  },
+  fromFirestore: function(snapshot, options) {
+    const id = snapshot.id;
+    const data = snapshot.data(options);
+    return new QAndA(
+      data.questions, 
+      data.answers,
+      data.tags,
+      data.uid,
+      data.memo,
+      data.timestamp.toDate(),
+      data.complete,
+      data.category,
+      data.success,
+      id,
+      data.color
+    );
+  }
 }
 function User(
   uid="", // String
@@ -82,59 +105,172 @@ function User(
   this.occupation = occupation;
   this.isResearchAccept = isResearchAccept;
 }
-function WellPoint(
-  id="",
-  analyzeid="", // String
-  contents=[], // {header, content1, content2, content3}の配列
-  useNumber=null, // Number
-) {
-  this.id = id;
-  this.analyzeid = analyzeid;
-  this.contents = contents;
-  this.useNumber = useNumber;
+class WellPoint {
+  constructor(id="", analyzeid="", contents=[], useNumber=-1) {
+    this.id = id;
+    this.analyzeid = analyzeid;
+    this.contents = contents;
+    this.useNumber = useNumber;
+  }
+  toString() {
+    var str = "";
+    this.contents.forEach((v, i) => {
+      str = str + v.header + ':' + v.content1 +','+ v.content2 +','+ v.content3 + "--";
+    })
+    return this.id + "--" + this.analyzeid + "--" + str + this.useNumber;
+  }
 }
-function MyEvent(
-  id="",
-  analyzeid="", // String
-  when="",
-  where="",
-  who="",
-  what="",
-  how="",
-) {
-  this.id = id;
-  this.analyzeid = analyzeid;
-  this.when = when;
-  this.where = where;
-  this.who = who;
-  this.what = what;
-  this.how = how;
+var wellPointConverter = {
+  toFirestore: function(wp) {
+    return {
+      analyzeid: wp.analyzeid,
+      contents: wp.contents,
+      useNumber: wp.useNumber
+    };
+  },
+  fromFirestore: function(snapshot, options) {
+    const id = snapshot.id;
+    const data = snapshot.data(options);
+    return new WellPoint(
+      id,
+      data.analyzeid,
+      data.contents,
+      data.useNumber,
+    );
+  }
 }
-function Consideration(
-  id="",
-  analyzeid="", // String
-  contents=[], // Array(String)
-) {
-  this.id = id;
-  this.analyzeid = analyzeid;
-  this.contents = contents;
+class MyEvent{
+  constructor(id="", analyzeid="", title="", color="", when="", where="", who="", what="", how="", uid="", timestamp=new Date()) {
+    this.id = id;
+    this.analyzeid = analyzeid;
+    this.title = title;
+    this.color = color;
+    this.when = when;
+    this.where = where;
+    this.who = who;
+    this.what = what;
+    this.how = how;
+    this.uid = uid;
+    this.timestamp = timestamp;
+  }
+  toString() {
+    return this.id + '--' + this.analyzeid + '--' + this.title + '--' + this.color + '--' + this.when + '--' + this.where + '--' + this.who + '--' + this.what + '--' + this.how + '--' + this.uid + '--' + this.timestamp;
+  }
 }
-function Gakuchika(
-  id="",
-  analyzeid="", // String
-  contents=[], // Array(String)
-) {
-  this.id = id;
-  this.analyzeid = analyzeid;
-  this.contents = contents;
+var myEventConverter = {
+  toFirestore: function(event) {
+    return {
+      analyzeid: event.analyzeid,
+      title: event.title,
+      color: event.color,
+      when: event.when,
+      where: event.where,
+      who: event.who,
+      what: event.what,
+      how: event.how,
+      uid: event.uid,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+  },
+  fromFirestore: function(snapshot, options) {
+    const id = snapshot.id;
+    const data = snapshot.data(options);
+    return new MyEvent(
+      id,
+      data.analyzeid,
+      data.title,
+      data.color,
+      data.when,
+      data.where,
+      data.who,
+      data.what,
+      data.how,
+      data.uid,
+      data.timestamp.toDate(),
+    );
+  }
+}
+class Consideration {
+  constructor(id="", analyzeid="", contents=[]) {
+    this.id = id;
+    this.analyzeid = analyzeid;
+    this.contents = contents;
+  }
+  toString() {
+    var str = "";
+    this.contents.forEach((v, i) => {
+      str = str + v + ':';
+    });
+    return this.id + '--' + this.analyzeid + '--' + str;
+  }
+}
+var considerationConverter = {
+  toFirestore: function(c) {
+    return {
+      analyzeid: c.analyzeid,
+      contents: c.contents,
+    };
+  },
+  fromFirestore: function(snapshot, options) {
+    const id = snapshot.id;
+    const data = snapshot.data(options);
+    return new Consideration(
+      id,
+      data.analyzeid,
+      data.contents,
+    );
+  }
+}
+class Gakuchika {
+  constructor(id="", analyzeid="", title="", color="", contents=[], uid="", timestamp=new Date()) {
+    this.id = id;
+    this.analyzeid = analyzeid;
+    this.title = title;
+    this.color = color;
+    this.contents = contents;
+    this.uid = uid;
+    this.timestamp = timestamp;
+  }
+  toString() {
+    var str = "";
+    this.contents.forEach((v, i) => {
+      str = str + v + ":";
+    });
+    return this.id + '--' + this.analyzeid + '--' + this.title + '--' + this.color + '--' + str + this.uid + this.timestamp;
+  }
+}
+var gakuchikaConverter = {
+  toFirestore: function(gakuchika) {
+    return {
+      analyzeid: gakuchika.analyzeid,
+      title: gakuchika.title,
+      color: gakuchika.color,
+      contents: gakuchika.contents,
+      uid: gakuchika.uid,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+  },
+  fromFirestore: function(snapshot, options) {
+    const id = snapshot.id;
+    const data = snapshot.data(options);
+    return new Gakuchika(
+      id,
+      data.analyzeid,
+      data.title,
+      data.color,
+      data.contents,
+      data.uid,
+      data.timestamp.toDate(),
+    );
+  }
 }
 
+// Gakuchika
+// 新規データ
 function setNewGakuchika(gakuchika) {
   var id = "";
-  db.collection("gakuchika").add({
-    analyzeid: gakuchika.analyzeid,
-    contents: gakuchika.contents,
-  }).then(function(docRef) {
+  console.log(gakuchika.toString());
+  db.collection("gakuchika").withConverter(gakuchikaConverter).add(gakuchika).then(function(docRef) {
     console.log('Document written with ID: ', docRef.id);
     id = docRef.id;
   }).catch(function(error) {
@@ -143,21 +279,41 @@ function setNewGakuchika(gakuchika) {
   });
   return id;
 }
+// データ更新
 function updateGakuchika(gakuchika, func=function(){}) {
-  db.collection("consideration").doc(gakuchika.id).set({
-    analyzeid: gakuchika.analyzeid,
-    contents: gakuchika.contents,
-  }).then(function() {
+  db.collection("consideration").doc(gakuchika.id).withConverter(gakuchikaConverter).set(gakuchika).then(function() {
     console.log("Document successfully updated!");
     func();
   });
 }
+// 自分のデータ全て
+function getGakuchika() {
+  var array = [];
+  var user = firebase.auth().currentUser;
+  db.collection("gakuchika")
+    .withConverter(gakuchikaConverter)
+    .where("uid", "==", user.uid)
+    .get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        var gakuchika = doc.data();
+        array.push(gakuchika);
+      });
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("errorCode: ", errorCode);
+      console.log("errorMessage: ", errorMessage);
+   	});
+  return array;
+}
+
+// Consideration
+// 新規データ
 function setNewConsideration(consideration) {
   var id = "";
-  db.collection("consideration").add({
-    analyzeid: consideration.analyzeid,
-    contents: consideration.contents,
-  }).then(function(docRef) {
+  console.log(consideration.toString());
+  db.collection("consideration").withConverter(considerationConverter).add(consideration).then(function(docRef) {
     console.log('Document written with ID: ', docRef.id);
     id = docRef.id;
   }).catch(function(error) {
@@ -166,26 +322,22 @@ function setNewConsideration(consideration) {
   });
   return id;
 }
+// データ更新
 function updateConsideration(consideration, func=function(){}) {
-  db.collection("consideration").doc(consideration.id).set({
-    analyzeid: consideration.analyzeid,
-    contents: consideration.contents,
-  }).then(function() {
+  db.collection("consideration").doc(consideration.id).withConverter(considerationConverter).set(consideration).then(function() {
     console.log("Document successfully updated!");
     func();
   });
 }
+// 分析のidから関連するものを取ってくる(arrayだけど最初の１つだけ使用)
 function getConsiderationFromAnalyzeid(analyzeid) {
   var array = [new Consideration()];
   db.collection("consideration")
+    .withConverter(considerationConverter)
     .where("analyzeid", "==", analyzeid)
     .get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        var consideration = new Consideration(
-          doc.id,
-          doc.data().analyzeid,
-          doc.data().contents,
-        );
+        var consideration = doc.data();
         array.splice(0, 1 ,consideration);
       });
     }).catch(function(error) {
@@ -197,16 +349,15 @@ function getConsiderationFromAnalyzeid(analyzeid) {
    	});
   return array;
 }
+
+// MyEvent
+// 新規データ
 function setNewMyEvent(event) {
   var id = "";
-  db.collection("event").add({
-    analyzeid: event.analyzeid,
-    when: event.when,
-    where: event.where,
-    who: event.who,
-    what: event.what,
-    how: event.how,
-  }).then(function(docRef) {
+  console.log(event.toString());
+  db.collection("event").withConverter(myEventConverter).add(
+    event
+  ).then(function(docRef) {
     console.log('Document written with ID: ', docRef.id);
     id = docRef.id;
   }).catch(function(error) {
@@ -215,34 +366,24 @@ function setNewMyEvent(event) {
   });
   return id;
 }
+// データ更新
 function updateMyEvent(event, func=function(){}) {
-  db.collection("event").doc(event.id).set({
-    analyzeid: event.analyzeid,
-    when: event.when,
-    where: event.where,
-    who: event.who,
-    what: event.what,
-    how: event.how,
-  }).then(function() {
+  db.collection("event").doc(event.id).withConverter(myEventConverter).set(
+    event
+  ).then(function() {
     console.log("Document successfully updated!");
     func();
   });
 }
+// 分析のidから関連するものを取ってくる(arrayだけど最初の１つだけ使用)
 function getMyEventFromAnalyzeid(analyzeid, func=function(){}) {
   var array = [new MyEvent()];
   db.collection("event")
+    .withConverter(myEventConverter)
     .where("analyzeid", "==", analyzeid)
     .get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        var event = new MyEvent(
-          doc.id,
-          doc.data().analyzeid,
-          doc.data().when,
-          doc.data().where,
-          doc.data().who,
-          doc.data().what,
-          doc.data().how,
-        );
+        var event = doc.data();
         array.splice(0, 1, event);
         func(event);
       });
@@ -255,6 +396,30 @@ function getMyEventFromAnalyzeid(analyzeid, func=function(){}) {
    	});
   return array;
 }
+// 自分のデータ全て
+function getMyEvent() {
+  var array = [];
+  var user = firebase.auth().currentUser;
+  db.collection("event")
+    .withConverter(myEventConverter)
+    .where("uid", "==", user.uid)
+    .get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        var event = doc.data();
+        array.push(event);
+      });
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("errorCode: ", errorCode);
+      console.log("errorMessage: ", errorMessage);
+   	});
+  return array;
+}
+
+// WellPoint
+// 新規データ
 function setNewWellPoint(wellPoint, func=function(){}) {
   var id = "";
   if(!wellPoint.analyzeid) {
@@ -266,80 +431,71 @@ function setNewWellPoint(wellPoint, func=function(){}) {
       wellPoint.analyzeid = qa.id;
     });
   }
-  db.collection("wellPoint").add({
-    analyzeid: wellPoint.analyzeid,
-    contents: wellPoint.contents,
-    useNumber: wellPoint.useNumber,
-  }).then(function(docRef) {
-    console.log('Document written with ID: ', docRef.id);
-    id = docRef.id;
-    func(id);
-  }).catch(function(error) {
-    console.log('Error adding document: ', error);
-    id = error;
-  });
+  console.log(wellPoint.toString());
+  db.collection("wellPoint")
+    .withConverter(wellPointConverter)
+    .add(wellPoint).then(function(docRef) {
+      console.log('Document written with ID: ', docRef.id);
+      id = docRef.id;
+      func(id);
+    }).catch(function(error) {
+      console.log('Error adding document: ', error);
+      id = error;
+    });
   return id;
 }
+// データ更新
 function updateWellPoint(wellPoint, func=function(){}) {
-  db.collection("wellPoint").doc(wellPoint.id).set({
-    analyzeid: wellPoint.analyzeid,
-    contents: wellPoint.contents,
-    useNumber: wellPoint.useNumber,
-  }).then(function() {
+  console.log(wellPoint.toString());
+  db.collection("wellPoint").doc(wellPoint.id).withConverter(wellPointConverter).set(
+    wellPoint
+  ).then(function() {
     console.log("Document successfully updated!");
     func();
   });
 }
+
+// qAndA
+// 新規データ
 function setNewData(qAndA, func=function(){}) {
   var id = "";
-  db.collection("questionAndAnswer").add({
-    questions: qAndA.questions,
-    answers: qAndA.answers,
-    tags: qAndA.tags,
-    uid: qAndA.uid,
-    public: qAndA.public,
-    memo: qAndA.memo,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    complete: qAndA.complete,
-    category: qAndA.category,
-    success: qAndA.success,
-    color: qAndA.color,
-  }).then(function(docRef) {
-    console.log('Document written with ID: ', docRef.id);
-    id = docRef.id;
-    func(id);
-    localStorage.setItem("documentID", id);
-  }).catch(function(error) {
-    console.log('Error adding document: ', error);
-    id = error;
-  });
+  console.log(qAndA.toString());
+  db.collection("questionAndAnswer")
+    .withConverter(qAndAConverter)
+    .add(qAndA).then(function(docRef) {
+      console.log('Document written with ID: ', docRef.id);
+      id = docRef.id;
+      func(id);
+      localStorage.setItem("documentID", id);
+    }).catch(function(error) {
+      console.log('Error adding document: ', error);
+      id = error;
+    });
   return id;
 }
+// データ更新
+function updateData(qAndA, func = function() {}) {
+  db.collection("questionAndAnswer").doc(qAndA.id).withConverter(qAndAConverter).set(
+    qAndA
+  ).then(function() {
+    console.log("Document successfully updated!");
+    func();
+  });
+}
+// 自分のデータで完了しているものを取得
 function getQuestionAndAnswer(limit = 100) {
   var user = firebase.auth().currentUser;
   var array = [];
   console.log("getQuestionAndAnswer");
   db.collection("questionAndAnswer")
+    .withConverter(qAndAConverter)
     .where("uid", "==", user.uid)
     .where("complete", "==", true)
     .orderBy("timestamp", "desc")
     .limit(limit)
     .get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        var qAndA = new QAndA(
-          doc.data().questions,
-          doc.data().answers,
-          doc.data().tags,
-          doc.data().uid,
-          doc.data().public,
-          doc.data().memo,
-          doc.data().timestamp.toDate(),
-          doc.data().complete,
-          doc.data().category,
-          doc.data().success,
-          doc.id,
-          doc.data().color,
-        );
+        var qAndA = doc.data();
         array.push(qAndA);
       });
     }).catch(function(error) {
@@ -351,26 +507,14 @@ function getQuestionAndAnswer(limit = 100) {
    	});
   return array;
 }
+// idから取得
 function getQuestionAndAnswerFromId(id, func=function(){}) {
   var array = [new QAndA()];
   db.collection("questionAndAnswer")
+    .withConverter(qAndAConverter)
     .doc(id)
     .get().then((doc) => {
-      console.log(doc);
-      var qAndA = new QAndA(
-        doc.data().questions,
-        doc.data().answers,
-        doc.data().tags,
-        doc.data().uid,
-        doc.data().public,
-        doc.data().memo,
-        doc.data().timestamp.toDate(),
-        doc.data().complete,
-        doc.data().category,
-        doc.data().success,
-        doc.id,
-        doc.data().color,
-      );
+      var qAndA = doc.data();
       array.splice(0, 1, qAndA);
     }).catch(function(error) {
       // Handle Errors here.
@@ -379,31 +523,9 @@ function getQuestionAndAnswerFromId(id, func=function(){}) {
       console.log("errorCode: ", errorCode);
       console.log("errorMessage: ", errorMessage);
    	});
-    console.log("aaa");
     return array;
-    // if(typeof qAndA !== "undefined") {
-    //   console.log("ccc");
-    //   return qAndA;
-    // }
 }
-function updateData(qAndA, func = function() {}) {
-  db.collection("questionAndAnswer").doc(qAndA.id).set({
-    questions: qAndA.questions,
-    answers: qAndA.answers,
-    tags: qAndA.tags,
-    uid: qAndA.uid,
-    public: qAndA.public,
-    memo: qAndA.memo,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    complete: qAndA.complete,
-    category: qAndA.category,
-    success: qAndA.success,
-    color: qAndA.color,
-  }).then(function() {
-    console.log("Document successfully updated!");
-    func();
-  });
-}
+
 function getGakuchikaAll(analyzeid, func = function() {}) {
   var qAndA, event, consideration;
   db.collection("questionAndAnswer")
@@ -469,7 +591,6 @@ function getGakuchikaAll(analyzeid, func = function() {}) {
    	});
   func(qAndA, event, consideration);
 }
-
 function getIncomplete() {
   var user = firebase.auth().currentUser;
   var array = [];

@@ -23,5 +23,14 @@
   border: none;
   font-size: 10pt;
 }
+.recode__topbtns {
+  background-color: #CCC;
+}
+.recode__topbtns button {
+  background: none;
+}
+.recode__topbtns button img {
+  width: 1em;
+}
 
 /*# sourceMappingURL=recode.css.map */

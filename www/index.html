@@ -2104,6 +2104,11 @@
         <button class="recode__tab--archive" @click="onArchiveButton" :style="tabActive ? activeTab1 : nonActiveTab1">アーカイブ</button>
         <button class="recode__tab--saving" @click="onSavingButton" :style="tabActive ? nonActiveTab2 : activeTab2">セーブ中</button>
       </div>
+      <div class="recode__topbtns">
+        <button @click="onBunsekinomeButton"><img src="images/2021_02_25_新素材/memo_icon_gray.png">分析の芽</button>
+        <button @click="onArchiveButton"><img src="images/2021_02_25_新素材/analyze_icon_gray.png">分析</button>
+        <button @click="onGakuchikaButton"><img src="images/2021_02_25_新素材/gakuchika_icon_gray.png">ガクチカ</button>
+      </div>
       <div class="archive" id="GD">
         <div v-for="data in arr" class="archive__data" @click="onDataButton(data)">
           <span :class="data.color=='hobby'?'archive__time--pink':
@@ -2114,7 +2119,8 @@
                         'archive__time'))))">
             {{ data.timestamp.getFullYear() }}/{{ ('0'+(data.timestamp.getMonth()+1)).slice(-2) }}/{{ data.timestamp.getDate() }}
           </span>
-          <p class="archive__p">{{ data.answers[0] }}</p>
+          <p class="archive__p" v-if="tabType == 'analyze'">{{ data.answers[0] }}</p>
+          <p class="archive__p" v-else="tabType == 'bunsekinome'">{{ data.title }}</p>
           <img class="archive__trash" @click.stop="onDeleteBtn(data)" src="images/分析カテゴリ追加時_素材/trash_object.png">
           <hr class="archive__hr">
         </div>
@@ -2139,6 +2145,7 @@
           data: {
             arr: getQuestionAndAnswer(),
             tabActive: true,
+            tabType: "analyze",
             showModal: false,
             activeTab1: {
               backgroundColor: "#FFF",
@@ -2176,11 +2183,20 @@
           methods: {
             onArchiveButton: function() {
               this.tabActive = true;
+              this.tabType = "analyze";
               this.arr = getQuestionAndAnswer();
             },
             onSavingButton: function() {
               this.tabActive = false;
               this.arr = getIncomplete();
+            },
+            onBunsekinomeButton: function() {
+              this.tabType = "bunsekinome";
+              this.arr = getMyEvent();
+            },
+            onGakuchikaButton: function() {
+              this.tabType = "gakuchika";
+              this.arr = getGakuchika();
             },
             onDataButton: function(data) {
               hBanner();
@@ -2447,7 +2463,6 @@
               qAndA.questions.push(this.qa.why);
               qAndA.answers.push(this.qa.answer);
               qAndA.tags.push(this.qa.tag);
-              console.log(qAndA.id);
               updateData(qAndA);
               this.qa.num++;
               this.qa.tag = "";
@@ -2485,7 +2500,6 @@
                 qAndA.tags.push(this.qa.tag);
                 updateData(qAndA);
               }
-              console.log(qAndA);
               myNavigator.pushPage('result.html',{
                 data: {
                   qAndA: qAndA
@@ -2933,7 +2947,6 @@
         if(myNavigator.topPage.data.recode) {
           recode = true;
         }
-        console.log(qAndA);
         vm = new Vue({
           el: '#resultVue',
           data: {
@@ -3425,7 +3438,6 @@
             nextButton: function() {
               const t = this;
               var wp = new WellPoint();
-              console.log(t.defo_memo.concat(t.memo));
               wp.contents = t.defo_memo.concat(t.memo);
               setNewWellPoint(wp, function(id) {
                 wp.id = id;
@@ -3435,8 +3447,6 @@
                   }
                 });
               });
-              
-              // TODO: データベース挿入
             },
             savingButton: function() {
               var id = uniqueId();
@@ -3500,7 +3510,6 @@
       var myNavigator = document.querySelector('#myNavigator');
       ons.getScriptPage().onInit = function() {
         var wp = myNavigator.topPage.data.wp;
-        console.log(wp);
         new Vue({
           el: '#jobhunting_memo3',
           data: {
@@ -3630,11 +3639,14 @@
             nextButton: function() {
               var event = new MyEvent();
               event.analyzeid = analyzeid;
+              event.title = this.title;
+              event.color = "jobhunting";
               event.when = this.when;
               event.where = this.where;
               event.who = this.who;
               event.what = this.what;
               event.how = this.how;
+              event.uid = firebase.auth().currentUser.uid;
               event.id = setNewMyEvent(event);
               
               var qAndA = new QAndA();
@@ -3732,7 +3744,6 @@
       ons.getScriptPage().onInit = function() {
         var consideration = new Consideration();
         var qAndA = myNavigator.topPage.data.qAndA;
-        console.log(qAndA);
         new Vue({
           el: '#jobhunting_analyze',
           data: {
@@ -3771,7 +3782,7 @@
               updateData(qAndA);
               myNavigator.pushPage('jobhunting_gakuchika.html', {
                 data: {
-                  id: qAndA.id,
+                  analyzeid: qAndA.id,
                 }
               });
             },
@@ -3792,7 +3803,7 @@
 <template id="jobhunting_gakuchika.html">
   <ons-page>
     <div class="page__background" style="background-color: #FFFFFF;"></div>
-    <div id="jobhunting_gakuchika" class="jobhunting_memo1">
+    <div id="jobhunting_gakuchika" class="jobhunting_memo1" v-cloak>
       <!-- header -->
       <div class="jobhunting_memo1__header">
         <span>▼</span>ガクチカを書いてみよう
@@ -3919,10 +3930,9 @@
     </div>
     <script>
       var myNavigator = document.querySelector('#myNavigator');
-      //var id = myNavigator.topPage.data.id;
-      var id = 'eJ7lVVwlve65wc2NAmEY';
 
       ons.getScriptPage().onShow = function() {
+        var id = myNavigator.topPage.data.analyzeid;
         var vue = new Vue({
           el: '#jobhunting_gakuchika',
           data: {
@@ -3950,8 +3960,6 @@
             t.qAndA = getQuestionAndAnswerFromId(id);
             t.event = getMyEventFromAnalyzeid(id);
             t.consideration = getConsiderationFromAnalyzeid(id);
-            console.log(t.event);
-            setTimeout(function(){console.log(t.event)}, 5000);
           },
           methods: {
             openModal: function() {
@@ -3964,7 +3972,10 @@
               // TODO: データベース
               var gakuchika = new Gakuchika();
               gakuchika.analyzeid = id;
+              gakuchika.title = this.qAndA[0].answers[0];
+              gakuchika.color = "jobhunting";
               gakuchika.contents = this.contents;
+              gakuchika.uid = firebase.auth().currentUser.uid;
               gakuchika.id = setNewGakuchika(gakuchika);
               myNavigator.resetToPage('index.html');
             },
