@@ -4,36 +4,56 @@
       margin: 0;
       padding: 1vh;
       background-color: #F4BC3E;
+      height: 4vh;
+      width:100%;
+      position:fixed;
+      margin-bottom:4vh;
   
       img {
         height: 4vh;
+        position:fixed;
       }
     }
     &--pink {
       margin: 0;
       padding: 1vh;
       background-color: #F49C9C;
+      height: 4vh;
+      width:100%;
+      position:fixed;
+      margin-bottom:4vh;
   
       img {
         height: 4vh;
+        position:fixed;
       }
     }
     &--green {
       margin: 0;
       padding: 1vh;
       background-color: #6EB161;
+      height: 4vh;
+      width:100%;
+      position:fixed;
+      margin-bottom:4vh;
   
       img {
         height: 4vh;
+        position:fixed;
       }
     }
     &--blue {
       margin: 0;
       padding: 1vh;
       background-color: #558FC9;
+      height: 4vh;
+      width:100%;
+      position:fixed;
+      margin-bottom:4vh;
   
       img {
         height: 4vh;
+        position:fixed;
       }
     }
   }
@@ -45,7 +65,7 @@
     color: #585858;
     font-size: 22px;
     border-radius: 0 0 50% 50%;
-    padding: 5vh 0;
+    padding: 11vh 0 5vh 0;
   }
 
   &__exp {
