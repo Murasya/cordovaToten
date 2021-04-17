@@ -31,6 +31,7 @@
   <link rel="stylesheet" href="css/mailChange.css">
   <link rel="stylesheet" href="css/jobhunting_memo1.css">
   <link rel="stylesheet" href="css/snsButton.css">
+  <link rel="stylesheet" href="css/result_memo.css">
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
 
@@ -2200,19 +2201,37 @@
             },
             onDataButton: function(data) {
               hBanner();
-              if (data.complete) {
-                document.getElementById("myNavigator").pushPage('result.html', {
+              console.log(data.toString());
+              if(this.tabType == "bunsekinome") {
+                document.getElementById("myNavigator").pushPage('result_memo.html', {
                   data: {
-                    qAndA: data,
+                    bunsekinome: data,
                     recode: true,
                   }
                 });
-              } else {
-                document.getElementById("myNavigator").pushPage('resume.html', {
+                return;
+              } else if(this.tabType == "analyze") {
+                if(data.complete) {
+                  document.getElementById("myNavigator").pushPage('result.html', {
+                    data: {
+                      qAndA: data,
+                      recode: true,
+                    }
+                  });
+                } else {
+                  document.getElementById("myNavigator").pushPage('resume.html', {
+                    data: {
+                      qAndA: data,
+                    }
+                  });
+                }
+              } else if(this.tabType == "gakuchika") {
+                document.getElementById("myNavigator").pushPage('result_gakuchika.html', {
                   data: {
-                    qAndA: data,
+                    gakuchika: data,
+                    recode: true,
                   }
-                })
+                });
               }
             },
             onDeleteBtn: function(data) {
@@ -2936,7 +2955,7 @@
           <button class="overlay__save--nobtn" @click="closeModal">いいえ</button>
         </div>
       </div>
-      <my-toolbar v-show="recode == true"></my-toolbar>
+      <result-float-button :id="id" :active="1"></result-float-button>
     </div>
   
     <script>
@@ -2950,6 +2969,7 @@
         vm = new Vue({
           el: '#resultVue',
           data: {
+            id: qAndA.id,
             theme: qAndA.answers[0],
             category: qAndA.category,
             questions: qAndA.questions,
@@ -4021,6 +4041,135 @@
             }
           }
         });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="result_memo.html">
+  <ons-page>
+    <div class="page__background" style="background-color: #FFF;"></div>
+    <div id="result_memo" class="jobhunting_memo1 resutl_memo" v-cloak>
+      <!-- header -->
+      <div class="result_memo__header">
+        <img src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
+        {{ event.title }}
+        <img src="images/分析カテゴリ追加時_素材/edit_object.png">
+      </div>
+      <!-- category -->
+      <div>
+        {{ category }}
+      </div>
+      <!-- contents -->
+      <div class="jobhunting_memo1__5w">
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>いつ？</p>
+          <textarea readonly>{{ event.when }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>どこで？</p>
+          <textarea readonly>{{ event.where }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>だれが？だれと？</p>
+          <textarea readonly>{{ event.who }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>何を？</p>
+          <textarea readonly>{{ event.what }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>どのように？</p>
+          <textarea readonly>{{ event.how }}</textarea>
+        </div>
+      </div>
+      <!-- float button -->
+      <result-float-button :id="event.analyzeid" :active="0"></result-float-button>
+    </div>
+    <script>
+      ons.getScriptPage().onShow = function() {
+        var myNavigator = document.querySelector('#myNavigator');
+
+        new Vue({
+          el: '#result_memo',
+          data: {
+            event: myNavigator.topPage.data.bunsekinome,
+            category: "",
+          },
+          created: function() {
+            var t = this;
+            switch(event.color) {
+              case "jobhunting":
+                t.category = "出来事・体験";
+                break;
+            }
+          },
+          methods: {
+            back_button: function() {
+              myNavigator.popPage();
+            },
+          },
+        });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="result_gakuchika.html">
+  <ons-page>
+    <div class="page__background" style="background-color: #FFF;"></div>
+    <div id="result_gakuchika" class="jobhunting_memo1 resutl_memo" v-cloak>
+      <!-- header -->
+      <div class="result_memo__header">
+        <img class="result_memo__header-back" src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
+        {{ gakuchika.title }}
+        <img class="result_memo__header-edit" src="images/分析カテゴリ追加時_素材/edit_object.png">
+      </div>
+      <!-- contents -->
+      <div class="jobhunting_memo1__5w">
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>結論 ＜どんなことをしたのか＞</p>
+          <textarea readonly>{{ gakuchika.contents[0] }}</textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ gakuchika.contents[0].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>背景 ＜どんな状況だったのか＞</p>
+          <textarea readonly>{{ gakuchika.contents[1]}}</textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ gakuchika.contents[1].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>課題 ＜何を解決すべきと捉えたのか＞</p>
+          <textarea readonly>{{ gakuchika.contents[2] }}</textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ gakuchika.contents[2].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>解決策 ＜課題をどのように工夫して解決したのか＞</p>
+          <textarea readonly>{{ gakuchika.contents[3] }}</textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ gakuchika.contents[3].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>まとめ ＜出来事を通して、自分はどんな人と言えるか＞</p>
+          <textarea readonly>{{ gakuchika.contents[4] }}</textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ gakuchika.contents[4].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-total">TOTAL[{{ gakuchika.contents[0].length + gakuchika.contents[1].length + gakuchika.contents[2].length + gakuchika.contents[3].length + gakuchika.contents[4].length }}]</div>
+      </div>
+      <result-float-button :id="gakuchika.analyzeid" :active="2"></result-float-button>
+    </div>
+    <script>
+      ons.getScriptPage().onShow = function() {
+        var myNavigator = document.querySelector('#myNavigator');
+        new Vue({
+          el: '#result_gakuchika',
+          data: {
+            gakuchika: myNavigator.topPage.data.gakuchika,
+          },
+          methods: {
+            back_button: function() {
+              myNavigator.popPage();
+            },
+          },
+        })
       }
     </script>
   </ons-page>

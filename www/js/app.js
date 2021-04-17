@@ -307,6 +307,27 @@ function getGakuchika() {
    	});
   return array;
 }
+// 分析のidから関連するものを取ってくる(arrayだけど最初の１つだけ使用)
+function getGakuchikaFromAnalyzeid(analyzeid, func=function(){}) {
+  var array = [new Gakuchika()];
+  db.collection("gakuchika")
+    .withConverter(gakuchikaConverter)
+    .where("analyzeid", "==", analyzeid)
+    .get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        var gakuchika = doc.data();
+        array.splice(0, 1, gakuchika);
+        func(gakuchika);
+      });
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("errorCode: ", errorCode);
+      console.log("errorMessage: ", errorMessage);
+   	});
+  return array;
+}
 
 // Consideration
 // 新規データ
@@ -516,6 +537,7 @@ function getQuestionAndAnswerFromId(id, func=function(){}) {
     .get().then((doc) => {
       var qAndA = doc.data();
       array.splice(0, 1, qAndA);
+      func(qAndA);
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -750,6 +772,55 @@ Vue.component("my-toolbar", {
     },
   }
 });
+
+Vue.component("result-float-button", {
+  props: ['id', 'active'],
+  template: `
+    <div class="result__floatbutton-wrapper">
+      <span v-if="active!=0" @click="goBunsekinome"><img src="images/2021_02_25_新素材/memo_icon_gray.png"></span>
+      <span v-else @click="goBunsekinome" class="result__floatbutton-wrapper--active"><img src="images/2021_02_25_新素材/memo_icon_white.png"></span>
+      <span v-if="active!=1" @click="goAnalyze"><img src="images/2021_02_25_新素材/analyze_icon_gray.png"></span>
+      <span v-else @click="goAnalyze" class="result__floatbutton-wrapper--active"><img src="images/2021_02_25_新素材/analyze_icon_white.png"></span>
+      <span v-if="active!=2" @click="goGakuchika"><img src="images/2021_02_25_新素材/gakuchika_icon_gray.png"></span>
+      <span v-else @click="goGakuchika" class="result__floatbutton-wrapper--active"><img src="images/2021_02_25_新素材/gakuchika_icon_white.png"></span>
+    </div>
+  `,
+  methods: {
+    goBunsekinome: function() {
+      if(this.active == 0) return;
+      getMyEventFromAnalyzeid(this.id, (event) => {
+        myNavigator.replacePage("result_memo.html", {
+          data: {
+            bunsekinome: event,
+            recode: true,
+          }
+        });
+      });
+    },
+    goAnalyze: function() {
+      if(this.active == 1) return;
+      getQuestionAndAnswerFromId(this.id, (qAndA) => {
+        myNavigator.replacePage("result.html", {
+          data: {
+            qAndA: qAndA,
+            recode: true,
+          }
+        });
+      });
+    },
+    goGakuchika: function() {
+      if(this.active == 2) return;
+      getGakuchikaFromAnalyzeid(this.id, (gakuchika)=>{
+        myNavigator.replacePage("result_gakuchika.html", {
+          data: {
+            gakuchika: gakuchika,
+            recode: true,
+          }
+        });
+      });
+    },
+  }
+})
 
 
 // admob

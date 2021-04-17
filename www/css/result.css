@@ -120,5 +120,30 @@
   align-items: flex-start;
   margin-right: 20vw;
 }
+.result__floatbutton-wrapper {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  left: 25vw;
+  bottom: 10vh;
+  width: 50vw;
+  border-radius: 12vw;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  padding: 2vw;
+  z-index: 100;
+  background-color: #FFF;
+}
+.result__floatbutton-wrapper span {
+  border: solid 0.5px #E8E8E8;
+  border-radius: 50%;
+  padding: 2vw;
+}
+.result__floatbutton-wrapper img {
+  width: 8vw;
+  height: 8vw;
+}
+.result__floatbutton-wrapper--active {
+  background-color: #ED6A4C;
+}
 
 /*# sourceMappingURL=result.css.map */

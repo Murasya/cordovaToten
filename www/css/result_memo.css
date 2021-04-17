@@ -1,0 +1,16 @@
+.result_memo__header {
+  background-color: #E8F6FD;
+  font-size: 18px;
+}
+.result_memo__header-back {
+  margin: 3vh 0 0 5vw;
+  display: block;
+  height: 1.2em;
+}
+.result_memo__header-edit {
+  display: block;
+  margin: 0 5vw 3vh auto;
+  height: 1.2em;
+}
+
+/*# sourceMappingURL=result_memo.css.map */

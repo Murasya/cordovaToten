@@ -1,0 +1,17 @@
+.result_memo {
+  &__header {
+    background-color: #E8F6FD;
+    font-size: 18px;
+
+    &-back {
+      margin: 3vh 0 0 5vw;
+      display: block;
+      height: 1.2em;
+    }
+    &-edit {
+      display: block;
+      margin: 0 5vw 3vh auto;
+      height: 1.2em;
+    }
+  }
+}
