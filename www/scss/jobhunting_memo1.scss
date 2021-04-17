@@ -1,3 +1,52 @@
+//スライドイン
+@mixin keyframe ($animation_name) {
+  @-webkit-keyframes animation-slide-in-up {
+      @content;
+  }
+
+  @-moz-keyframes animation-slide-in-up {
+      @content;
+  }
+
+  @-o-keyframes animation-slide-in-up {
+      @content;
+  }
+
+  @keyframes animation-slide-in-up {
+      @content;
+  }
+}
+
+@mixin animation ($delay, $duration, $animation, $direction: forward, $fillmode: fowards) {
+  -webkit-animation-delay: $delay;
+  -webkit-animation-duration: $duration;
+  -webkit-animation-name: $animation;
+  -webkit-animation-fill-mode: $fillmode;
+  -webkit-animation-direction: $direction;
+
+  -moz-animation-delay: $delay;
+  -moz-animation-duration: $duration;
+  -moz-animation-name: $animation;
+  -moz-animation-fill-mode: $fillmode;
+  -moz-animation-direction: $direction;
+
+  animation-delay: $delay;
+  animation-duration: $duration;
+  animation-name: $animation;
+  animation-fill-mode: $fillmode;
+  animation-direction: $direction;
+}
+
+@include keyframe(animation-slide-in-up) {
+  0% {
+      transform: translate(0,100vh);
+  }
+
+  100% {
+      transform: translate(0,0);
+  }
+}
+
 .jobhunting_memo1 {
   &__header {
     padding: 2.5vh 5vw;
@@ -191,6 +240,7 @@
     &--off {
       @extend %show-result;
       bottom: 0;
+      box-shadow:0 -4px 0 0 rgba(0,0,0,0.05);
       img {
         width: 8vw;
         display: block;
@@ -199,10 +249,14 @@
       button {
         font-size: 1em;
       }
+      
     }
     &--on {
       @extend %show-result;
       top: calc(5vh + 1em);
+
+      @include animation(0, 1.1s, animation-slide-in-up, linear);
+
       img {
         width: 8vw;
         display: block;
@@ -221,6 +275,8 @@
       width: 100vw;
       height: 80vh;
       overflow-y: auto;
+      
+      @include animation(0, 1.1s, animation-slide-in-up, linear);
     }
     &--off {
       display: none;
