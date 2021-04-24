@@ -140,7 +140,7 @@ var wellPointConverter = {
   }
 }
 class MyEvent{
-  constructor(id="", analyzeid="", title="", color="", when="", where="", who="", what="", how="", uid="", timestamp=new Date()) {
+  constructor(id="", analyzeid="", title="No title", color="", when="empty", where="empty", who="empty", what="empty", how="empty", uid="", timestamp=new Date()) {
     this.id = id;
     this.analyzeid = analyzeid;
     this.title = title;
@@ -222,7 +222,7 @@ var considerationConverter = {
   }
 }
 class Gakuchika {
-  constructor(id="", analyzeid="", title="", color="", contents=[], uid="", timestamp=new Date()) {
+  constructor(id="", analyzeid="", title="", color="", contents=["","","","",""], uid="", timestamp=new Date()) {
     this.id = id;
     this.analyzeid = analyzeid;
     this.title = title;
@@ -512,6 +512,30 @@ function getQuestionAndAnswer(limit = 100) {
     .withConverter(qAndAConverter)
     .where("uid", "==", user.uid)
     .where("complete", "==", true)
+    .orderBy("timestamp", "desc")
+    .limit(limit)
+    .get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        var qAndA = doc.data();
+        array.push(qAndA);
+      });
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("errorCode: ", errorCode);
+      console.log("errorMessage: ", errorMessage);
+   	});
+  return array;
+}
+// 自分のデータを全て取得（未完了含む）
+function getQuestionAndAnswerAll(limit = 100) {
+  var user = firebase.auth().currentUser;
+  var array = [];
+  console.log("getQuestionAndAnswer");
+  db.collection("questionAndAnswer")
+    .withConverter(qAndAConverter)
+    .where("uid", "==", user.uid)
     .orderBy("timestamp", "desc")
     .limit(limit)
     .get().then((querySnapshot) => {

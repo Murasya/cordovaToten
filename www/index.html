@@ -58,7 +58,7 @@
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> -->
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="result_memo.html"></ons-navigator>
 </body>
 </html>
 
@@ -2106,9 +2106,12 @@
         <button class="recode__tab--saving" @click="onSavingButton" :style="tabActive ? nonActiveTab2 : activeTab2">セーブ中</button>
       </div>
       <div class="recode__topbtns">
-        <button @click="onBunsekinomeButton"><img src="images/2021_02_25_新素材/memo_icon_gray.png">分析の芽</button>
-        <button @click="onArchiveButton"><img src="images/2021_02_25_新素材/analyze_icon_gray.png">分析</button>
-        <button @click="onGakuchikaButton"><img src="images/2021_02_25_新素材/gakuchika_icon_gray.png">ガクチカ</button>
+        <a v-if="tabType=='bunsekinome'" @click="onBunsekinomeButton" class="recode__topbtns--on"><img src="images/2021_02_25_新素材/memo_icon_white.png">分析の芽</a>
+        <a v-else @click="onBunsekinomeButton" class="recode__topbtns--off"><img src="images/2021_02_25_新素材/memo_icon_gray.png">分析の芽</a>
+        <a v-if="tabType=='analyze'" @click="onArchiveButton" class="recode__topbtns--on"><img src="images/2021_02_25_新素材/analyze_icon_white.png">分析</a>
+        <a v-else @click="onArchiveButton" class="recode__topbtns--off"><img src="images/2021_02_25_新素材/analyze_icon_gray.png">分析</a>
+        <a v-if="tabType=='gakuchika'" @click="onGakuchikaButton" class="recode__topbtns--on"><img src="images/2021_02_25_新素材/gakuchika_icon_white.png">ガクチカ</a>
+        <a v-else @click="onGakuchikaButton" class="recode__topbtns--off"><img src="images/2021_02_25_新素材/gakuchika_icon_gray.png">ガクチカ</a>
       </div>
       <div class="archive" id="GD">
         <div v-for="data in arr" class="archive__data" @click="onDataButton(data)">
@@ -2120,6 +2123,7 @@
                         'archive__time'))))">
             {{ data.timestamp.getFullYear() }}/{{ ('0'+(data.timestamp.getMonth()+1)).slice(-2) }}/{{ data.timestamp.getDate() }}
           </span>
+          <div class="archive__incomplete" v-show="!data.complete"></div>
           <p class="archive__p" v-if="tabType == 'analyze'">{{ data.answers[0] }}</p>
           <p class="archive__p" v-else="tabType == 'bunsekinome'">{{ data.title }}</p>
           <img class="archive__trash" @click.stop="onDeleteBtn(data)" src="images/分析カテゴリ追加時_素材/trash_object.png">
@@ -2144,7 +2148,7 @@
         var vm = new Vue({
           el: '#myRecodeVue',
           data: {
-            arr: getQuestionAndAnswer(),
+            arr: getQuestionAndAnswerAll(),
             tabActive: true,
             tabType: "analyze",
             showModal: false,
@@ -2185,7 +2189,7 @@
             onArchiveButton: function() {
               this.tabActive = true;
               this.tabType = "analyze";
-              this.arr = getQuestionAndAnswer();
+              this.arr = getQuestionAndAnswerAll();
             },
             onSavingButton: function() {
               this.tabActive = false;
@@ -4087,13 +4091,14 @@
       <result-float-button :id="event.analyzeid" :active="0"></result-float-button>
     </div>
     <script>
+      var debug = new MyEvent();
       ons.getScriptPage().onShow = function() {
         var myNavigator = document.querySelector('#myNavigator');
 
         new Vue({
           el: '#result_memo',
           data: {
-            event: myNavigator.topPage.data.bunsekinome,
+            event: myNavigator.topPage.data.bunsekinome ?? debug,
             category: "",
           },
           created: function() {
@@ -4118,7 +4123,7 @@
 <template id="result_gakuchika.html">
   <ons-page>
     <div class="page__background" style="background-color: #FFF;"></div>
-    <div id="result_gakuchika" class="jobhunting_memo1 resutl_memo" v-cloak>
+    <div id="result_gakuchika" class="jobhunting_memo1 result_memo" v-cloak>
       <!-- header -->
       <div class="result_memo__header">
         <img class="result_memo__header-back" src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
@@ -4157,12 +4162,16 @@
       <result-float-button :id="gakuchika.analyzeid" :active="2"></result-float-button>
     </div>
     <script>
+      var test = new Gakuchika();
+      // test.title = "あああ";
+      // test.contents = ["あ","あ","あ","あ","あ"];
+      console.log(test.toString());
       ons.getScriptPage().onShow = function() {
         var myNavigator = document.querySelector('#myNavigator');
         new Vue({
           el: '#result_gakuchika',
           data: {
-            gakuchika: myNavigator.topPage.data.gakuchika,
+            gakuchika: myNavigator.topPage.data.gakuchika ?? test,
           },
           methods: {
             back_button: function() {

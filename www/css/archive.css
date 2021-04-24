@@ -57,6 +57,18 @@
   bottom: 17px;
   margin: 0 21px;
 }
+.archive__incomplete {
+  position: absolute;
+  width: 0;
+  height: 0;
+  right: 0;
+  top: 18px;
+  border-bottom: 10px solid #CCC;
+  border-left: 10px solid #CCC;
+  border-right: 10px solid #FFF;
+  border-top: 10px solid #FFF;
+  z-index: 100;
+}
 .archive__overlay {
   z-index: 101;
   position: fixed;
