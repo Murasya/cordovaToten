@@ -2955,7 +2955,7 @@
           <button class="overlay__save--nobtn" @click="closeModal">いいえ</button>
         </div>
       </div>
-      <result-float-button :id="id" :active="1"></result-float-button>
+      <result-float-button :id="id" :active="1" v-show="recode"></result-float-button>
     </div>
   
     <script>
@@ -3952,7 +3952,7 @@
       var myNavigator = document.querySelector('#myNavigator');
 
       ons.getScriptPage().onShow = function() {
-        var id = myNavigator.topPage.data.analyzeid;
+        var id = myNavigator.topPage.data.analyzeid ?? "eJ7lVVwlve65wc2NAmEY";
         var vue = new Vue({
           el: '#jobhunting_gakuchika',
           data: {
