@@ -58,7 +58,7 @@
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> -->
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="result_memo.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
 </body>
 </html>
 
@@ -2244,15 +2244,28 @@
             },
             onYes: function() {
               var t = this;
-              db.collection("questionAndAnswer").doc(this.data.id).delete().then(function() {
-                console.log("Document successfully deleted!");
-                if(t.tabActive)
+              if(this.tabType == 'bunsekinome') {
+                db.collection("event").doc(this.data.id).delete().then(function() {
+                  console.log("Document successfully deleted!");
+                  vm.onBunsekinomeButton();
+                }).catch(function(error) {
+                  console.log("Error removing document: ", error);
+                });
+              } else if(this.tabType == 'analyze') {
+                db.collection("questionAndAnswer").doc(this.data.id).delete().then(function() {
+                  console.log("Document successfully deleted!");
                   vm.onArchiveButton();
-                else
-                  vm.onSavingButton();
-              }).catch(function(error) {
-                console.log("Error removing document: ", error);
-              });
+                }).catch(function(error) {
+                  console.log("Error removing document: ", error);
+                });
+              } else if(this.tabType == 'gakuchika') {
+                db.collection("gakuchika").doc(this.data.id).delete().then(function() {
+                  console.log("Document successfully deleted!");
+                  vm.onGakuchikaButton();
+                }).catch(function(error) {
+                  console.log("Error removing document: ", error);
+                });
+              }
             },
             closeModal: function() {
               this.showModal = false;
