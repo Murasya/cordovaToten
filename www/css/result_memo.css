@@ -3,14 +3,20 @@
   font-size: 18px;
 }
 .result_memo__header-back {
-  margin: 3vh 0 0 5vw;
+  padding: 3vh 0 0 5vw;
   display: block;
   height: 1.2em;
 }
 .result_memo__header-edit {
   display: block;
-  margin: 0 5vw 3vh auto;
+  margin: 0 5vw 0 auto;
+  padding: 0 0 3vh;
   height: 1.2em;
+}
+.result_memo__header-str {
+  color: #818181;
+  font-size: 1.5em;
+  padding: 2vh 5vw 0;
 }
 
 /*# sourceMappingURL=result_memo.css.map */

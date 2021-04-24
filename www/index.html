@@ -4052,9 +4052,9 @@
     <div id="result_memo" class="jobhunting_memo1 resutl_memo" v-cloak>
       <!-- header -->
       <div class="result_memo__header">
-        <img src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
-        {{ event.title }}
-        <img src="images/分析カテゴリ追加時_素材/edit_object.png">
+        <img class="result_memo__header-back" src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
+        <div class="result_memo__header-str">{{ event.title }}</div>
+        <img class="result_memo__header-edit" src="images/分析カテゴリ追加時_素材/edit_object.png">
       </div>
       <!-- category -->
       <div>
@@ -4122,7 +4122,7 @@
       <!-- header -->
       <div class="result_memo__header">
         <img class="result_memo__header-back" src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
-        {{ gakuchika.title }}
+        <div class="result_memo__header-str">{{ gakuchika.title }}</div>
         <img class="result_memo__header-edit" src="images/分析カテゴリ追加時_素材/edit_object.png">
       </div>
       <!-- contents -->
