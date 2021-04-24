@@ -120,6 +120,12 @@
   align-items: flex-start;
   margin-right: 20vw;
 }
+.result__back {
+  padding: 3vh 0 0 5vw;
+  display: block;
+  height: 1.5em;
+  align-self: flex-start;
+}
 .result__floatbutton-wrapper {
   position: fixed;
   display: flex;

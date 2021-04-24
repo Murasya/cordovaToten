@@ -2123,7 +2123,7 @@
                         'archive__time'))))">
             {{ data.timestamp.getFullYear() }}/{{ ('0'+(data.timestamp.getMonth()+1)).slice(-2) }}/{{ data.timestamp.getDate() }}
           </span>
-          <div class="archive__incomplete" v-show="!data.complete"></div>
+          <div class="archive__incomplete" v-show="data.complete === false"></div>
           <p class="archive__p" v-if="tabType == 'analyze'">{{ data.answers[0] }}</p>
           <p class="archive__p" v-else="tabType == 'bunsekinome'">{{ data.title }}</p>
           <img class="archive__trash" @click.stop="onDeleteBtn(data)" src="images/分析カテゴリ追加時_素材/trash_object.png">
@@ -2931,6 +2931,7 @@
   <ons-page>
     <div class="background" style="background-color: #E8F6FD;"></div>
     <div id="resultVue" class="result" v-cloak>
+      <img v-show="recode" class="result__back" src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
       <p class="result__theme">{{ theme }}</p>
       <span :class="headerClass" v-if="category.length">
         <span v-for="n in category">{{ n }}&emsp;</span>
@@ -3097,6 +3098,9 @@
             },
             closeModal: function() {
               this.showSavingModal = false;
+            },
+            back_button: function() {
+              myNavigator.popPage();
             }
           }
         });
