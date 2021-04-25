@@ -1,3 +1,6 @@
+.index {
+  font-size: 2vh;
+}
 .index__logo {
   height: 22vh;
   display: block;
@@ -76,7 +79,7 @@
   color: #656565;
   font-weight: bold;
   margin: 0 .5em .5em;
-  font-size: .7em;
+  font-size: .8em;
 }
 
 #isSignIn {
