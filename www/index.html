@@ -58,7 +58,7 @@
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> -->
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="jobhunting_gakuchika.html"></ons-navigator>
 </body>
 </html>
 
@@ -3480,6 +3480,16 @@
               const t = this;
               var wp = new WellPoint();
               wp.contents = t.defo_memo.concat(t.memo);
+              var isEmpty = true;
+              wp.contents.forEach((e) => {
+                if(e.content1 != "" || e.content2 != "" || e.content3 != "") {
+                  isEmpty = false;
+                }
+              });
+              if(isEmpty) {
+                ons.notification.toast("どれか一つは書いてください", {timeout: 2000, animation: "fall"});
+                return;
+              }
               setNewWellPoint(wp, function(id) {
                 wp.id = id;
                 myNavigator.pushPage('jobhunting_memo3.html', {
@@ -3550,7 +3560,7 @@
     <script>
       var myNavigator = document.querySelector('#myNavigator');
       ons.getScriptPage().onInit = function() {
-        var wp = myNavigator.topPage.data.wp;
+        var wp = myNavigator.topPage.data.wp ?? new WellPoint();
         new Vue({
           el: '#jobhunting_memo3',
           data: {
@@ -3563,8 +3573,8 @@
               this.showSavingModal = true;
             },
             nextButton: function() {
-              // TODO: データベース
-              if(this.picked == null) {
+              console.log(this.picked);
+              if(this.picked === "") {
                 ons.notification.toast('どれか一つを選択してください', {animation: 'fall', timeout: 1000});
                 return;
               }
@@ -3657,8 +3667,8 @@
     <script>
       var myNavigator = document.querySelector('#myNavigator');
       ons.getScriptPage().onInit = function() {
-        var theme = myNavigator.topPage.data.theme;
-        var analyzeid = myNavigator.topPage.data.analyzeid;
+        var theme = myNavigator.topPage.data.theme ?? "Empty";
+        var analyzeid = myNavigator.topPage.data.analyzeid ?? "eJ7lVVwlve65wc2NAmEY";
         new Vue({
           el: '#jobhunting_memo4',
           data: {
@@ -3678,6 +3688,10 @@
               this.showSavingModal = false;
             },
             nextButton: function() {
+              if(this.when === "" || this.where === "" || this.who === "" || this.what === "" || this.how === "") {
+                ons.notification.toast("全て入力してください", {timeout: 2000, animation: "fall"});
+                return;
+              }
               var event = new MyEvent();
               event.analyzeid = analyzeid;
               event.title = this.title;
@@ -3784,7 +3798,11 @@
       var myNavigator = document.querySelector('#myNavigator');
       ons.getScriptPage().onInit = function() {
         var consideration = new Consideration();
-        var qAndA = myNavigator.topPage.data.qAndA;
+        var test = new QAndA();
+        test.questions = ["あ","あ"];
+        test.answers = ["い","い"];
+        test.tags = ["in"];
+        var qAndA = myNavigator.topPage.data.qAndA ?? test;
         new Vue({
           el: '#jobhunting_analyze',
           data: {
@@ -3815,7 +3833,10 @@
               this.showSavingModal = false;
             },
             nextButton: function() {
-              // TODO: データベース
+              if(this.contents[0] === "" || this.contents[1] === "" || this.contents[2] === "" || this.contents[3] === "" || this.contents[4] === "" || this.contents[5] === "") {
+                ons.notification.toast("全て入力してください", {timeout: 2000, animation: "fall"});
+                return;
+              }
               consideration.analyzeid = qAndA.id;
               consideration.contents = this.contents;
               consideration.id = setNewConsideration(consideration);
@@ -4010,7 +4031,10 @@
               this.showSavingModal = false;
             },
             nextButton: function() {
-              // TODO: データベース
+              if(this.contents[0] === "" || this.contents[1] === "" || this.contents[2] === "" || this.contents[3] === "" || this.contents[4] === "") {
+                ons.notification.toast("全て入力してください", {timeout: 2000, animation: "fall"});
+                return;
+              }
               var gakuchika = new Gakuchika();
               gakuchika.analyzeid = id;
               gakuchika.title = this.qAndA[0].answers[0];

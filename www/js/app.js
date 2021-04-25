@@ -106,7 +106,7 @@ function User(
   this.isResearchAccept = isResearchAccept;
 }
 class WellPoint {
-  constructor(id="", analyzeid="", contents=[], useNumber=-1) {
+  constructor(id="", analyzeid="", contents=[{header:"",content1:"Empty",content2:"",content3:""}], useNumber=-1) {
     this.id = id;
     this.analyzeid = analyzeid;
     this.contents = contents;
