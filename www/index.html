@@ -3067,6 +3067,33 @@
         <p>{{ questions[index] }}</p>
         <p>{{ answers[index] }}</p>
       </div>
+      <!-- consideration -->
+      <div class="jobhunting_memo1__5w" v-show="consideration[0].analyzeid !== '' && recode">
+        <div class="jobhunting_memo1__5w-contents">
+          <p>あなたの強みはどこにありそう？</p>
+          <textarea readonly>{{ consideration[0].contents[0] }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>あなたの強みはどんなことに活かせそう？</p>
+          <textarea readonly>{{ consideration[0].contents[1] }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>この出来事の中で大切だった・大事にしていたことは?</p>
+          <textarea readonly>{{ consideration[0].contents[2] }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>一番工夫したポイントは？</p>
+          <textarea readonly>{{ consideration[0].contents[3] }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>この出来事で悪かったことは?</p>
+          <textarea readonly>{{ consideration[0].contents[4] }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>今回の分析で考えたりていないことは?</p>
+          <textarea readonly>{{ consideration[0].contents[5] }}</textarea>
+        </div>
+      </div>
       <!-- memo -->
       <div v-if="color !== 'jobhunting'" style="width:100%;">
         <textarea class="result__memo" v-model="memo" v-if="recode == false" placeholder="振り返りを入力"></textarea>
@@ -3082,6 +3109,7 @@
       <select v-else class="result__success" disabled>
         <option>{{ success }}</option>
       </select>
+      <!-- buttons -->
       <div class="result__btns" v-show="recode == false">
         <div class="result__btns--ver">
           <a @click="interruptionButtonClick"><img src="./images/各種ボタン/break_ボタン.png" alt="中断ボタン" width="30px"></a>
@@ -3098,13 +3126,16 @@
           <button class="overlay__save--nobtn" @click="closeModal">いいえ</button>
         </div>
       </div>
+      <div style="height: 10vh;"></div>
       <result-float-button :id="id" :active="1" v-show="recode"></result-float-button>
     </div>
   
     <script>
       var myNavigator = document.querySelector('#myNavigator');
       ons.getScriptPage().onInit = function() {
-        var qAndA = myNavigator.topPage.data.qAndA;
+        var debug = new QAndA();
+        debug.questions = ["あ","あ"]; debug.answers["Empty","Empty"]; debug.tags["in"];
+        var qAndA = myNavigator.topPage.data.qAndA ?? debug;
         var recode = false;
         if(myNavigator.topPage.data.recode) {
           recode = true;
@@ -3128,12 +3159,14 @@
             blueClass: "blue",
             headerClass: "",
             showSavingModal: false,
+            consideration: [new Consideration()],
             tweet: {
               text: "",
               url: "http://toten.html.xdomain.jp/",
             }
           },
           created: function() {
+            this.consideration = getConsiderationFromAnalyzeid(qAndA.id);
             switch(this.color) {
               case "future":
                 this.headerClass = "result__category--yellow";
