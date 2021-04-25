@@ -1,0 +1,125 @@
+.memo__header {
+  background-color: #CBCBCB;
+  position: fixed;
+  width: 100vw;
+}
+.memo__header img {
+  height: 5vh;
+  margin: 2vh 5vw;
+}
+.memo__title {
+  border: none;
+  width: 90vw;
+  margin: 0 auto;
+  padding: 15vh .2em .2em;
+  display: block;
+  font-size: 1.5em;
+  border-bottom: solid 2px #ABABAB;
+}
+.memo .memo__category--off, .memo .memo__category--yellow, .memo .memo__category--green, .memo .memo__category--pink, .memo .memo__category--blue, .memo .memo__category--black {
+  padding: 1em;
+  border-radius: 3em;
+  color: #FFFFFF;
+  margin: 1vw;
+  font-size: .6em;
+}
+.memo__category {
+  margin: 2vh 5vw;
+  display: flex;
+  flex-wrap: wrap;
+}
+.memo__category--off {
+  background-color: #D1D1D1;
+}
+.memo__category--yellow {
+  background-color: #F4BC3E;
+}
+.memo__category--green {
+  background-color: #6EB161;
+}
+.memo__category--pink {
+  background-color: #F49C9C;
+}
+.memo__category--blue {
+  background-color: #558FC9;
+}
+.memo__category--black {
+  background-color: #585858;
+}
+.memo__str {
+  margin: 0 5vw;
+  color: #ABABAB;
+  font-size: .8em;
+}
+.memo__freememo {
+  border: none;
+  width: 90vw;
+  display: block;
+  margin: 3vh auto;
+  border-left: solid 2px #ED6A4C;
+  border-bottom: solid 2px #ED6A4C;
+  height: 5em;
+}
+.memo__recodebutton {
+  border: none;
+  background-color: #ED6A4C;
+  color: #FFF;
+  font-weight: bold;
+  margin: 5vh auto;
+  display: block;
+  font-size: 1em;
+  padding: .5em 2em;
+  border-radius: .5em;
+}
+.memo__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(55, 107, 152, 0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.memo__overlay-icon {
+  background-color: #BCBCBC;
+  border-radius: 50%;
+}
+.memo__overlay-icon img {
+  height: 5vh;
+  padding: 2vh;
+}
+.memo__overlay-str {
+  font-weight: bold;
+  color: #FFF;
+  text-align: center;
+  margin: 4vh;
+}
+.memo__overlay-buttons {
+  display: flex;
+  flex-direction: column;
+}
+.memo__overlay-button--red {
+  background-color: #ED6A4C;
+  color: #FFF;
+  border-radius: .5em;
+  padding: .5em;
+  border: none;
+  width: 60vw;
+  font-size: 1em;
+  margin: .2em;
+}
+.memo__overlay-button--white {
+  background-color: #FFF;
+  color: #707070;
+  border-radius: .5em;
+  padding: .5em;
+  border: none;
+  width: 60vw;
+  font-size: 1em;
+  margin: .2em;
+}
+
+/*# sourceMappingURL=memo.css.map */

@@ -32,6 +32,7 @@
   <link rel="stylesheet" href="css/jobhunting_memo1.css">
   <link rel="stylesheet" href="css/snsButton.css">
   <link rel="stylesheet" href="css/result_memo.css">
+  <link rel="stylesheet" href="css/memo.css">
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
 
@@ -58,7 +59,7 @@
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> -->
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="jobhunting_gakuchika.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
 </body>
 </html>
 
@@ -126,6 +127,7 @@
             <div v-else>
               <p class="index__mada">まだ記録がありません。</p>
             </div>
+            <div class="index__floatbutton" @click="goMemo"><img src="images/2021_02_25_新素材/memo_icon_add.png"></div>
           </div>
         </div>
         <my-toolbar v-show="currentUser != null"></my-toolbar>
@@ -202,6 +204,9 @@
             goMyPage: function() {
               hBanner();
               document.getElementById("myNavigator").pushPage('myPage.html');
+            },
+            goMemo: function() {
+              document.getElementById("myNavigator").pushPage('memo.html');
             },
             urlClick: function() {
               window.open("https://noteappm.wixsite.com/policies", "_self", "location=yes");
@@ -338,6 +343,126 @@
       }
       ons.getScriptPage().onShow = function() {
         // ui.start('#firebaseui-auth-container', uiConfig);
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="memo.html">
+  <ons-page>
+    <div class="background" style="background-color: #FFF;"></div>
+    <div id="memo" class="memo" v-cloak>
+      <div class="memo__header">
+        <img @click="backButton" src="images/2021_02_25_新素材/memo_back.png">
+      </div>
+      <input class="memo__title" placeholder="タイトル" v-model="title">
+      <div class="memo__category">
+        <a @click="choiceCategory('やりたいこと')" :class="category==='やりたいこと' ? 'memo__category--yellow' : 'memo__category--off'">やりたいこと</a>
+        <a @click="choiceCategory('やりたくないこと')" :class="category==='やりたくないこと' ? 'memo__category--blue' : 'memo__category--off'">やりたくないこと</a>
+        <a @click="choiceCategory('出来事・体験')" :class="category==='出来事・体験' ? 'memo__category--green' : 'memo__category--off'">出来事・体験</a>
+        <a @click="choiceCategory('日常の小さな感情')" :class="category==='日常の小さな感情' ? 'memo__category--pink' : 'memo__category--off'">日常の小さな感情</a>
+        <a @click="choiceCategory('その他')" :class="category==='その他' ? 'memo__category--black' : 'memo__category--off'">その他</a>
+      </div>
+      <div class="memo__str">●状況を整理しておこう</div>
+      <div class="jobhunting_memo1__5w" style="margin-top: 0;">
+        <div class="jobhunting_memo1__5w-contents">
+          <p>いつ？</p>
+          <textarea v-model="when"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>どこで？</p>
+          <textarea v-model="where"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>だれが？だれと？</p>
+          <textarea v-model="who"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>何を？</p>
+          <textarea v-model="what"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>どのように？</p>
+          <textarea v-model="how"></textarea>
+        </div>
+      </div>
+      <textarea class="memo__freememo" placeholder="フリーメモ" v-model="freememo"></textarea>
+      <button class="memo__recodebutton" @click="saveButton">記録する</button>
+      <div class="memo__overlay" v-show="overlay">
+        <div class="memo__overlay-icon"><img src="images/2021_02_25_新素材/memo_icon_white.png"></div>
+        <div class="memo__overlay-str"> ”分析の芽” を記録しました。<br>アーカイブから確認できます。</div>
+        <div class="memo__overlay-buttons">
+          <!-- <button class="memo__overlay-button--red" @click="continueButton">このまま分析</button> -->
+          <button class="memo__overlay-button--red" @click="newButton">新しい分析の芽を記録</button>
+          <button class="memo__overlay-button--white" @click="homeButton">HOMEに戻る</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      var myNavigator = document.getElementById("myNavigator");
+      ons.getScriptPage().onShow = function() {
+        new Vue({
+          el: '#memo',
+          data: {
+            title: "",
+            when: "",
+            where: "",
+            who: "",
+            what: "",
+            how: "",
+            freememo: "",
+            category: "",
+            overlay: false,
+          },
+          methods: {
+            choiceCategory: function(str) {
+              this.category = str;
+              console.log(this.category);
+            },
+            saveButton: function() {
+              this.overlay = true;
+              // return;
+              if(this.title === "") {
+                ons.notification.toast("タイトルを入力", {timeout: 2000, animation: "fall"});
+                return;
+              }
+              if(this.category === "") {
+                ons.notification.toast("カテゴリを選択", {timeout: 2000, animation: "fall"});
+                return;
+              }
+              if(this.when === "" || this.where === "" || this.who === "" || this.what === "" || this.how === "") {
+                ons.notification.toast("状況を入力", {timeout: 2000, animation: "fall"});
+                return;
+              }
+              var qAndA = new QAndA();
+              qAndA.memo = this.freememo;
+              setNewData(qAndA, (id) => {
+                var memo = new MyEvent();
+                memo.title = this.title;
+                memo.when = this.when;
+                memo.where = this.where;
+                memo.who = this.who;
+                memo.what = this.what;
+                memo.how = this.how;
+                memo.color = this.category;
+                memo.analyzeid = id;
+                setNewMyEvent(memo);
+              });
+            },
+            continueButton: function() {
+              // myNavigator.pushPage('');
+            },
+            newButton: function() {
+              myNavigator.replacePage('memo.html');
+            },
+            homeButton: function() {
+              myNavigator.resetToPage('index.html');
+            },
+            backButton: function() {
+              myNavigator.popPage();
+            },
+          },
+        })
       }
     </script>
   </ons-page>

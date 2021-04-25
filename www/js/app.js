@@ -63,7 +63,7 @@ var qAndAConverter = {
       questions: qAndA.questions,
       answers: qAndA.answers,
       tags: qAndA.tags,
-      uid: qAndA.uid,
+      uid: firebase.auth().currentUser.uid,
       memo: qAndA.memo,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       complete: qAndA.complete,
@@ -168,7 +168,7 @@ var myEventConverter = {
       who: event.who,
       what: event.what,
       how: event.how,
-      uid: event.uid,
+      uid: firebase.auth().currentUser.uid,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
   },

@@ -40,6 +40,17 @@
     width: 75pt;
     margin: 15vh 10vw 0 auto;
   }
+  &__floatbutton {
+    position: fixed;
+    background-color: #ED6A4C;
+    padding: 5vw;
+    border-radius: 50%;
+    right: 5vw;
+    bottom: 10vh;
+    img {
+      width: 10vw;
+    }
+  }
 }
 #isSignIn {
   display: flex;

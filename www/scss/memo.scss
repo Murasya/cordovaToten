@@ -1,0 +1,133 @@
+.memo {
+  &__header {
+    background-color: #CBCBCB;
+    position: fixed;
+    width: 100vw;
+
+    img {
+      height: 5vh;
+      margin: 2vh 5vw;
+    }
+  }
+  &__title {
+    border: none;
+    width: 90vw;
+    margin: 0 auto;
+    padding: 15vh .2em .2em;
+    display: block;
+    font-size: 1.5em;
+    border-bottom: solid 2px #ABABAB;
+  }
+  %__category-item {
+    padding: 1em;
+    border-radius: 3em;
+    color: #FFFFFF;
+    margin: 1vw;
+    font-size: .6em;
+  }
+  &__category {
+    margin: 2vh 5vw;
+    display: flex;
+    flex-wrap: wrap;
+    &--off {
+      @extend %__category-item;
+      background-color: #D1D1D1;
+    }
+    &--yellow {
+      @extend %__category-item;
+      background-color: #F4BC3E;
+    }
+    &--green {
+      @extend %__category-item;
+      background-color: #6EB161;
+    }
+    &--pink {
+      @extend %__category-item;
+      background-color: #F49C9C;
+    }
+    &--blue {
+      @extend %__category-item;
+      background-color: #558FC9;
+    }
+    &--black {
+      @extend %__category-item;
+      background-color: #585858;
+    }
+  }
+  &__str {
+    margin: 0 5vw;
+    color: #ABABAB;
+    font-size: .8em;
+  }
+  &__freememo {
+    border: none;
+    width: 90vw;
+    display: block;
+    margin: 3vh auto;
+    border-left: solid 2px #ED6A4C;
+    border-bottom: solid 2px #ED6A4C;
+    height: 5em;
+  }
+  &__recodebutton {
+    border: none;
+    background-color: #ED6A4C;
+    color: #FFF;
+    font-weight: bold;
+    margin: 5vh auto;
+    display: block;
+    font-size: 1em;
+    padding: .5em 2em;
+    border-radius: .5em;
+  }
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(55, 107, 152, 0.85);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &-icon {
+      background-color: #BCBCBC;
+      border-radius: 50%;
+
+      img {
+        height: 5vh;
+        padding: 2vh;
+      }
+    }
+    &-str {
+      font-weight: bold;
+      color: #FFF;
+      text-align: center;
+      margin: 4vh;
+    }
+    &-buttons {
+      display: flex;
+      flex-direction: column;
+    }
+    &-button--red {
+      background-color: #ED6A4C;
+      color: #FFF;
+      border-radius: .5em;
+      padding: .5em;
+      border: none;
+      width: 60vw;
+      font-size: 1em;
+      margin: .2em;
+    }
+    &-button--white {
+      background-color: #FFF;
+      color: #707070;border-radius: .5em;
+      padding: .5em;
+      border: none;
+      width: 60vw;
+      font-size: 1em;
+      margin: .2em;
+    }
+  }
+}
