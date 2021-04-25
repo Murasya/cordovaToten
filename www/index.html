@@ -110,7 +110,20 @@
                 <a href="https://note.com/toten_app" class="snsButton__note">noteで見てみる</a>
               </div>
             </div>
-            <div class="archive" v-if="recent.length!=0">
+            <!-- news -->
+            <div class="index__news">
+              <div class="index__news-item">
+                <span class="index__news-category">イベント情報</span>
+                <span class="index__news-date">04.19.</span>
+                <div class="index__news-title">就活団体「キャリ窓+」とコラボ！自己分析イベント開催</div>
+              </div>
+              <div class="index__news-item">
+                <span class="index__news-category">お役立ちコンテンツ</span>
+                <span class="index__news-date">04.12.</span>
+                <div class="index__news-title">-自己分析上級者向け- とーてん活用術を公開中！</div>
+              </div>
+            </div>
+            <!-- <div class="archive" v-if="recent.length!=0">
               <a v-for="data in recent" class="archive__data" @click="onDataButton(data)">
                 <span :class="data.color=='hobby'?'archive__time--pink':
                         (data.color=='future'?'archive__time--yellow':
@@ -126,7 +139,7 @@
             </div>
             <div v-else>
               <p class="index__mada">まだ記録がありません。</p>
-            </div>
+            </div> -->
             <div class="index__floatbutton" @click="goMemo"><img src="images/2021_02_25_新素材/memo_icon_add.png"></div>
           </div>
         </div>
@@ -215,7 +228,7 @@
         });
         firebase.auth().onAuthStateChanged(user => {
           if(user) {
-            vue.recent = getQuestionAndAnswer(2);
+            //vue.recent = getQuestionAndAnswer(2);
             vue.currentUser = user.uid;
             console.log(vue.currentUser);
             vue.loading = true;
