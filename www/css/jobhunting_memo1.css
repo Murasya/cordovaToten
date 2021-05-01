@@ -14,7 +14,7 @@
     transform: translate(0, 0);
   }
 }
-@-o-keyframes animation-slide-in-up {
+@keyframes animation-slide-in-up {
   0% {
     transform: translate(0, 100vh);
   }
@@ -22,9 +22,49 @@
     transform: translate(0, 0);
   }
 }
-@keyframes animation-slide-in-up {
+@-webkit-keyframes animation-slide-out-down-title {
   0% {
-    transform: translate(0, 100vh);
+    transform: translate(0, -80vh);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@-moz-keyframes animation-slide-out-down-title {
+  0% {
+    transform: translate(0, -80vh);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@keyframes animation-slide-out-down-title {
+  0% {
+    transform: translate(0, -80vh);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@-webkit-keyframes animation-slide-out-down-body {
+  0% {
+    transform: translate(0, -80vh);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@-moz-keyframes animation-slide-out-down-body {
+  0% {
+    transform: translate(0, -80vh);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@keyframes animation-slide-out-down-body {
+  0% {
+    transform: translate(0, -80vh);
   }
   100% {
     transform: translate(0, 0);
@@ -200,7 +240,6 @@
 }
 .jobhunting_memo1 .jobhunting_memo1__show-result--off, .jobhunting_memo1 .jobhunting_memo1__show-result--on {
   text-align: center;
-  font-weight: bold;
   color: #818181;
   padding: 1em 0 1em;
   border-top: solid 1px #00000029;
@@ -214,37 +253,30 @@
 .jobhunting_memo1__show-result--off {
   bottom: 0;
   box-shadow: 0 -4px 0 0 rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .jobhunting_memo1__show-result--off img {
-  width: 8vw;
+  width: 6vw;
   display: block;
-  margin: 0 auto 1em;
+  margin: 0.5em;
+  height: 2vh;
 }
 .jobhunting_memo1__show-result--off button {
   font-size: 1em;
 }
 .jobhunting_memo1__show-result--on {
   top: calc(5vh + 1em);
-  -webkit-animation-delay: 0;
-  -webkit-animation-duration: 1.1s;
-  -webkit-animation-name: animation-slide-in-up;
-  -webkit-animation-fill-mode: fowards;
-  -webkit-animation-direction: linear;
-  -moz-animation-delay: 0;
-  -moz-animation-duration: 1.1s;
-  -moz-animation-name: animation-slide-in-up;
-  -moz-animation-fill-mode: fowards;
-  -moz-animation-direction: linear;
-  animation-delay: 0;
-  animation-duration: 1.1s;
-  animation-name: animation-slide-in-up;
-  animation-fill-mode: fowards;
-  animation-direction: linear;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .jobhunting_memo1__show-result--on img {
-  width: 8vw;
+  width: 6vw;
   display: block;
-  margin: 0 auto 1em;
+  margin: 0.5em;
+  height: 2vh;
   transform: rotate(180deg);
 }
 .jobhunting_memo1__show-result--on button {
@@ -256,21 +288,6 @@
   width: 100vw;
   height: 80vh;
   overflow-y: auto;
-  -webkit-animation-delay: 0;
-  -webkit-animation-duration: 1.1s;
-  -webkit-animation-name: animation-slide-in-up;
-  -webkit-animation-fill-mode: fowards;
-  -webkit-animation-direction: linear;
-  -moz-animation-delay: 0;
-  -moz-animation-duration: 1.1s;
-  -moz-animation-name: animation-slide-in-up;
-  -moz-animation-fill-mode: fowards;
-  -moz-animation-direction: linear;
-  animation-delay: 0;
-  animation-duration: 1.1s;
-  animation-name: animation-slide-in-up;
-  animation-fill-mode: fowards;
-  animation-direction: linear;
 }
 .jobhunting_memo1__result--off {
   display: none;
