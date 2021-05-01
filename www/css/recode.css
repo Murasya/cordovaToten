@@ -34,12 +34,14 @@
 .recode__topbtns--on {
   background-color: #9A9A9A;
   width: 25vw;
-  text-align: center;
   border-radius: 25vw;
   margin: 5px;
   font-weight: bold;
   color: #FFF;
   padding: 2px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 .recode__topbtns--on img {
   height: 1em;
@@ -52,6 +54,9 @@
   margin: 5px;
   color: #B5B5B5;
   padding: 2px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 .recode__topbtns--off img {
   height: 1em;
