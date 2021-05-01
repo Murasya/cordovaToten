@@ -1,3 +1,5 @@
+const DEBUG_MODE = true;
+
 // Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: "AIzaSyBida9QeFpWHZcexb8Wby3XYRMCNib-BaY",

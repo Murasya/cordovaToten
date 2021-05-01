@@ -1,0 +1,89 @@
+@charset "UTF-8";
+.jobhunting_story {
+  font-size: 2vh;
+}
+.jobhunting_story__header {
+  background-color: #FFF;
+  font-weight: bold;
+  color: #6A6A6A;
+  height: 5vh;
+  width: 90vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5vw 0;
+}
+.jobhunting_story__background {
+  background-image: url("../images/2021_02_25_新素材/story.png");
+  background-size: cover;
+  background-position: center center;
+  height: 95vh;
+  width: 100vw;
+}
+.jobhunting_story__fukidashi {
+  margin: 0 auto;
+  padding: 60vh 0 0;
+  height: 35vh;
+  width: 90vw;
+}
+.jobhunting_story__reader {
+  background-color: #E4E4E4;
+  border-radius: 1em 1em 0 0;
+  font-weight: bold;
+  padding: .5em 1em;
+}
+.jobhunting_story__comment-wrapper {
+  background-color: #FFF;
+  border-radius: 0 0 1em 1em;
+  height: 50%;
+  padding: 2em 1em;
+}
+.jobhunting_story__comment {
+  white-space: pre-wrap;
+  margin-bottom: 1.5em;
+}
+.jobhunting_story__comment--red {
+  color: #ED6A4C;
+}
+.jobhunting_story__triangle {
+  border-left: solid 10px transparent;
+  border-right: solid 10px transparent;
+  border-top: solid 15px #ED6A4C;
+  position: absolute;
+  right: 10vw;
+  bottom: 7vh;
+}
+.jobhunting_story__triangle-before {
+  font-weight: bold;
+  color: #ED6A4C;
+  position: absolute;
+  bottom: 7vh;
+  right: 17vw;
+}
+.jobhunting_story__triangle2 {
+  border-left: solid 10px transparent;
+  border-right: solid 10px transparent;
+  border-top: solid 1em #ED6A4C;
+  display: inline-block;
+}
+.jobhunting_story__orange-button {
+  background-color: #ED6A4C;
+  color: #FFF;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2em;
+  margin: 1vh 0;
+  border-radius: .5em;
+}
+.jobhunting_story__skip {
+  background-color: #E4E4E4;
+  color: #6A6A6A;
+  border: none;
+  box-shadow: none;
+  border-radius: .5em;
+  padding: .5em 1em;
+}
+
+/*# sourceMappingURL=jobhunting_story.css.map */
