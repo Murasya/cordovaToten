@@ -292,5 +292,8 @@
 .jobhunting_memo1__result--off {
   display: none;
 }
+.jobhunting_memo1__result__title--on {
+  color: #ED6A4C;
+}
 
 /*# sourceMappingURL=jobhunting_memo1.css.map */
