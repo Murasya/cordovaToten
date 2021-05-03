@@ -3225,7 +3225,7 @@
               this.showSavingModal = false;
             },
             back_button: function() {
-              myNavigator.popPage();
+              myNavigator.resetToPage("myRecode.html");
             }
           }
         });
@@ -3500,13 +3500,14 @@
               qAndA.memo = this.memo;
               qAndA.success = this.success;
               updateData(qAndA, function(){
-                myNavigator.resetToPage("result.html",{
+                myNavigator.pushPage("result.html",{
                   data: {
                     qAndA: qAndA,
                     recode: true,
                   }
                 })
               });
+              myNavigator.removePage(myNavigator.pages.length-2);
             }
           }
         });
