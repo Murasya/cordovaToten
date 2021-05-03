@@ -1,5 +1,5 @@
 .overlay__save {
-  z-index: 99;
+  z-index: 100;
   position: fixed;
   top: 0;
   left: 0;
@@ -18,6 +18,12 @@
   display: block;
   margin-top: 0;
 }
+
+.overlay__save p {
+  color: white;
+}
+
+
 .overlay__save--yesbtn {
   width: 78.9pt;
   height: 30.29pt;
