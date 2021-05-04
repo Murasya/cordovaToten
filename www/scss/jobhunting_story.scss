@@ -83,4 +83,47 @@
     border-radius: .5em;
     padding: .5em 1em;
   }
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(55, 107, 152, 0.85);
+    text-align: center;
+
+    &-str1 {
+      color: #FFF;
+      font-weight: bold;
+      border-bottom: solid 2px #FFF;
+      display: inline-block;
+      padding-top: 30vh;
+      padding-bottom: .3em;
+      font-size: 1.3em;
+    }
+    &-str2 {
+      color: #FFF;
+      padding: 3vh 0 5vh;
+    }
+    &-button {
+      &--orange {
+        box-shadow: none;
+        border: none;
+        padding: .5em 1.5em;
+        border-radius: .5em;
+        font-size: 2vh;
+        background-color: #ED6A4C;
+        color: #FFF;
+      }
+      &--white {
+        box-shadow: none;
+        border: none;
+        padding: .5em 1.5em;
+        border-radius: .5em;
+        font-size: 2vh;
+        background-color: #FFF;
+        color: #474645;
+      }
+    }
+  }
 }

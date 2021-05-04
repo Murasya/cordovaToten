@@ -85,5 +85,45 @@
   border-radius: .5em;
   padding: .5em 1em;
 }
+.jobhunting_story__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(55, 107, 152, 0.85);
+  text-align: center;
+}
+.jobhunting_story__overlay-str1 {
+  color: #FFF;
+  font-weight: bold;
+  border-bottom: solid 2px #FFF;
+  display: inline-block;
+  padding-top: 30vh;
+  padding-bottom: .3em;
+  font-size: 1.3em;
+}
+.jobhunting_story__overlay-str2 {
+  color: #FFF;
+  padding: 3vh 0 5vh;
+}
+.jobhunting_story__overlay-button--orange {
+  box-shadow: none;
+  border: none;
+  padding: .5em 1.5em;
+  border-radius: .5em;
+  font-size: 2vh;
+  background-color: #ED6A4C;
+  color: #FFF;
+}
+.jobhunting_story__overlay-button--white {
+  box-shadow: none;
+  border: none;
+  padding: .5em 1.5em;
+  border-radius: .5em;
+  font-size: 2vh;
+  background-color: #FFF;
+  color: #474645;
+}
 
 /*# sourceMappingURL=jobhunting_story.css.map */

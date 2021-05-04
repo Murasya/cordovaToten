@@ -3226,18 +3226,8 @@
               if(!DEBUG_MODE) {
                 updateData(qAndA);
               }
-              if(DEBUG_MODE) {
-                if(qAndA.color == "jobhunting") {
-                  myNavigator.bringPageTop('jobhunting_story.html', {
-                    data: {
-                      qAndA: qAndA,
-                    },
-                  });
-                }
-                return;
-              }
               if(qAndA.color == "jobhunting") {
-                myNavigator.pushPage('jobhunting_analyze.html', {
+                myNavigator.bringPageTop('jobhunting_story.html', {
                   data: {
                     qAndA: qAndA,
                   },
@@ -3679,19 +3669,24 @@
                 ons.notification.toast("どれか一つは書いてください", {timeout: 2000, animation: "fall"});
                 return;
               }
-              if(DEBUG_MODE) {myNavigator.bringPageTop('jobhunting_story.html',{data: {wp:wp}});return;}
-              setNewWellPoint(wp, function(id) {
-                wp.id = id;
-                myNavigator.pushPage('jobhunting_memo3.html', {
+              if(DEBUG_MODE) {
+                myNavigator.bringPageTop('jobhunting_story.html',{
                   data: {
-                    wp: wp,
+                    wp:wp
                   }
                 });
-              });
+              } else {
+                setNewWellPoint(wp, function(id) {
+                  wp.id = id;
+                  myNavigator.bringPageTop('jobhunting_story.html', {
+                    data: {
+                      wp: wp,
+                    }
+                  });
+                });
+              }
             },
             savingButton: function() {
-              var id = uniqueId();
-              console.log("id:"+id);
               WellPoint(id, this.defo_memo.concat(this.memo));
               // TODO: データベース挿入
               myNavigator.resetToPage('index.html');
@@ -3786,13 +3781,22 @@
                   theme = wp.contents[num].content3;
                   break;
               }
-              if(DEBUG_MODE) {myNavigator.bringPageTop('jobhunting_story.html', {data: {theme: theme,analyzeid: "eJ7lVVwlve65wc2NAmEY",}});return;}
-              myNavigator.pushPage('jobhunting_memo4.html', {
-                data: {
-                  theme: theme,
-                  analyzeid: wp.analyzeid,
-                }
-              });
+              if(DEBUG_MODE) {
+                myNavigator.bringPageTop('jobhunting_story.html', {
+                  data: {
+                    theme: theme,
+                    analyzeid: "eJ7lVVwlve65wc2NAmEY",
+                  }
+                });
+                return;
+              } else {
+                myNavigator.bringPageTop('jobhunting_story.html', {
+                  data: {
+                    theme: theme,
+                    analyzeid: wp.analyzeid,
+                  }
+                });
+              }
             },
             savingButton: function() {
               // TODO: データベース
@@ -3912,13 +3916,13 @@
                 myNavigator.bringPageTop('jobhunting_story.html', {data: {
                   qAndA: qAndA
                 }});
-                return;
+              } else {
+                myNavigator.bringPageTop('jobhunting_story.html', {
+                  data: {
+                    qAndA: qAndA
+                  }
+                });
               }
-              myNavigator.replacePage('start.html', {
-                data: {
-                  qAndA: qAndA
-                }
-              });
             },
             savingButton: function() {
               // TODO: データベース
@@ -4041,7 +4045,9 @@
               }
               consideration.analyzeid = qAndA.id;
               consideration.contents = this.contents;
-              consideration.id = setNewConsideration(consideration);
+              if(!DEBUG_MODE) {
+                consideration.id = setNewConsideration(consideration);
+              }
               qAndA.memo = this.memo;
               if(!DEBUG_MODE) {
                 updateData(qAndA);
@@ -4052,13 +4058,13 @@
                     analyzeid: "eJ7lVVwlve65wc2NAmEY",
                   }
                 });
-                return;
+              } else {
+                myNavigator.bringPageTop('jobhunting_story.html', {
+                  data: {
+                    analyzeid: qAndA.id,
+                  }
+                });
               }
-              myNavigator.pushPage('jobhunting_gakuchika.html', {
-                data: {
-                  analyzeid: qAndA.id,
-                }
-              });
             },
             savingButton: function() {
               // TODO: データベース
@@ -4256,11 +4262,7 @@
               if(!DEBUG_MODE) {
                 gakuchika.id = setNewGakuchika(gakuchika);
               }
-              if(DEBUG_MODE) {
-                myNavigator.bringPageTop('jobhunting_story.html');
-                return;
-              }
-              myNavigator.resetToPage('index.html');
+              myNavigator.bringPageTop('jobhunting_story.html');
             },
             savingButton: function() {
               // TODO: データベース
@@ -4459,6 +4461,14 @@
           </div>
         </div>
       </div>
+      <div class="jobhunting_story__overlay" v-show="overlay" @click="closeOverlay">
+        <div class="jobhunting_story__overlay-str1">保存して中断しますか？</div>
+        <div class="jobhunting_story__overlay-str2">中断後はアーカイブから再開できます。</div>
+        <div>
+          <button class="jobhunting_story__overlay-button--orange" @click="save">中断</button>
+          <button class="jobhunting_story__overlay-button--white" @click="closeOverlay">戻る</button>
+        </div>
+      </div>
     </div>
     <script>
       var vue;
@@ -4510,12 +4520,12 @@
             ],
             buttonNum: 0,
             buttons: [
-              ["ガクチカ", "志望動機"],
-              ["OK", "選びなおす"],
-              ["続ける", "保存して休憩する"],
-              ["先輩の分析を見る", "見ないでやってみる"],
-              ["続ける", "保存して休憩する"],
-              ["先輩のガクチカを見る", "見ないでやってみる"],
+              ['ガクチカ', "志望動機"],//3
+              ["OK", "選びなおす"],//10
+              ["続ける", "保存して休憩する"],//13
+              ["先輩の分析を見る", "見ないでやってみる"],//15
+              ["続ける", "保存して休憩する"],//24
+              ["先輩のガクチカを見る", "見ないでやってみる"],//27
             ],
             j: 0,
             lastButtons: [
@@ -4528,6 +4538,7 @@
             ],
             buttonMode: false,
             lastMode: false,
+            overlay: false,
           },
           methods: {
             next: function() {
@@ -4601,10 +4612,39 @@
               this.i++;
             },
             onButton1: function() {
-              this.buttonMode = false;
+              switch(this.i) {
+                case 15:
+                case 27:
+                  window.open("https://noteappm.wixsite.com/policies", "_self", "location=yes");//TODO: URL変更
+                  break;
+                default:
+                  this.buttonMode = false;
+                  break;
+              }
             },
             onButton2: function() {
-              this.buttonMode = false;
+              switch(this.i) {
+                case 3:
+                  ons.notification.toast("Coming Soon...", {timeout: 2000, animation: "fall"});
+                  break;
+                case 10:
+                  myNavigator.bringPageTop("jobhunting_memo3.html");
+                  this.buttonNum--;
+                  break;
+                case 13:
+                case 24:
+                  this.overlay = true;
+                  break;
+                default:
+                  this.buttonMode = false;
+                  break;
+              }
+            },
+            closeOverlay: function() {
+              this.overlay = false;
+            },
+            save: function() {
+              myNavigator.resetToPage('index.html');
             },
             skip: function() {
               if(this.i < 3) {
@@ -4647,7 +4687,6 @@
         });
       }
       ons.getScriptPage().onShow = function() {
-        console.log(myNavigator.topPage.data.theme + vue.i);
         switch(vue.i) {
           case 10:
             vue.comments[10] = "<div class='jobhunting_story__triangle2'></div>この「" + myNavigator.topPage.data.theme + "」という出来事にするテン？";
