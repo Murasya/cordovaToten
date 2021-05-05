@@ -298,5 +298,11 @@
     &--off {
       display:none;
     }
+    &__title{
+      &--on{
+        color:#ED6A4C;
+        font-weight: bold;
+      }
+    }
   }
 }
