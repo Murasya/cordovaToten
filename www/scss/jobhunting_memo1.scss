@@ -204,8 +204,8 @@
     border-left: solid 1px #ED6A4C;
     border-bottom: solid 1px #ED6A4C;
     display: block;
-    width: 80vw;
-    margin: 2vh 10vw;
+    width: calc(90vw - 2px);
+    margin: 2vh 5vw;
     height: 5em;
     font-size: 0.8em;
   }
