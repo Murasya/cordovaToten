@@ -3435,7 +3435,7 @@
     <div id="edit" class="edit" v-cloak>
       <p class="edit__theme">{{ theme }}</p>
       <span :class="headerClass">
-        <span v-for="n in category">{{ n }}&emsp;</span>
+        <span v-for="n in category">&emsp;{{ n }}&emsp;</span>
       </span>
       <a class="edit__comp" @click="goComp"><img  src="images/分析カテゴリ追加時_素材/edit-finish_object.png" height="30px"></a>
       <div class="edit__writting" v-for="qa in data" :key="qa.num">
@@ -3489,6 +3489,7 @@
           why = "なぜ";
         }
         var numberClass = [];
+        console.log(qAndA.category);
         items.forEach(e => {
           if(e.tag == "in") {
             numberClass.push("blue");
