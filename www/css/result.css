@@ -131,7 +131,7 @@
   display: flex;
   justify-content: space-between;
   left: 25vw;
-  bottom: 10vh;
+  bottom: 5vh;
   width: 50vw;
   border-radius: 12vw;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
@@ -150,6 +150,10 @@
 }
 .result__floatbutton-wrapper--active {
   background-color: #ED6A4C;
+}
+.result__space {
+  height: 15vh;
+  width: 100vw;
 }
 
 /*# sourceMappingURL=result.css.map */
