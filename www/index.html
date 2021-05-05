@@ -33,6 +33,8 @@
   <link rel="stylesheet" href="css/snsButton.css">
   <link rel="stylesheet" href="css/result_memo.css">
   <link rel="stylesheet" href="css/memo.css">
+  <link rel="stylesheet" href="css/jobhunting_story.css">
+  <link rel="stylesheet" href="css/jobhunting_story_number.css">
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
 
@@ -59,7 +61,7 @@
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> -->
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="jobhunting_story.html"></ons-navigator>
 </body>
 </html>
 
@@ -110,7 +112,20 @@
                 <a href="https://note.com/toten_app" class="snsButton__note">noteで見てみる</a>
               </div>
             </div>
-            <div class="archive" v-if="recent.length!=0">
+            <!-- news -->
+            <div class="index__news">
+              <div class="index__news-item">
+                <span class="index__news-category">イベント情報</span>
+                <span class="index__news-date">04.19.</span>
+                <div class="index__news-title">就活団体「キャリ窓+」とコラボ！自己分析イベント開催</div>
+              </div>
+              <div class="index__news-item">
+                <span class="index__news-category">お役立ちコンテンツ</span>
+                <span class="index__news-date">04.12.</span>
+                <div class="index__news-title">-自己分析上級者向け- とーてん活用術を公開中！</div>
+              </div>
+            </div>
+            <!-- <div class="archive" v-if="recent.length!=0">
               <a v-for="data in recent" class="archive__data" @click="onDataButton(data)">
                 <span :class="data.color=='hobby'?'archive__time--pink':
                         (data.color=='future'?'archive__time--yellow':
@@ -126,7 +141,7 @@
             </div>
             <div v-else>
               <p class="index__mada">まだ記録がありません。</p>
-            </div>
+            </div> -->
             <div class="index__floatbutton" @click="goMemo"><img src="images/2021_02_25_新素材/memo_icon_add.png"></div>
           </div>
         </div>
@@ -215,7 +230,7 @@
         });
         firebase.auth().onAuthStateChanged(user => {
           if(user) {
-            vue.recent = getQuestionAndAnswer(2);
+            //vue.recent = getQuestionAndAnswer(2);
             vue.currentUser = user.uid;
             console.log(vue.currentUser);
             vue.loading = true;
@@ -2598,10 +2613,10 @@
               document.getElementById('myNavigator').pushPage('help.html');
             },
             nextButtonClick: function() {
-              if(this.qa.answer == "") {
+              if(this.qa.answer == "" && !DEBUG_MODE) {
                 ons.notification.toast( '回答欄が入力されていません', {timeout: 1000, animation: 'fall'});
                 return;
-              } else if(this.qa.tag == "") {
+              } else if(this.qa.tag == "" && !DEBUG_MODE) {
                 ons.notification.toast( '内と外が決まっていません', {timeout: 1000, animation: 'fall'});
                 return;
               }
@@ -2624,7 +2639,9 @@
               qAndA.questions.push(this.qa.why);
               qAndA.answers.push(this.qa.answer);
               qAndA.tags.push(this.qa.tag);
-              updateData(qAndA);
+              if(!DEBUG_MODE) {
+                updateData(qAndA);
+              }
               this.qa.num++;
               this.qa.tag = "";
               this.numberClass = "defo";
@@ -2634,11 +2651,11 @@
               
             },
             finishButtonClick: function() {
-              if (this.qa.answer == "" && this.qa.num == 5) {
+              if ((this.qa.answer == "" && this.qa.num == 5) && !DEBUG_MODE) {
                 ons.notification.toast("回答欄が入力されていません", {timeout: 1000, animation: "fall"});
                 return;
               }
-              if(this.qa.answer != "" && this.qa.tag == "") {
+              if((this.qa.answer != "" && this.qa.tag == "") && !DEBUG_MODE) {
                 ons.notification.toast("内と外が決まっていません", {timeout: 1000, animation: "fall"});
                 return;
               }
@@ -2659,7 +2676,9 @@
                 qAndA.questions.push(this.qa.why);
                 qAndA.answers.push(this.qa.answer);
                 qAndA.tags.push(this.qa.tag);
-                updateData(qAndA);
+                if(!DEBUG_MODE) {
+                  updateData(qAndA);
+                }
               }
               myNavigator.pushPage('result.html',{
                 data: {
@@ -3067,6 +3086,33 @@
         <p>{{ questions[index] }}</p>
         <p>{{ answers[index] }}</p>
       </div>
+      <!-- consideration -->
+      <div class="jobhunting_memo1__5w" v-show="consideration[0].analyzeid !== '' && recode">
+        <div class="jobhunting_memo1__5w-contents">
+          <p>あなたの強みはどこにありそう？</p>
+          <textarea readonly>{{ consideration[0].contents[0] }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>あなたの強みはどんなことに活かせそう？</p>
+          <textarea readonly>{{ consideration[0].contents[1] }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>この出来事の中で大切だった・大事にしていたことは?</p>
+          <textarea readonly>{{ consideration[0].contents[2] }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>一番工夫したポイントは？</p>
+          <textarea readonly>{{ consideration[0].contents[3] }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>この出来事で悪かったことは?</p>
+          <textarea readonly>{{ consideration[0].contents[4] }}</textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>今回の分析で考えたりていないことは?</p>
+          <textarea readonly>{{ consideration[0].contents[5] }}</textarea>
+        </div>
+      </div>
       <!-- memo -->
       <div v-if="color !== 'jobhunting'" style="width:100%;">
         <textarea class="result__memo" v-model="memo" v-if="recode == false" placeholder="振り返りを入力"></textarea>
@@ -3082,6 +3128,7 @@
       <select v-else class="result__success" disabled>
         <option>{{ success }}</option>
       </select>
+      <!-- buttons -->
       <div class="result__btns" v-show="recode == false">
         <div class="result__btns--ver">
           <a @click="interruptionButtonClick"><img src="./images/各種ボタン/break_ボタン.png" alt="中断ボタン" width="30px"></a>
@@ -3098,13 +3145,17 @@
           <button class="overlay__save--nobtn" @click="closeModal">いいえ</button>
         </div>
       </div>
+      <div style="height: 10vh;"></div>
       <result-float-button :id="id" :active="1" v-show="recode"></result-float-button>
     </div>
+    <div class="result__space"></div>
   
     <script>
       var myNavigator = document.querySelector('#myNavigator');
       ons.getScriptPage().onInit = function() {
-        var qAndA = myNavigator.topPage.data.qAndA;
+        var debug = new QAndA();
+        debug.questions = ["あ","あ"]; debug.answers["Empty","Empty"]; debug.tags["in"];
+        var qAndA = myNavigator.topPage.data.qAndA ?? debug;
         var recode = false;
         if(myNavigator.topPage.data.recode) {
           recode = true;
@@ -3128,12 +3179,14 @@
             blueClass: "blue",
             headerClass: "",
             showSavingModal: false,
+            consideration: [new Consideration()],
             tweet: {
               text: "",
               url: "http://toten.html.xdomain.jp/",
             }
           },
           created: function() {
+            this.consideration = getConsiderationFromAnalyzeid(qAndA.id);
             switch(this.color) {
               case "future":
                 this.headerClass = "result__category--yellow";
@@ -3164,16 +3217,18 @@
                 ons.notification.toast("分析結果を振り返って今後に活かしましょう", {timeout: 1000, animation: "fall"});
                 return;
               }
-              if (this.success == "") {
+              if (this.success == "" && !DEBUG_MODE) {
                 ons.notification.toast("分析がうまくいったかを考えて選びましょう", {timeout: 1000, animation: "fall"});
                 return;
               }
               qAndA.memo = this.memo;
               qAndA.success = this.success;
               qAndA.complete = true;
-              updateData(qAndA);
+              if(!DEBUG_MODE) {
+                updateData(qAndA);
+              }
               if(qAndA.color == "jobhunting") {
-                myNavigator.pushPage('jobhunting_analyze.html', {
+                myNavigator.bringPageTop('jobhunting_story.html', {
                   data: {
                     qAndA: qAndA,
                   },
@@ -3184,7 +3239,7 @@
               sInt();
             },
             goEdit: function() {
-              myNavigator.pushPage('edit.html', {
+              myNavigator.bringPageTop('edit.html', {
                 data: {
                   qAndA: qAndA,
                 },
@@ -3225,7 +3280,7 @@
               this.showSavingModal = false;
             },
             back_button: function() {
-              myNavigator.popPage();
+              myNavigator.resetToPage("myRecode.html");
             }
           }
         });
@@ -3381,7 +3436,7 @@
     <div id="edit" class="edit" v-cloak>
       <p class="edit__theme">{{ theme }}</p>
       <span :class="headerClass">
-        <span v-for="n in category">{{ n }}&emsp;</span>
+        <span v-for="n in category">&emsp;{{ n }}&emsp;</span>
       </span>
       <a class="edit__comp" @click="goComp"><img  src="images/分析カテゴリ追加時_素材/edit-finish_object.png" height="30px"></a>
       <div class="edit__writting" v-for="qa in data" :key="qa.num">
@@ -3435,6 +3490,7 @@
           why = "なぜ";
         }
         var numberClass = [];
+        console.log(qAndA.category);
         items.forEach(e => {
           if(e.tag == "in") {
             numberClass.push("blue");
@@ -3500,7 +3556,7 @@
               qAndA.memo = this.memo;
               qAndA.success = this.success;
               updateData(qAndA, function(){
-                myNavigator.resetToPage("result.html",{
+                myNavigator.bringPageTop("result.html",{
                   data: {
                     qAndA: qAndA,
                     recode: true,
@@ -3521,7 +3577,7 @@
     <div id="jobhunting_memo1" class="jobhunting_memo1" v-cloak>
       <div class="jobhunting_memo1__header">
         <span>▼</span>時期ごとに頑張ったことを記入しよう
-        <img src="images/各種ボタン/break_ボタン.png" @click="openModal">
+        <!-- <img src="images/各種ボタン/break_ボタン.png" @click="openModal"> -->
       </div>
       <!-- 大学１〜４ -->
       <div class="jobhunting_memo1__folder" v-for="item in defo_memo" :key="item.header">
@@ -3548,7 +3604,7 @@
       </div>
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
         <p class="overlay__save--string">保存して中断しますか？</p>
-        <p>中断後はアーカイブから再開できます。</p>
+        <p>中断後は<span>アーカイブ</span>から再開できます。</p>
         <div>
           <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
           <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
@@ -3610,22 +3666,28 @@
                   isEmpty = false;
                 }
               });
-              if(isEmpty) {
+              if(isEmpty && !DEBUG_MODE) {
                 ons.notification.toast("どれか一つは書いてください", {timeout: 2000, animation: "fall"});
                 return;
               }
-              setNewWellPoint(wp, function(id) {
-                wp.id = id;
-                myNavigator.pushPage('jobhunting_memo3.html', {
+              if(DEBUG_MODE) {
+                myNavigator.bringPageTop('jobhunting_story.html',{
                   data: {
-                    wp: wp,
+                    wp:wp
                   }
                 });
-              });
+              } else {
+                setNewWellPoint(wp, function(id) {
+                  wp.id = id;
+                  myNavigator.bringPageTop('jobhunting_story.html', {
+                    data: {
+                      wp: wp,
+                    }
+                  });
+                });
+              }
             },
             savingButton: function() {
-              var id = uniqueId();
-              console.log("id:"+id);
               WellPoint(id, this.defo_memo.concat(this.memo));
               // TODO: データベース挿入
               myNavigator.resetToPage('index.html');
@@ -3646,7 +3708,7 @@
     <div id="jobhunting_memo3" class="jobhunting_memo1" v-cloak>
       <div class="jobhunting_memo1__header">
         <span>▼</span>一番思い入れのある出来事を選ぼう
-        <img src="images/各種ボタン/break_ボタン.png" @click="openModal">
+        <!-- <img src="images/各種ボタン/break_ボタン.png" @click="openModal"> -->
       </div>
       <div class="jobhunting_memo1__folder" v-for="(item, index) in memo" :key="item.header">
         <div class="jobhunting_memo1__folder--header1"><input type="text" v-model="item.header" readonly></div>
@@ -3673,7 +3735,7 @@
       </div>
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
         <p class="overlay__save--string">保存して中断しますか？</p>
-        <p>中断後はアーカイブから再開できます。</p>
+        <p>中断後は<span>アーカイブ</span>から再開できます。</p>
         <div>
           <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
           <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
@@ -3683,6 +3745,7 @@
     <script>
       var myNavigator = document.querySelector('#myNavigator');
       ons.getScriptPage().onInit = function() {
+        console.log(myNavigator.topPage.data);
         var wp = myNavigator.topPage.data.wp ?? new WellPoint();
         new Vue({
           el: '#jobhunting_memo3',
@@ -3697,12 +3760,14 @@
             },
             nextButton: function() {
               console.log(this.picked);
-              if(this.picked === "") {
+              if(this.picked === "" && !DEBUG_MODE) {
                 ons.notification.toast('どれか一つを選択してください', {animation: 'fall', timeout: 1000});
                 return;
               }
               wp.useNumber = this.picked;
-              updateWellPoint(wp);
+              if(!DEBUG_MODE) {
+                updateWellPoint(wp);
+              }
               var theme = "";
               const num = wp.useNumber / 3;
               switch(wp.useNumber % 3) {
@@ -3716,12 +3781,22 @@
                   theme = wp.contents[num].content3;
                   break;
               }
-              myNavigator.pushPage('jobhunting_memo4.html', {
-                data: {
-                  theme: theme,
-                  analyzeid: wp.analyzeid,
-                }
-              });
+              if(DEBUG_MODE) {
+                myNavigator.bringPageTop('jobhunting_story.html', {
+                  data: {
+                    theme: theme,
+                    analyzeid: "eJ7lVVwlve65wc2NAmEY",
+                  }
+                });
+                return;
+              } else {
+                myNavigator.bringPageTop('jobhunting_story.html', {
+                  data: {
+                    theme: theme,
+                    analyzeid: wp.analyzeid,
+                  }
+                });
+              }
             },
             savingButton: function() {
               // TODO: データベース
@@ -3779,7 +3854,7 @@
       </div>
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal"> <!-- modal -->
         <p class="overlay__save--string">保存して中断しますか？</p>
-        <p>中断後はアーカイブから再開できます。</p>
+        <p>中断後は<span>アーカイブ</span>から再開できます。</p>
         <div>
           <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
           <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
@@ -3810,7 +3885,7 @@
               this.showSavingModal = false;
             },
             nextButton: function() {
-              if(this.when === "" || this.where === "" || this.who === "" || this.what === "" || this.how === "") {
+              if((this.when === "" || this.where === "" || this.who === "" || this.what === "" || this.how === "") && !DEBUG_MODE) {
                 ons.notification.toast("全て入力してください", {timeout: 2000, animation: "fall"});
                 return;
               }
@@ -3824,7 +3899,9 @@
               event.what = this.what;
               event.how = this.how;
               event.uid = firebase.auth().currentUser.uid;
-              event.id = setNewMyEvent(event);
+              if(!DEBUG_MODE) {
+                event.id = setNewMyEvent(event);
+              }
               
               var qAndA = new QAndA();
               qAndA.questions.push("ガクチカ");
@@ -3834,11 +3911,17 @@
               qAndA.color = "jobhunting";
               qAndA.id = analyzeid;
               localStorage.setItem("tutorial_finished", "true");
-              myNavigator.replacePage('start.html', {
-                data: {
+              if(DEBUG_MODE) {
+                myNavigator.bringPageTop('jobhunting_story.html', {data: {
                   qAndA: qAndA
-                }
-              });
+                }});
+              } else {
+                myNavigator.bringPageTop('jobhunting_story.html', {
+                  data: {
+                    qAndA: qAndA
+                  }
+                });
+              }
             },
             savingButton: function() {
               // TODO: データベース
@@ -3910,7 +3993,7 @@
       <!-- savingModal -->
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal"> <!-- modal -->
         <p class="overlay__save--string">保存して中断しますか？</p>
-        <p>中断後はアーカイブから再開できます。</p>
+        <p>中断後は<span>アーカイブ</span>から再開できます。</p>
         <div>
           <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
           <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
@@ -3956,20 +4039,32 @@
               this.showSavingModal = false;
             },
             nextButton: function() {
-              if(this.contents[0] === "" || this.contents[1] === "" || this.contents[2] === "" || this.contents[3] === "" || this.contents[4] === "" || this.contents[5] === "") {
+              if((this.contents[0] === "" || this.contents[1] === "" || this.contents[2] === "" || this.contents[3] === "" || this.contents[4] === "" || this.contents[5] === "") && !DEBUG_MODE) {
                 ons.notification.toast("全て入力してください", {timeout: 2000, animation: "fall"});
                 return;
               }
               consideration.analyzeid = qAndA.id;
               consideration.contents = this.contents;
-              consideration.id = setNewConsideration(consideration);
+              if(!DEBUG_MODE) {
+                consideration.id = setNewConsideration(consideration);
+              }
               qAndA.memo = this.memo;
-              updateData(qAndA);
-              myNavigator.pushPage('jobhunting_gakuchika.html', {
-                data: {
-                  analyzeid: qAndA.id,
-                }
-              });
+              if(!DEBUG_MODE) {
+                updateData(qAndA);
+              }
+              if(DEBUG_MODE) {
+                myNavigator.bringPageTop('jobhunting_story.html', {
+                  data: {
+                    analyzeid: "eJ7lVVwlve65wc2NAmEY",
+                  }
+                });
+              } else {
+                myNavigator.bringPageTop('jobhunting_story.html', {
+                  data: {
+                    analyzeid: qAndA.id,
+                  }
+                });
+              }
             },
             savingButton: function() {
               // TODO: データベース
@@ -4030,7 +4125,9 @@
       <!-- result -->
       <div :class="showResultClass ? 'jobhunting_memo1__show-result--on' : 'jobhunting_memo1__show-result--off'">
         <img @click="showResult" src="images/2021_02_25_新素材/jobhunting_ポップアップ.png">
-        <a style="text-decoration: none;" @click="showContent(0)">出来事整理</a>｜<a style="text-decoration: none;" @click="showContent(1)">分析</a>｜<a style="text-decoration: none;" @click="showContent(2)">考察</a>
+        <a style="text-decoration: none;" @click="showContent(0)" :class="contentClass0 ? 'jobhunting_memo1__result__title--on' : 'jobhunting_memo1__result__title--off'">出来事整理</a>｜
+        <a style="text-decoration: none;" @click="showContent(1)" :class="contentClass1 ? 'jobhunting_memo1__result__title--on' : 'jobhunting_memo1__result__title--off'">分析</a>｜
+        <a style="text-decoration: none;" @click="showContent(2)" :class="contentClass2 ? 'jobhunting_memo1__result__title--on' : 'jobhunting_memo1__result__title--off'">考察</a>
       </div>
       
       <!-- 出来事整理 -->
@@ -4106,7 +4203,7 @@
       <!-- savingModal -->
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
         <p class="overlay__save--string">保存して中断しますか？</p>
-        <p>中断後はアーカイブから再開できます。</p>
+        <p>中断後は<span>アーカイブ</span>から再開できます。</p>
         <div>
           <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
           <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
@@ -4154,7 +4251,7 @@
               this.showSavingModal = false;
             },
             nextButton: function() {
-              if(this.contents[0] === "" || this.contents[1] === "" || this.contents[2] === "" || this.contents[3] === "" || this.contents[4] === "") {
+              if((this.contents[0] === "" || this.contents[1] === "" || this.contents[2] === "" || this.contents[3] === "" || this.contents[4] === "") && !DEBUG_MODE) {
                 ons.notification.toast("全て入力してください", {timeout: 2000, animation: "fall"});
                 return;
               }
@@ -4164,8 +4261,10 @@
               gakuchika.color = "jobhunting";
               gakuchika.contents = this.contents;
               gakuchika.uid = firebase.auth().currentUser.uid;
-              gakuchika.id = setNewGakuchika(gakuchika);
-              myNavigator.resetToPage('index.html');
+              if(!DEBUG_MODE) {
+                gakuchika.id = setNewGakuchika(gakuchika);
+              }
+              myNavigator.bringPageTop('jobhunting_story.html');
             },
             savingButton: function() {
               // TODO: データベース
@@ -4251,6 +4350,7 @@
           <textarea readonly>{{ event.how }}</textarea>
         </div>
       </div>
+      <div class="result__space"></div>
       <!-- float button -->
       <result-float-button :id="event.analyzeid" :active="0"></result-float-button>
     </div>
@@ -4325,6 +4425,7 @@
       </div>
       <result-float-button :id="gakuchika.analyzeid" :active="2"></result-float-button>
     </div>
+    <div class="result__space"></div>
     <script>
       var test = new Gakuchika();
       // test.title = "あああ";
@@ -4343,6 +4444,312 @@
             },
           },
         })
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="jobhunting_story.html">
+  <ons-page>
+    <div id="jobhunting_story" class="jobhunting_story" v-cloak>
+      <div class="jobhunting_story__header">{{ titles[titleNum] }}<button class="jobhunting_story__skip" @click="skip" v-show="!buttonMode && !lastMode">SKIP</button></div>
+      <div class="jobhunting_story__background">
+        <div class="jobhunting_story__fukidashi" @click="next">
+          <div class="jobhunting_story__reader">{{ reader }}</div>
+          <div class="jobhunting_story__comment-wrapper">
+            <div class="jobhunting_story__comment" v-html="comments[i]"></div>
+            <div class="jobhunting_story__orange-button" v-show="buttonMode" @click="onButton1">{{ buttons[buttonNum][0] }}</div>
+            <div class="jobhunting_story__orange-button" v-show="buttonMode" @click="onButton2">{{ buttons[buttonNum][1] }}</div>
+            <a class="jobhunting_story__triangle-before" v-show="lastMode">{{ lastButtons[j] }}</a>
+            <div class="jobhunting_story__triangle" v-show="!buttonMode"></div>
+          </div>
+        </div>
+      </div>
+      <div class="jobhunting_story__overlay" v-show="overlay" @click="closeOverlay">
+        <div class="jobhunting_story__overlay-str1">保存して中断しますか？</div>
+        <div class="jobhunting_story__overlay-str2">中断後はアーカイブから再開できます。</div>
+        <div>
+          <button class="jobhunting_story__overlay-button--orange" @click="save">中断</button>
+          <button class="jobhunting_story__overlay-button--white" @click="closeOverlay">戻る</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      var vue;
+      ons.getScriptPage().onInit = function() {
+        var myNavigator = document.querySelector('#myNavigator');
+        vue = new Vue({
+          el: "#jobhunting_story",
+          data: {
+            i: 0,
+            titles: [
+              "STEP1 出来事整理 編",
+              "STEP2 なぜなぜ分析 編",
+              "STEP3 ガクチカ 編",
+            ],
+            titleNum: 0,
+            reader: "テンちゃん",
+            comments: [
+              "来てくれてうれしいテン〜！！", // 0
+              "これから、<br><br>過去の出来事を整理したうえで、<br><br>最終的にはガクチカを書くところまで誘導していくから、", //1
+              "頑張ってついてくるテンよ！", //2
+              "<div class='jobhunting_story__triangle2'></div>今日はどれを考えるテン？", //3
+              "ガクチカ は、<br><br><span class='jobhunting_story__comment--red'>学生時代に力を入れて取り組んだこと</span><br><br>テンね！",//4
+              "まずは、<br><br>学生時代で思い入れのあることを書き出していくテン！",//5
+              "なんでも大丈夫テンよ！",//6
+              "ファミレスの深夜バイトを頑張ったとか、<br><br>友達と江ノ島まで自転車で行ったとか…",//7
+              "たくさんかけたテンね！<br><br>すごいテン…！",//8
+              "いま書き出した中から、<br><br>一番記憶に残っていることや頑張ったことを選ぶテン！",//9
+              "", //10(テーマを入れるためonShowで指定)
+              "今回選ばなかった出来事は、<br><span class='jobhunting_story__comment--red'>アーカイブの分析の芽</span>から確認できるテン。<br><br>それじゃあ、<br>出来事を整理していくテン〜！",//11
+              "いろいろと、<br>過去の出来事を整理できたかテンね？",//12
+              "<div class='jobhunting_story__triangle2'></div>これから、当時の出来事をもとにして、自分自身を掘り下げていくテン！",//13
+              "ここからは、<br><br><span class='jobhunting_story__comment--red'>なぜ？とくり返し自問自答</span>して、<br><br>自分自身を深掘りしていくテン！",//14
+              "<div class='jobhunting_story__triangle2'></div>ちょっと大変かもだから、先輩の事例を見ることをおすすめするテン！",//15
+              "最初の問いは、<br><br><span class='jobhunting_story__comment--red'>なぜそれに取り組んだのか？</span><br><br>テン！",//16
+              "取り組んだ背景を答えるテンよ。<br><br>周りに言われたから…とかでもいいテン。",//17
+              "その答えが、<br><br><span class='jobhunting_story__comment--red'>環境によるもの(外側)</span>なのか、<br><span class='jobhunting_story__comment--red'>自分の気持ち(内側)</span>なのかも考えるテン！",//18
+              "例えば…<br><br>●親に言われたから→外側<br>●面白そうだったから→内側<br><br>とかテンね！",//19
+              "いっぱい自分に向き合ってくれて、<br><br>ありがとうテン！",//20
+              "このあとは、<br><br>いまの結果から自分を考察してみるテン！",//21
+              "あともう一息テン…。<br><br>ここで、<br>自分の強みとかを見つけていくテンよ〜！",//22
+              "いろいろと、 自分の強みとかを実感できたテン？",//23
+              "<div class='jobhunting_story__triangle2'></div>これから、いままでの分析などをもとにして、ガクチカを書いてみるテン！",//24
+              "ここからは、<br><br>フォーマットに沿ってガクチカを書いていくテン！",//25
+              "いままで<br>たくさん自分に向き合ってきたから、<br><br>簡単に書けちゃうかもテン…？？？",//26
+              "<div class='jobhunting_story__triangle2'></div>ちょっと大変かもだから、先輩の事例を見ることをおすすめするテン！",//27
+              "うまく書くコツは、<br><br>自分の出来事整理と、分析の結果・考察をよく読むことテン。",//28
+              "自分の強みや軸はなんだろう？<br><br>って、考えながら書いていくテンよ〜！",//29
+              "おつかれさまテン〜！！！<br><br>ここまでよく頑張ったテン！さすがテン。",//30
+            ],
+            buttonNum: 0,
+            buttons: [
+              ['ガクチカ', "志望動機"],//3
+              ["OK", "選びなおす"],//10
+              ["続ける", "保存して休憩する"],//13
+              ["先輩の分析を見る", "見ないでやってみる"],//15
+              ["続ける", "保存して休憩する"],//24
+              ["先輩のガクチカを見る", "見ないでやってみる"],//27
+            ],
+            j: 0,
+            lastButtons: [
+              "出来事を書き出す",
+              "選ぶ",
+              "出来事整理へ",
+              "考察へ",
+              "ガクチカへ",
+              "FINISH",
+            ],
+            buttonMode: false,
+            lastMode: false,
+            overlay: false,
+          },
+          methods: {
+            next: function() {
+              console.log(this.i);
+              if(this.buttonMode || this.i >= this.comments.length) return;
+              switch(this.i) {
+                case 2:
+                  this.buttonMode = true;
+                  break;
+                case 6:
+                case 8:
+                case 10:
+                case 21:
+                case 28:
+                  this.lastMode = true;
+                  break;
+                case 7:
+                  myNavigator.pushPage("jobhunting_memo1.html");
+                  this.j++;
+                  this.lastMode = false;
+                  break;
+                case 9:
+                  myNavigator.pushPage("jobhunting_memo3.html", {
+                    data: myNavigator.topPage.data,
+                  });
+                  this.j++;
+                  this.lastMode = false;
+                  break;
+                case 11:
+                  myNavigator.pushPage("jobhunting_memo4.html", {
+                    data: myNavigator.topPage.data,
+                  });
+                  this.j++;
+                  this.lastMode = false;
+                  break;
+                case 12:
+                case 14:
+                case 23:
+                case 26:
+                  this.buttonMode = true;
+                  this.buttonNum++;
+                  break;
+                case 13:
+                case 24:
+                  this.titleNum++;
+                  break;
+                case 19:
+                  myNavigator.pushPage("jobhunting_story_number.html", {
+                    data: myNavigator.topPage.data,
+                  });
+                  break;
+                case 22:
+                  myNavigator.pushPage("jobhunting_analyze.html", {
+                    data: myNavigator.topPage.data,
+                  });
+                  this.j++;
+                  this.lastMode = false;
+                  break;
+                case 29:
+                  myNavigator.pushPage("jobhunting_gakuchika.html", {
+                    data: myNavigator.topPage.data,
+                  });
+                  this.j++;
+                  this.lastMode = false;
+                  break;
+                case 30:
+                  myNavigator.resetToPage("index.html");
+                  break;
+              }
+
+              this.i++;
+            },
+            onButton1: function() {
+              switch(this.i) {
+                case 15:
+                case 27:
+                  window.open("https://noteappm.wixsite.com/policies", "_self", "location=yes");//TODO: URL変更
+                  break;
+                default:
+                  this.buttonMode = false;
+                  break;
+              }
+            },
+            onButton2: function() {
+              switch(this.i) {
+                case 3:
+                  ons.notification.toast("Coming Soon...", {timeout: 2000, animation: "fall"});
+                  break;
+                case 10:
+                  myNavigator.bringPageTop("jobhunting_memo3.html");
+                  this.buttonNum--;
+                  break;
+                case 13:
+                case 24:
+                  this.overlay = true;
+                  break;
+                default:
+                  this.buttonMode = false;
+                  break;
+              }
+            },
+            closeOverlay: function() {
+              this.overlay = false;
+            },
+            save: function() {
+              myNavigator.resetToPage('index.html');
+            },
+            skip: function() {
+              if(this.i < 3) {
+                this.i = 3;
+                this.buttonMode = true;
+              } else if(this.i < 7) {
+                this.i = 7;
+                this.next();
+              } else if(this.i < 9) {
+                this.i = 9;
+                this.next();
+              } else if(this.i < 13) {
+                this.i = 13;
+                this.buttonMode = true;
+                this.buttonNum++;
+              } else if(this.i < 15) {
+                this.i = 15;
+                this.buttonMode = true;
+                this.buttonNum++;
+              } else if(this.i < 19) {
+                this.i = 19;
+                this.next();
+              } else if(this.i < 22) {
+                this.i = 22;
+                this.next();
+              } else if(this.i < 24) {
+                this.i = 24;
+                this.buttonMode = true;
+                this.buttonNum++;
+              } else if(this.i < 27) {
+                this.i = 27;
+                this.buttonMode = true;
+                this.buttonNum++;
+              } else if(this.i < 29) {
+                this.i = 29;
+                this.next();
+              }
+            },
+          },
+        });
+      }
+      ons.getScriptPage().onShow = function() {
+        switch(vue.i) {
+          case 10:
+            vue.comments[10] = "<div class='jobhunting_story__triangle2'></div>この「" + myNavigator.topPage.data.theme + "」という出来事にするテン？";
+            vue.buttonMode = true;
+            vue.buttonNum++;
+            break;
+          case 14:
+            vue.buttonMode = true;
+            vue.buttonNum++;
+            break;
+          case 30:
+            vue.lastMode = true;
+        }
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="jobhunting_story_number.html">
+  <ons-page>
+    <div id="jobhunting_story_number" class="jobhunting_story_number">
+      <div class="jobhunting_story_number__header">
+        <div>
+          自分の<span class="jobhunting_story_number__red">外</span>側のことなのか<span class="jobhunting_story_number__red">内</span>側のことなのかによって、左端の<span class="jobhunting_story_number__red">ナンバーボタン</span>の色を変えよう。
+        </div>
+      </div>
+      <div class="jobhunting_story_number__content1">
+        <div class="jobhunting_story_number__str1">
+          <span class="jobhunting_story_number__bold">外：環境によるもの。</span>当時の状況や一般的な事実など。<br><br>
+          <span class="jobhunting_story_number__bold">内：自分の気持ち。</span>考えや感情・意思、体験など。
+        </div>
+      </div>
+      <div class="jobhunting_story_number__content2">
+        <div class="jobhunting_story_number__str2">▼外側=1回タップ(水色)</div>
+        <div class="items">
+          <p class="lightBlue">1</p>
+          <p>なぜ取り組んだの？</p>
+          <p>テキスト</p>
+        </div>
+        <div class="jobhunting_story_number__str2">▼内側=2回タップ(青色)</div>
+        <div class="items">
+          <p class="blue">1</p>
+          <p>なぜ取り組んだの？</p>
+          <p>テキスト</p>
+        </div>
+        <button @click="goNext" class="jobhunting_story_number__button">分析へ進む</button>
+      </div>
+    </div>
+    <script>
+      ons.getScriptPage().onInit = function() {
+        var myNavigator = document.querySelector('#myNavigator');
+        new Vue({
+          el: '#jobhunting_story_number',
+          methods: {
+            goNext: function() {
+              myNavigator.pushPage('start.html', {data: myNavigator.topPage.data});
+            }
+          }
+        });
       }
     </script>
   </ons-page>
