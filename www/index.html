@@ -3148,6 +3148,7 @@
       <div style="height: 10vh;"></div>
       <result-float-button :id="id" :active="1" v-show="recode"></result-float-button>
     </div>
+    <div class="result__space"></div>
   
     <script>
       var myNavigator = document.querySelector('#myNavigator');
@@ -4352,6 +4353,7 @@
           <textarea readonly>{{ event.how }}</textarea>
         </div>
       </div>
+      <div class="result__space"></div>
       <!-- float button -->
       <result-float-button :id="event.analyzeid" :active="0"></result-float-button>
     </div>
@@ -4426,6 +4428,7 @@
       </div>
       <result-float-button :id="gakuchika.analyzeid" :active="2"></result-float-button>
     </div>
+    <div class="result__space"></div>
     <script>
       var test = new Gakuchika();
       // test.title = "あああ";
