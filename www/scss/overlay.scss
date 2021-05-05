@@ -17,12 +17,18 @@
   font-size: 18pt;
   display: block;
   margin-top: 0;
+  font-weight: bold;
+  text-decoration:underline;
+  text-decoration-color:#ffffff;
 }
 
 .overlay__save p {
   color: white;
 }
 
+.overlay__save span{
+  font-weight: bold;
+}
 
 .overlay__save--yesbtn {
   width: 78.9pt;
