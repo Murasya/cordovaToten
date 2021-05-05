@@ -3238,7 +3238,7 @@
               sInt();
             },
             goEdit: function() {
-              myNavigator.pushPage('edit.html', {
+              myNavigator.bringPageTop('edit.html', {
                 data: {
                   qAndA: qAndA,
                 },
@@ -3279,7 +3279,7 @@
               this.showSavingModal = false;
             },
             back_button: function() {
-              myNavigator.popPage();
+              myNavigator.resetToPage("myRecode.html");
             }
           }
         });
@@ -3554,7 +3554,7 @@
               qAndA.memo = this.memo;
               qAndA.success = this.success;
               updateData(qAndA, function(){
-                myNavigator.resetToPage("result.html",{
+                myNavigator.bringPageTop("result.html",{
                   data: {
                     qAndA: qAndA,
                     recode: true,
