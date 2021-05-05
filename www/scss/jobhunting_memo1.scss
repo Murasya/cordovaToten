@@ -72,7 +72,8 @@
     font-weight: bold;
     display: flex;
     align-items: center;
-    position: fixed;
+    position: -webkit-sticky;
+    position: sticky;
     width: 90vw;
     top: 0;
     z-index: 100;
@@ -130,7 +131,7 @@
       input {
         background: none;
         border: none;
-        font-size: .9em;
+        font-size: .8em;
       }
       hr {
         border: solid .8px #C3C3C3;
@@ -143,7 +144,7 @@
     border: solid 1px #D9D9D9;
     border-radius: 10px;
     padding: 2vw;
-    margin-top: calc(5vh + 2em);
+    margin-top: 2em;
     background-color: #FFF;
     &-title {
       background-color: #E8F6FD;
@@ -166,7 +167,7 @@
         border: none;
         background-color: transparent;
         width: 85vw;
-        font-size: 1em;
+        font-size: 0.8em;
       }
     }
     &-gakuchika {
@@ -183,7 +184,7 @@
         border: none;
         background-color: transparent;
         width: 85vw;
-        font-size: 1em;
+        font-size: 0.8em;
       }
     }
     &-number {
@@ -204,10 +205,10 @@
     border-left: solid 1px #ED6A4C;
     border-bottom: solid 1px #ED6A4C;
     display: block;
-    width: 80vw;
-    margin: 2vh 10vw;
+    width: calc(90vw - 2px);
+    margin: 2vh 5vw;
     height: 5em;
-    font-size: 1em;
+    font-size: 0.8em;
   }
   &__btn {
     margin: 5vh 0 7em;
@@ -297,6 +298,12 @@
     }
     &--off {
       display:none;
+    }
+    &__title{
+      &--on{
+        color:#ED6A4C;
+        font-weight: bold;
+      }
     }
   }
 }

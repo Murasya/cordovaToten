@@ -16,7 +16,7 @@
 .edit .edit__category, .edit .edit__category--yellow, .edit .edit__category--blue, .edit .edit__category--green, .edit .edit__category--pink {
   display: inline-block;
   color: #FFF;
-  padding: 5px 0 5px 15px;
+  padding: 5px 0 5px 0;
   border-radius: 5px;
   font-size: 15px;
   align-self: flex-start;

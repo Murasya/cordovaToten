@@ -145,7 +145,7 @@
   &__back {
     padding: 3vh 0 0 5vw;
     display: block;
-    height: 1.5em;
+    height: 1.9em;
     align-self: flex-start;
   }
   &__floatbutton-wrapper {
@@ -153,7 +153,7 @@
     display: flex;
     justify-content: space-between;
     left: 25vw;
-    bottom: 10vh;
+    bottom: 5vh;
     width: 50vw;
     border-radius: 12vw;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16);
@@ -164,6 +164,8 @@
       border: solid 0.5px #E8E8E8;
       border-radius: 50%;
       padding: 2vw;
+      height:8vw;
+      width:8vw;
     }
     img {
       width: 8vw;
@@ -172,5 +174,9 @@
     &--active {
       background-color: #ED6A4C;
     }
+  }
+  &__space{
+    height:15vh;
+    width:100vw;
   }
 }

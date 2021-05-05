@@ -3148,6 +3148,7 @@
       <div style="height: 10vh;"></div>
       <result-float-button :id="id" :active="1" v-show="recode"></result-float-button>
     </div>
+    <div class="result__space"></div>
   
     <script>
       var myNavigator = document.querySelector('#myNavigator');
@@ -3238,7 +3239,7 @@
               sInt();
             },
             goEdit: function() {
-              myNavigator.pushPage('edit.html', {
+              myNavigator.bringPageTop('edit.html', {
                 data: {
                   qAndA: qAndA,
                 },
@@ -3279,7 +3280,7 @@
               this.showSavingModal = false;
             },
             back_button: function() {
-              myNavigator.popPage();
+              myNavigator.resetToPage("myRecode.html");
             }
           }
         });
@@ -3435,7 +3436,7 @@
     <div id="edit" class="edit" v-cloak>
       <p class="edit__theme">{{ theme }}</p>
       <span :class="headerClass">
-        <span v-for="n in category">{{ n }}&emsp;</span>
+        <span v-for="n in category">&emsp;{{ n }}&emsp;</span>
       </span>
       <a class="edit__comp" @click="goComp"><img  src="images/分析カテゴリ追加時_素材/edit-finish_object.png" height="30px"></a>
       <div class="edit__writting" v-for="qa in data" :key="qa.num">
@@ -3489,6 +3490,7 @@
           why = "なぜ";
         }
         var numberClass = [];
+        console.log(qAndA.category);
         items.forEach(e => {
           if(e.tag == "in") {
             numberClass.push("blue");
@@ -3554,7 +3556,7 @@
               qAndA.memo = this.memo;
               qAndA.success = this.success;
               updateData(qAndA, function(){
-                myNavigator.resetToPage("result.html",{
+                myNavigator.bringPageTop("result.html",{
                   data: {
                     qAndA: qAndA,
                     recode: true,
@@ -3577,7 +3579,6 @@
         <span>▼</span>時期ごとに頑張ったことを記入しよう
         <!-- <img src="images/各種ボタン/break_ボタン.png" @click="openModal"> -->
       </div>
-      <div class="jobhunting_memo1__header--hide"></div>
       <!-- 大学１〜４ -->
       <div class="jobhunting_memo1__folder" v-for="item in defo_memo" :key="item.header">
         <div class="jobhunting_memo1__folder--header1"><input type="text" v-model="item.header" readonly></div>
@@ -3603,7 +3604,7 @@
       </div>
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
         <p class="overlay__save--string">保存して中断しますか？</p>
-        <p>中断後はアーカイブから再開できます。</p>
+        <p>中断後は<span>アーカイブ</span>から再開できます。</p>
         <div>
           <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
           <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
@@ -3709,7 +3710,6 @@
         <span>▼</span>一番思い入れのある出来事を選ぼう
         <!-- <img src="images/各種ボタン/break_ボタン.png" @click="openModal"> -->
       </div>
-      <div class="jobhunting_memo1__header--hide"></div>
       <div class="jobhunting_memo1__folder" v-for="(item, index) in memo" :key="item.header">
         <div class="jobhunting_memo1__folder--header1"><input type="text" v-model="item.header" readonly></div>
         <div class="jobhunting_memo1__folder--content">
@@ -3735,7 +3735,7 @@
       </div>
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
         <p class="overlay__save--string">保存して中断しますか？</p>
-        <p>中断後はアーカイブから再開できます。</p>
+        <p>中断後は<span>アーカイブ</span>から再開できます。</p>
         <div>
           <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
           <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
@@ -3821,7 +3821,6 @@
         <span>▼</span>選んだ出来事について整理しよう
         <img src="images/各種ボタン/break_ボタン.png" @click="openModal">
       </div>
-      <div class="jobhunting_memo1__header--hide"></div>
       <!-- title -->
       <div class="jobhunting_memo1__5w-title">
         {{ title }}
@@ -3855,7 +3854,7 @@
       </div>
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal"> <!-- modal -->
         <p class="overlay__save--string">保存して中断しますか？</p>
-        <p>中断後はアーカイブから再開できます。</p>
+        <p>中断後は<span>アーカイブ</span>から再開できます。</p>
         <div>
           <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
           <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
@@ -3994,7 +3993,7 @@
       <!-- savingModal -->
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal"> <!-- modal -->
         <p class="overlay__save--string">保存して中断しますか？</p>
-        <p>中断後はアーカイブから再開できます。</p>
+        <p>中断後は<span>アーカイブ</span>から再開できます。</p>
         <div>
           <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
           <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
@@ -4126,7 +4125,9 @@
       <!-- result -->
       <div :class="showResultClass ? 'jobhunting_memo1__show-result--on' : 'jobhunting_memo1__show-result--off'">
         <img @click="showResult" src="images/2021_02_25_新素材/jobhunting_ポップアップ.png">
-        <a style="text-decoration: none;" @click="showContent(0)">出来事整理</a>｜<a style="text-decoration: none;" @click="showContent(1)">分析</a>｜<a style="text-decoration: none;" @click="showContent(2)">考察</a>
+        <a style="text-decoration: none;" @click="showContent(0)" :class="contentClass0 ? 'jobhunting_memo1__result__title--on' : 'jobhunting_memo1__result__title--off'">出来事整理</a>｜
+        <a style="text-decoration: none;" @click="showContent(1)" :class="contentClass1 ? 'jobhunting_memo1__result__title--on' : 'jobhunting_memo1__result__title--off'">分析</a>｜
+        <a style="text-decoration: none;" @click="showContent(2)" :class="contentClass2 ? 'jobhunting_memo1__result__title--on' : 'jobhunting_memo1__result__title--off'">考察</a>
       </div>
       
       <!-- 出来事整理 -->
@@ -4202,7 +4203,7 @@
       <!-- savingModal -->
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
         <p class="overlay__save--string">保存して中断しますか？</p>
-        <p>中断後はアーカイブから再開できます。</p>
+        <p>中断後は<span>アーカイブ</span>から再開できます。</p>
         <div>
           <button class="overlay__save--yesbtn" @click="savingButton">中断</button>
           <button class="overlay__save--nobtn" @click="closeModal">戻る</button>
@@ -4349,6 +4350,7 @@
           <textarea readonly>{{ event.how }}</textarea>
         </div>
       </div>
+      <div class="result__space"></div>
       <!-- float button -->
       <result-float-button :id="event.analyzeid" :active="0"></result-float-button>
     </div>
@@ -4423,6 +4425,7 @@
       </div>
       <result-float-button :id="gakuchika.analyzeid" :active="2"></result-float-button>
     </div>
+    <div class="result__space"></div>
     <script>
       var test = new Gakuchika();
       // test.title = "あああ";
