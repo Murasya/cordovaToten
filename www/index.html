@@ -3184,7 +3184,7 @@
               sInt();
             },
             goEdit: function() {
-              myNavigator.pushPage('edit.html', {
+              myNavigator.bringPageTop('edit.html', {
                 data: {
                   qAndA: qAndA,
                 },
@@ -3500,14 +3500,13 @@
               qAndA.memo = this.memo;
               qAndA.success = this.success;
               updateData(qAndA, function(){
-                myNavigator.pushPage("result.html",{
+                myNavigator.bringPageTop("result.html",{
                   data: {
                     qAndA: qAndA,
                     recode: true,
                   }
                 })
               });
-              myNavigator.removePage(myNavigator.pages.length-2);
             }
           }
         });
