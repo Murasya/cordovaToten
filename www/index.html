@@ -3579,7 +3579,6 @@
         <span>▼</span>時期ごとに頑張ったことを記入しよう
         <!-- <img src="images/各種ボタン/break_ボタン.png" @click="openModal"> -->
       </div>
-      <div class="jobhunting_memo1__header--hide"></div>
       <!-- 大学１〜４ -->
       <div class="jobhunting_memo1__folder" v-for="item in defo_memo" :key="item.header">
         <div class="jobhunting_memo1__folder--header1"><input type="text" v-model="item.header" readonly></div>
@@ -3711,7 +3710,6 @@
         <span>▼</span>一番思い入れのある出来事を選ぼう
         <!-- <img src="images/各種ボタン/break_ボタン.png" @click="openModal"> -->
       </div>
-      <div class="jobhunting_memo1__header--hide"></div>
       <div class="jobhunting_memo1__folder" v-for="(item, index) in memo" :key="item.header">
         <div class="jobhunting_memo1__folder--header1"><input type="text" v-model="item.header" readonly></div>
         <div class="jobhunting_memo1__folder--content">
@@ -3823,7 +3821,6 @@
         <span>▼</span>選んだ出来事について整理しよう
         <img src="images/各種ボタン/break_ボタン.png" @click="openModal">
       </div>
-      <div class="jobhunting_memo1__header--hide"></div>
       <!-- title -->
       <div class="jobhunting_memo1__5w-title">
         {{ title }}

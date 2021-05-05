@@ -72,7 +72,8 @@
     font-weight: bold;
     display: flex;
     align-items: center;
-    position: fixed;
+    position: -webkit-sticky;
+    position: sticky;
     width: 90vw;
     top: 0;
     z-index: 100;
@@ -143,7 +144,7 @@
     border: solid 1px #D9D9D9;
     border-radius: 10px;
     padding: 2vw;
-    margin-top: calc(5vh + 2em);
+    margin-top: 2em;
     background-color: #FFF;
     &-title {
       background-color: #E8F6FD;
