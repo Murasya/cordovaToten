@@ -190,7 +190,7 @@
   border: none;
   background-color: transparent;
   width: 85vw;
-  font-size: 1em;
+  font-size: 0.8em;
 }
 .jobhunting_memo1__5w-number {
   color: #818181;
@@ -212,7 +212,7 @@
   width: calc(90vw - 2px);
   margin: 2vh 5vw;
   height: 5em;
-  font-size: 1em;
+  font-size: 0.8em;
 }
 .jobhunting_memo1__btn {
   margin: 5vh 0 7em;
@@ -296,6 +296,7 @@
 }
 .jobhunting_memo1__result__title--on {
   color: #ED6A4C;
+  font-weight: bold;
 }
 
 /*# sourceMappingURL=jobhunting_memo1.css.map */

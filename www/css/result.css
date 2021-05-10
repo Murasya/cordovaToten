@@ -123,7 +123,7 @@
 .result__back {
   padding: 3vh 0 0 5vw;
   display: block;
-  height: 1.5em;
+  height: 1.9em;
   align-self: flex-start;
 }
 .result__floatbutton-wrapper {
@@ -143,6 +143,8 @@
   border: solid 0.5px #E8E8E8;
   border-radius: 50%;
   padding: 2vw;
+  height: 8vw;
+  width: 8vw;
 }
 .result__floatbutton-wrapper img {
   width: 8vw;
