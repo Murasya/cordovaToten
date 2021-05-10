@@ -142,7 +142,7 @@ var wellPointConverter = {
   }
 }
 class MyEvent{
-  constructor(id="", analyzeid="", title="No title", color="", when="empty", where="empty", who="empty", what="empty", how="empty", uid="", timestamp=new Date()) {
+  constructor(id="", analyzeid="", title="No title", color="", when="empty", where="empty", who="empty", what="empty", how="empty", complete=false, uid="", timestamp=new Date()) {
     this.id = id;
     this.analyzeid = analyzeid;
     this.title = title;
@@ -152,11 +152,12 @@ class MyEvent{
     this.who = who;
     this.what = what;
     this.how = how;
+    this.complete = complete;
     this.uid = uid;
     this.timestamp = timestamp;
   }
   toString() {
-    return this.id + '--' + this.analyzeid + '--' + this.title + '--' + this.color + '--' + this.when + '--' + this.where + '--' + this.who + '--' + this.what + '--' + this.how + '--' + this.uid + '--' + this.timestamp;
+    return this.id + '--' + this.analyzeid + '--' + this.title + '--' + this.color + '--' + this.when + '--' + this.where + '--' + this.who + '--' + this.what + '--' + this.how + '--' + this.complete + '--' + this.uid + '--' + this.timestamp;
   }
 }
 var myEventConverter = {
@@ -224,12 +225,13 @@ var considerationConverter = {
   }
 }
 class Gakuchika {
-  constructor(id="", analyzeid="", title="", color="", contents=["","","","",""], uid="", timestamp=new Date()) {
+  constructor(id="", analyzeid="", title="", color="", contents=["","","","",""], complete=false, uid="", timestamp=new Date()) {
     this.id = id;
     this.analyzeid = analyzeid;
     this.title = title;
     this.color = color;
     this.contents = contents;
+    this.complete = complete;
     this.uid = uid;
     this.timestamp = timestamp;
   }
@@ -238,7 +240,7 @@ class Gakuchika {
     this.contents.forEach((v, i) => {
       str = str + v + ":";
     });
-    return this.id + '--' + this.analyzeid + '--' + this.title + '--' + this.color + '--' + str + this.uid + this.timestamp;
+    return this.id + '--' + this.analyzeid + '--' + this.title + '--' + this.color + '--' + str + this.complete + this.uid + this.timestamp;
   }
 }
 var gakuchikaConverter = {

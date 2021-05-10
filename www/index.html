@@ -372,11 +372,11 @@
       </div>
       <input class="memo__title" placeholder="タイトル" v-model="title">
       <div class="memo__category">
-        <a @click="choiceCategory('やりたいこと')" :class="category==='やりたいこと' ? 'memo__category--yellow' : 'memo__category--off'">やりたいこと</a>
-        <a @click="choiceCategory('やりたくないこと')" :class="category==='やりたくないこと' ? 'memo__category--blue' : 'memo__category--off'">やりたくないこと</a>
-        <a @click="choiceCategory('出来事・体験')" :class="category==='出来事・体験' ? 'memo__category--green' : 'memo__category--off'">出来事・体験</a>
-        <a @click="choiceCategory('日常の小さな感情')" :class="category==='日常の小さな感情' ? 'memo__category--pink' : 'memo__category--off'">日常の小さな感情</a>
-        <a @click="choiceCategory('その他')" :class="category==='その他' ? 'memo__category--black' : 'memo__category--off'">その他</a>
+        <a @click="choiceCategory('future')" :class="category==='future' ? 'memo__category--yellow' : 'memo__category--off'">やりたいこと</a>
+        <a @click="choiceCategory('task')" :class="category==='task' ? 'memo__category--blue' : 'memo__category--off'">やりたくないこと</a>
+        <a @click="choiceCategory('experience')" :class="category==='experience ? 'memo__category--green' : 'memo__category--off'">出来事・体験</a>
+        <a @click="choiceCategory('hobby')" :class="category==='hobby' ? 'memo__category--pink' : 'memo__category--off'">日常の小さな感情</a>
+        <!-- <a @click="choiceCategory('その他')" :class="category==='その他' ? 'memo__category--black' : 'memo__category--off'">その他</a> -->
       </div>
       <div class="memo__str">●状況を整理しておこう</div>
       <div class="jobhunting_memo1__5w" style="margin-top: 0;">
@@ -460,6 +460,7 @@
                 memo.what = this.what;
                 memo.how = this.how;
                 memo.color = this.category;
+                memo.complete = true;
                 memo.analyzeid = id;
                 setNewMyEvent(memo);
               });
@@ -3898,6 +3899,7 @@
               event.who = this.who;
               event.what = this.what;
               event.how = this.how;
+              event.complete = true;
               event.uid = firebase.auth().currentUser.uid;
               if(!DEBUG_MODE) {
                 event.id = setNewMyEvent(event);
@@ -3941,7 +3943,7 @@
       <!-- header -->
       <div class="jobhunting_memo1__header">
         <span>▼</span>分析の結果を参考に考えてみよう
-        <img src="images/各種ボタン/break_ボタン.png" @click="openModal">
+        <!-- <img src="images/各種ボタン/break_ボタン.png" @click="openModal"> -->
       </div>
       <!-- contents -->
       <div class="jobhunting_memo1__5w">
@@ -4260,6 +4262,7 @@
               gakuchika.title = this.qAndA[0].answers[0];
               gakuchika.color = "jobhunting";
               gakuchika.contents = this.contents;
+              gakuchika.complete = true;
               gakuchika.uid = firebase.auth().currentUser.uid;
               if(!DEBUG_MODE) {
                 gakuchika.id = setNewGakuchika(gakuchika);
