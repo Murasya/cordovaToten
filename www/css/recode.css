@@ -61,5 +61,8 @@
 .recode__topbtns--off img {
   height: 1em;
 }
+.recode__space {
+  height: 10vh;
+}
 
 /*# sourceMappingURL=recode.css.map */
