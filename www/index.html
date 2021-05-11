@@ -3081,64 +3081,74 @@
       <span :class="headerClass" v-if="category.length">
         <span v-for="n in category">{{ n }}&emsp;</span>
       </span>
-      <a v-show="recode" class="result__edit" @click="goEdit"><img  src="images/分析カテゴリ追加時_素材/edit_object.png" height="30px"></a>
-      <div v-for="index in answers.length-1" class="items">
-        <p :class='tags[index-1] == "" ? defoClass : (tags[index-1] == "out" ? lightClass : blueClass)'>{{ index }}</p>
-        <p>{{ questions[index] }}</p>
-        <p>{{ answers[index] }}</p>
+      <a v-show="recode && questions.length" class="result__edit" @click="goEdit"><img  src="images/分析カテゴリ追加時_素材/edit_object.png" height="30px"></a>
+      <div v-if="questions.length" class="result__wrapper--on">
+        <!-- 分析の記録 -->
+        <div v-for="index in answers.length-1" class="items">
+          <p :class='tags[index-1] == "" ? defoClass : (tags[index-1] == "out" ? lightClass : blueClass)'>{{ index }}</p>
+          <p>{{ questions[index] }}</p>
+          <p>{{ answers[index] }}</p>
+        </div>
+        <!-- consideration -->
+        <div class="jobhunting_memo1__5w" v-show="consideration[0].analyzeid !== '' && recode">
+          <div class="jobhunting_memo1__5w-contents">
+            <p>あなたの強みはどこにありそう？</p>
+            <textarea readonly>{{ consideration[0].contents[0] }}</textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>あなたの強みはどんなことに活かせそう？</p>
+            <textarea readonly>{{ consideration[0].contents[1] }}</textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>この出来事の中で大切だった・大事にしていたことは?</p>
+            <textarea readonly>{{ consideration[0].contents[2] }}</textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>一番工夫したポイントは？</p>
+            <textarea readonly>{{ consideration[0].contents[3] }}</textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>この出来事で悪かったことは?</p>
+            <textarea readonly>{{ consideration[0].contents[4] }}</textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-contents">
+            <p>今回の分析で考えたりていないことは?</p>
+            <textarea readonly>{{ consideration[0].contents[5] }}</textarea>
+          </div>
+        </div>
+        <!-- memo -->
+        <div v-if="color !== 'jobhunting'" style="width:100%;">
+          <textarea class="result__memo" v-model="memo" v-if="recode == false" placeholder="振り返りを入力"></textarea>
+          <div v-else class="result__memo--readonly">{{ memo }}</div>
+        </div>
+        <!-- success -->
+        <p style="font-size: 11pt; color: #767676; margin-top: 30px; text-align: center;">分析はうまくいった？</p>
+        <select v-model="success" v-if="recode == false" class="result__success">
+          <option>はい</option>
+          <option>いいえ</option>
+          <option>どちらともいえない</option>
+        </select>
+        <select v-else class="result__success" disabled>
+          <option>{{ success }}</option>
+        </select>
+        <!-- buttons -->
+        <div class="result__btns" v-show="recode == false">
+          <div class="result__btns--ver">
+            <a @click="interruptionButtonClick"><img src="./images/各種ボタン/break_ボタン.png" alt="中断ボタン" width="30px"></a>
+            <a @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png" alt="ヘルプボタン" width="30px"></a> 
+          </div>
+          <button class="result__savebtn" @click="saveButtonClick">完了</button>
+        </div>
+        <!--<a @click="onTweet" class="result__tweetbtn"><ons-icon icon="fa-twitter"></ons-icon> Tweet</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
+        <div style="height: 10vh;"></div>
+        <div class="result__space"></div>
       </div>
-      <!-- consideration -->
-      <div class="jobhunting_memo1__5w" v-show="consideration[0].analyzeid !== '' && recode">
-        <div class="jobhunting_memo1__5w-contents">
-          <p>あなたの強みはどこにありそう？</p>
-          <textarea readonly>{{ consideration[0].contents[0] }}</textarea>
-        </div>
-        <div class="jobhunting_memo1__5w-contents">
-          <p>あなたの強みはどんなことに活かせそう？</p>
-          <textarea readonly>{{ consideration[0].contents[1] }}</textarea>
-        </div>
-        <div class="jobhunting_memo1__5w-contents">
-          <p>この出来事の中で大切だった・大事にしていたことは?</p>
-          <textarea readonly>{{ consideration[0].contents[2] }}</textarea>
-        </div>
-        <div class="jobhunting_memo1__5w-contents">
-          <p>一番工夫したポイントは？</p>
-          <textarea readonly>{{ consideration[0].contents[3] }}</textarea>
-        </div>
-        <div class="jobhunting_memo1__5w-contents">
-          <p>この出来事で悪かったことは?</p>
-          <textarea readonly>{{ consideration[0].contents[4] }}</textarea>
-        </div>
-        <div class="jobhunting_memo1__5w-contents">
-          <p>今回の分析で考えたりていないことは?</p>
-          <textarea readonly>{{ consideration[0].contents[5] }}</textarea>
-        </div>
+      <div v-else class="result__wrapper--off">
+        <div class="result_memo__str">まだ分析の記録がありません</div>
+        <button class="result_memo__button">分析する！</button>
       </div>
-      <!-- memo -->
-      <div v-if="color !== 'jobhunting'" style="width:100%;">
-        <textarea class="result__memo" v-model="memo" v-if="recode == false" placeholder="振り返りを入力"></textarea>
-        <div v-else class="result__memo--readonly">{{ memo }}</div>
-      </div>
-      <!-- success -->
-      <p style="font-size: 11pt; color: #767676; margin-top: 30px;">分析はうまくいった？</p>
-      <select v-model="success" v-if="recode == false" class="result__success">
-        <option>はい</option>
-        <option>いいえ</option>
-        <option>どちらともいえない</option>
-      </select>
-      <select v-else class="result__success" disabled>
-        <option>{{ success }}</option>
-      </select>
-      <!-- buttons -->
-      <div class="result__btns" v-show="recode == false">
-        <div class="result__btns--ver">
-          <a @click="interruptionButtonClick"><img src="./images/各種ボタン/break_ボタン.png" alt="中断ボタン" width="30px"></a>
-          <a @click="helpButtonClick"><img src="./images/各種ボタン/help_ボタン.png" alt="ヘルプボタン" width="30px"></a> 
-        </div>
-        <button class="result__savebtn" @click="saveButtonClick">完了</button>
-      </div>
-      <!--<a @click="onTweet" class="result__tweetbtn"><ons-icon icon="fa-twitter"></ons-icon> Tweet</a>
-      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
+      <result-float-button :id="id" :active="1" :title="answers[0]" v-show="recode"></result-float-button>
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
         <p class="overlay__save--string">分析を中断しますか？</p>
         <div>
@@ -3146,10 +3156,7 @@
           <button class="overlay__save--nobtn" @click="closeModal">いいえ</button>
         </div>
       </div>
-      <div style="height: 10vh;"></div>
-      <result-float-button :id="id" :active="1" v-show="recode"></result-float-button>
     </div>
-    <div class="result__space"></div>
   
     <script>
       var myNavigator = document.querySelector('#myNavigator');
@@ -4324,38 +4331,44 @@
       <div class="result_memo__header">
         <img class="result_memo__header-back" src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
         <div class="result_memo__header-str">{{ event.title }}</div>
-        <img class="result_memo__header-edit" src="images/分析カテゴリ追加時_素材/edit_object.png">
+        <img class="result_memo__header-edit" src="images/分析カテゴリ追加時_素材/edit_object.png" v-show="event.complete">
       </div>
       <!-- category -->
       <div>
         {{ category }}
       </div>
       <!-- contents -->
-      <div class="jobhunting_memo1__5w">
-        <div class="jobhunting_memo1__5w-gakuchika">
-          <p>いつ？</p>
-          <textarea readonly>{{ event.when }}</textarea>
+      <div v-if="event.complete">
+        <div class="jobhunting_memo1__5w">
+          <div class="jobhunting_memo1__5w-gakuchika">
+            <p>いつ？</p>
+            <textarea readonly>{{ event.when }}</textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-gakuchika">
+            <p>どこで？</p>
+            <textarea readonly>{{ event.where }}</textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-gakuchika">
+            <p>だれが？だれと？</p>
+            <textarea readonly>{{ event.who }}</textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-gakuchika">
+            <p>何を？</p>
+            <textarea readonly>{{ event.what }}</textarea>
+          </div>
+          <div class="jobhunting_memo1__5w-gakuchika">
+            <p>どのように？</p>
+            <textarea readonly>{{ event.how }}</textarea>
+          </div>
         </div>
-        <div class="jobhunting_memo1__5w-gakuchika">
-          <p>どこで？</p>
-          <textarea readonly>{{ event.where }}</textarea>
-        </div>
-        <div class="jobhunting_memo1__5w-gakuchika">
-          <p>だれが？だれと？</p>
-          <textarea readonly>{{ event.who }}</textarea>
-        </div>
-        <div class="jobhunting_memo1__5w-gakuchika">
-          <p>何を？</p>
-          <textarea readonly>{{ event.what }}</textarea>
-        </div>
-        <div class="jobhunting_memo1__5w-gakuchika">
-          <p>どのように？</p>
-          <textarea readonly>{{ event.how }}</textarea>
-        </div>
+      </div>
+      <div v-else>
+        <div class="result_memo__str">分析の芽は記録されていません</div>
+        <button class="result_memo__button">記録する</button>
       </div>
       <div class="result__space"></div>
       <!-- float button -->
-      <result-float-button :id="event.analyzeid" :active="0"></result-float-button>
+      <result-float-button :id="event.analyzeid" :title="event.title" :active="0"></result-float-button>
     </div>
     <script>
       var debug = new MyEvent();
@@ -4395,10 +4408,10 @@
       <div class="result_memo__header">
         <img class="result_memo__header-back" src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
         <div class="result_memo__header-str">{{ gakuchika.title }}</div>
-        <img class="result_memo__header-edit" src="images/分析カテゴリ追加時_素材/edit_object.png">
+        <img class="result_memo__header-edit" src="images/分析カテゴリ追加時_素材/edit_object.png" v-show="gakuchika.complete">
       </div>
       <!-- contents -->
-      <div class="jobhunting_memo1__5w">
+      <div class="jobhunting_memo1__5w" v-if="gakuchika.complete">
         <div class="jobhunting_memo1__5w-gakuchika">
           <p>結論 ＜どんなことをしたのか＞</p>
           <textarea readonly>{{ gakuchika.contents[0] }}</textarea>
@@ -4426,7 +4439,11 @@
         </div>
         <div class="jobhunting_memo1__5w-total">TOTAL[{{ gakuchika.contents[0].length + gakuchika.contents[1].length + gakuchika.contents[2].length + gakuchika.contents[3].length + gakuchika.contents[4].length }}]</div>
       </div>
-      <result-float-button :id="gakuchika.analyzeid" :active="2"></result-float-button>
+      <div v-else>
+        <div class="result_memo__str">まだガクチカがありません</div>
+        <button class="result_memo__button">書いてみる！</button>
+      </div>
+      <result-float-button :id="gakuchika.analyzeid" :active="2" :title="gakuchika.title"></result-float-button>
     </div>
     <div class="result__space"></div>
     <script>
@@ -4523,7 +4540,7 @@
               "<div class='jobhunting_story__triangle2'></div>ちょっと大変かもだから、先輩の事例を見ることをおすすめするテン！",//27
               "うまく書くコツは、<br><br>自分の出来事整理と、分析の結果・考察をよく読むことテン。",//28
               "自分の強みや軸はなんだろう？<br><br>って、考えながら書いていくテンよ〜！",//29
-              "おつかれさまテン〜！！！<br><br>ここまでよく頑張ったテン！さすがテン。<br>今回キミが作ったガクチカは、これからブラッシュアップしていくことでさらに輝いていくテン！<br>相手を見ることが大切なのは恋愛と同じようなものテンね。<br>もしかして就活は企業との恋愛テン？",//30
+              "おつかれさまテン〜！！！ここまでよく頑張ったテン！さすがテン。<br>今回キミが作ったガクチカは、これからブラッシュアップしていくことでさらに輝いていくテン！",//30
             ],
             buttonNum: 0,
             buttons: [

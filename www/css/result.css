@@ -3,11 +3,9 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding-bottom: 100px;
 }
 .result__theme {
-  margin-top: 5vh;
-  margin-left: 5vw;
+  margin: 5vh 5vw 0;
   font-size: 1.5em;
   font-weight: 700;
   color: #818181;
@@ -71,6 +69,7 @@
   border-width: 0.23px;
   background-color: #FFF;
   padding: 0.5em 40px 0.5em 1em;
+  margin: 0 auto;
   appearance: none;
   text-align: left;
   background-image: linear-gradient(45deg, transparent 50%, #FFF 50%), linear-gradient(135deg, #FFF 50%, transparent 50%), linear-gradient(to right, #797979, #797979);
@@ -156,6 +155,14 @@
 .result__space {
   height: 15vh;
   width: 100vw;
+}
+.result__wrapper--on {
+  width: 100vw;
+}
+.result__wrapper--off {
+  width: 100vw;
+  background-color: #FFF;
+  height: calc(91vh - 3.4em);
 }
 
 /*# sourceMappingURL=result.css.map */

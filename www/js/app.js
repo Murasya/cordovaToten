@@ -39,7 +39,7 @@ var uiConfig = {
 
 // database
 var db = firebase.firestore();
-localStorage.setItem("tutorial_finished", true);
+//localStorage.setItem("tutorial_finished", true);
 
 class QAndA {
   constructor(questions=[], answers=[], tags=[], uid="", memo="", timestamp=new Date(), complete=false, category="", success="", id="", color="") {
@@ -142,7 +142,7 @@ var wellPointConverter = {
   }
 }
 class MyEvent{
-  constructor(id="", analyzeid="", title="No title", color="", when="empty", where="empty", who="empty", what="empty", how="empty", complete=false, uid="", timestamp=new Date()) {
+  constructor(id="", analyzeid="", title="", color="", when="empty", where="empty", who="empty", what="empty", how="empty", complete=false, uid="", timestamp=new Date()) {
     this.id = id;
     this.analyzeid = analyzeid;
     this.title = title;
@@ -313,7 +313,8 @@ function getGakuchika() {
 }
 // 分析のidから関連するものを取ってくる(arrayだけど最初の１つだけ使用)
 function getGakuchikaFromAnalyzeid(analyzeid, func=function(){}) {
-  var array = [new Gakuchika()];
+  var g = new Gakuchika(); g.analyzeid = analyzeid;
+  var array = [g];
   db.collection("gakuchika")
     .withConverter(gakuchikaConverter)
     .where("analyzeid", "==", analyzeid)
@@ -321,7 +322,6 @@ function getGakuchikaFromAnalyzeid(analyzeid, func=function(){}) {
       querySnapshot.forEach((doc) => {
         var gakuchika = doc.data();
         array.splice(0, 1, gakuchika);
-        func(gakuchika);
       });
     }).catch(function(error) {
       // Handle Errors here.
@@ -329,7 +329,9 @@ function getGakuchikaFromAnalyzeid(analyzeid, func=function(){}) {
       var errorMessage = error.message;
       console.log("errorCode: ", errorCode);
       console.log("errorMessage: ", errorMessage);
-   	});
+   	}).finally(() => {
+      func(array[0]);
+    });
   return array;
 }
 
@@ -402,7 +404,9 @@ function updateMyEvent(event, func=function(){}) {
 }
 // 分析のidから関連するものを取ってくる(arrayだけど最初の１つだけ使用)
 function getMyEventFromAnalyzeid(analyzeid, func=function(){}) {
-  var array = [new MyEvent()];
+  var e = new MyEvent(); e.analyzeid = analyzeid;
+  var array = [e];
+  console.log("aaaaa");
   db.collection("event")
     .withConverter(myEventConverter)
     .where("analyzeid", "==", analyzeid)
@@ -410,7 +414,6 @@ function getMyEventFromAnalyzeid(analyzeid, func=function(){}) {
       querySnapshot.forEach((doc) => {
         var event = doc.data();
         array.splice(0, 1, event);
-        func(event);
       });
     }).catch(function(error) {
       // Handle Errors here.
@@ -418,7 +421,9 @@ function getMyEventFromAnalyzeid(analyzeid, func=function(){}) {
       var errorMessage = error.message;
       console.log("errorCode: ", errorCode);
       console.log("errorMessage: ", errorMessage);
-   	});
+   	}).finally(() => {
+      func(array[0]);
+     });
   return array;
 }
 // 自分のデータ全て
@@ -545,7 +550,8 @@ function getQuestionAndAnswerAll(limit = 100) {
     .get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         var qAndA = doc.data();
-        array.push(qAndA);
+        if(qAndA.answers.length)
+          array.push(qAndA);
       });
     }).catch(function(error) {
       // Handle Errors here.
@@ -558,7 +564,8 @@ function getQuestionAndAnswerAll(limit = 100) {
 }
 // idから取得
 function getQuestionAndAnswerFromId(id, func=function(){}) {
-  var array = [new QAndA()];
+  var q = new QAndA(); q.id = id;
+  var array = [q];
   db.collection("questionAndAnswer")
     .withConverter(qAndAConverter)
     .doc(id)
@@ -802,7 +809,7 @@ Vue.component("my-toolbar", {
 });
 
 Vue.component("result-float-button", {
-  props: ['id', 'active'],
+  props: ['id', 'title', 'active'],
   template: `
     <div class="result__floatbutton-wrapper">
       <span v-if="active!=0" @click="goBunsekinome"><img src="images/2021_02_25_新素材/memo_icon_gray.png"></span>
@@ -817,6 +824,7 @@ Vue.component("result-float-button", {
     goBunsekinome: function() {
       if(this.active == 0) return;
       getMyEventFromAnalyzeid(this.id, (event) => {
+        if(event.title === "") event.title = this.title;
         myNavigator.replacePage("result_memo.html", {
           data: {
             bunsekinome: event,
@@ -828,6 +836,7 @@ Vue.component("result-float-button", {
     goAnalyze: function() {
       if(this.active == 1) return;
       getQuestionAndAnswerFromId(this.id, (qAndA) => {
+        if(!qAndA.answers.length) qAndA.answers[0] = this.title;
         myNavigator.replacePage("result.html", {
           data: {
             qAndA: qAndA,
@@ -839,6 +848,7 @@ Vue.component("result-float-button", {
     goGakuchika: function() {
       if(this.active == 2) return;
       getGakuchikaFromAnalyzeid(this.id, (gakuchika)=>{
+        if(gakuchika.title === "") gakuchika.title = this.title;
         myNavigator.replacePage("result_gakuchika.html", {
           data: {
             gakuchika: gakuchika,

@@ -3,11 +3,9 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding-bottom: 100px;
 
   &__theme {
-    margin-top: 5vh;
-    margin-left: 5vw;
+    margin: 5vh 5vw 0;
     font-size: 1.5em;
     font-weight: 700;
     color: #818181;
@@ -76,6 +74,7 @@
     border-width: 0.23px;
     background-color: #FFF;
     padding: 0.5em 40px 0.5em 1em;
+    margin: 0 auto;
     appearance: none;
     text-align: left;
     background-image:
@@ -178,5 +177,15 @@
   &__space{
     height:15vh;
     width:100vw;
+  }
+  &__wrapper {
+    &--on {
+      width: 100vw;
+    }
+    &--off {
+      width: 100vw;
+      background-color: #FFF;
+      height: calc(91vh - 3.4em);
+    }
   }
 }

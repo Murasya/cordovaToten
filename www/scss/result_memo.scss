@@ -1,7 +1,8 @@
 .result_memo {
+  font-size: 2vh;
   &__header {
     background-color: #E8F6FD;
-    font-size: 18px;
+    font-size: 1em;
 
     &-back {
       padding: 3vh 0 0 5vw;
@@ -20,5 +21,21 @@
       padding: 2vh 5vw 0;
       font-weight: bold;
     }
+  }
+  &__str {
+    color: #818181;
+    font-weight: bold;
+    text-align: center;
+    margin: 30vh 0 5vh;
+  }
+  &__button {
+    color: #FFF;
+    font-weight: bold;
+    font-size: 1em;
+    background-color: #ED6A4C;
+    padding: .5em 1.5em;
+    border-radius: .5em;
+    display: block;
+    margin: 0 auto;
   }
 }
