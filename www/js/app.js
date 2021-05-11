@@ -172,7 +172,7 @@ var myEventConverter = {
       what: event.what,
       how: event.how,
       uid: firebase.auth().currentUser.uid,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      timestamp: event.timestamp,
     };
   },
   fromFirestore: function(snapshot, options) {
@@ -251,7 +251,7 @@ var gakuchikaConverter = {
       color: gakuchika.color,
       contents: gakuchika.contents,
       uid: gakuchika.uid,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      timestamp: gakuchika.timestamp,
     };
   },
   fromFirestore: function(snapshot, options) {
@@ -809,7 +809,7 @@ Vue.component("my-toolbar", {
 });
 
 Vue.component("result-float-button", {
-  props: ['id', 'title', 'active'],
+  props: ['id', 'title', 'color', 'active'],
   template: `
     <div class="result__floatbutton-wrapper">
       <span v-if="active!=0" @click="goBunsekinome"><img src="images/2021_02_25_新素材/memo_icon_gray.png"></span>
@@ -825,6 +825,7 @@ Vue.component("result-float-button", {
       if(this.active == 0) return;
       getMyEventFromAnalyzeid(this.id, (event) => {
         if(event.title === "") event.title = this.title;
+        if(event.color === "") event.color = this.color;
         myNavigator.replacePage("result_memo.html", {
           data: {
             bunsekinome: event,
@@ -837,6 +838,7 @@ Vue.component("result-float-button", {
       if(this.active == 1) return;
       getQuestionAndAnswerFromId(this.id, (qAndA) => {
         if(!qAndA.answers.length) qAndA.answers[0] = this.title;
+        if(qAndA.color === "") qAndA.color = this.color;
         myNavigator.replacePage("result.html", {
           data: {
             qAndA: qAndA,
@@ -849,6 +851,7 @@ Vue.component("result-float-button", {
       if(this.active == 2) return;
       getGakuchikaFromAnalyzeid(this.id, (gakuchika)=>{
         if(gakuchika.title === "") gakuchika.title = this.title;
+        if(gakuchika.color === "") gakuchika.color = this.color;
         myNavigator.replacePage("result_gakuchika.html", {
           data: {
             gakuchika: gakuchika,

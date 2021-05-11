@@ -374,7 +374,7 @@
       <div class="memo__category">
         <a @click="choiceCategory('future')" :class="category==='future' ? 'memo__category--yellow' : 'memo__category--off'">やりたいこと</a>
         <a @click="choiceCategory('task')" :class="category==='task' ? 'memo__category--blue' : 'memo__category--off'">やりたくないこと</a>
-        <a @click="choiceCategory('experience')" :class="category==='experience ? 'memo__category--green' : 'memo__category--off'">出来事・体験</a>
+        <a @click="choiceCategory('experience')" :class="category==='experience' ? 'memo__category--green' : 'memo__category--off'">出来事・体験</a>
         <a @click="choiceCategory('hobby')" :class="category==='hobby' ? 'memo__category--pink' : 'memo__category--off'">日常の小さな感情</a>
         <!-- <a @click="choiceCategory('その他')" :class="category==='その他' ? 'memo__category--black' : 'memo__category--off'">その他</a> -->
       </div>
@@ -415,8 +415,10 @@
     </div>
     <script>
       var myNavigator = document.getElementById("myNavigator");
-      ons.getScriptPage().onShow = function() {
-        new Vue({
+      var vue;
+      ons.getScriptPage().onInit = function() {
+        var e = myNavigator.topPage.data.event;
+        vue = new Vue({
           el: '#memo',
           data: {
             title: "",
@@ -428,6 +430,12 @@
             freememo: "",
             category: "",
             overlay: false,
+          },
+          created: function() {
+            console.log(e);
+            if(e) {
+              this.title = e.title;
+            }
           },
           methods: {
             choiceCategory: function(str) {
@@ -451,19 +459,30 @@
               }
               var qAndA = new QAndA();
               qAndA.memo = this.freememo;
-              setNewData(qAndA, (id) => {
-                var memo = new MyEvent();
-                memo.title = this.title;
-                memo.when = this.when;
-                memo.where = this.where;
-                memo.who = this.who;
-                memo.what = this.what;
-                memo.how = this.how;
-                memo.color = this.category;
-                memo.complete = true;
-                memo.analyzeid = id;
+              if(e) {
+                e.when = this.when;
+                e.where = this.where;
+                e.who = this.who;
+                e.what = this.what;
+                e.how = this.how;
+                e.color = this.category;
+                e.complete = true;
                 setNewMyEvent(memo);
-              });
+              } else {
+                setNewData(qAndA, (id) => {
+                  var memo = new MyEvent();
+                  memo.title = this.title;
+                  memo.when = this.when;
+                  memo.where = this.where;
+                  memo.who = this.who;
+                  memo.what = this.what;
+                  memo.how = this.how;
+                  memo.color = this.category;
+                  memo.complete = true;
+                  memo.analyzeid = id;
+                  setNewMyEvent(memo);
+                });
+              }
             },
             continueButton: function() {
               // myNavigator.pushPage('');
@@ -478,7 +497,7 @@
               myNavigator.popPage();
             },
           },
-        })
+        });
       }
     </script>
   </ons-page>
@@ -589,6 +608,7 @@
                 .then(function () {
                   ons.notification.toast('ログイン成功', { timeout: 1000, animation: 'fall'});
                   document.querySelector('#myNavigator').resetToPage("index.html");
+                  localStorage.setItem("tutorial_finished", true);
                 }).catch(function(error) {
                   ons.notification.toast(error.message, { timeout: 1000, animation: 'fall'});
                 });
@@ -2349,13 +2369,15 @@
               hBanner();
               console.log(data.toString());
               if(this.tabType == "bunsekinome") {
-                document.getElementById("myNavigator").pushPage('result_memo.html', {
-                  data: {
-                    bunsekinome: data,
-                    recode: true,
-                  }
-                });
-                return;
+                if(data.complete) {
+                  document.getElementById("myNavigator").pushPage('result_memo.html', {
+                    data: {
+                      bunsekinome: data,
+                      recode: true,
+                    }
+                  });
+                } else {
+                }
               } else if(this.tabType == "analyze") {
                 if(data.complete) {
                   document.getElementById("myNavigator").pushPage('result.html', {
@@ -2372,12 +2394,16 @@
                   });
                 }
               } else if(this.tabType == "gakuchika") {
-                document.getElementById("myNavigator").pushPage('result_gakuchika.html', {
-                  data: {
-                    gakuchika: data,
-                    recode: true,
-                  }
-                });
+                if(data.complete) {
+                  document.getElementById("myNavigator").pushPage('result_gakuchika.html', {
+                    data: {
+                      gakuchika: data,
+                      recode: true,
+                    }
+                  });
+                } else {
+                  
+                }
               }
             },
             onDeleteBtn: function(data) {
@@ -3147,9 +3173,9 @@
       </div>
       <div v-else class="result__wrapper--off">
         <div class="result_memo__str">まだ分析の記録がありません</div>
-        <button class="result_memo__button">分析する！</button>
+        <button class="result_memo__button" @click="startQuestion">分析する！</button>
       </div>
-      <result-float-button :id="id" :active="1" :title="answers[0]" v-show="recode"></result-float-button>
+      <result-float-button :active="1" :id="id" :title="theme" :color="color" v-show="recode"></result-float-button>
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
         <p class="overlay__save--string">分析を中断しますか？</p>
         <div>
@@ -3240,6 +3266,7 @@
                 myNavigator.bringPageTop('jobhunting_story.html', {
                   data: {
                     qAndA: qAndA,
+                    storyNum: 20,
                   },
                 });
               } else {
@@ -3290,6 +3317,13 @@
             },
             back_button: function() {
               myNavigator.resetToPage("myRecode.html");
+            },
+            startQuestion: function() {
+              myNavigator.pushPage('start.html',{
+                data: {
+                  qAndA: qAndA,
+                }
+              });
             }
           }
         });
@@ -3923,12 +3957,14 @@
               localStorage.setItem("tutorial_finished", "true");
               if(DEBUG_MODE) {
                 myNavigator.bringPageTop('jobhunting_story.html', {data: {
-                  qAndA: qAndA
+                  qAndA: qAndA,
+                  storyNum: 12,
                 }});
               } else {
                 myNavigator.bringPageTop('jobhunting_story.html', {
                   data: {
-                    qAndA: qAndA
+                    qAndA: qAndA,
+                    storyNum: 12,
                   }
                 });
               }
@@ -4066,12 +4102,14 @@
                 myNavigator.bringPageTop('jobhunting_story.html', {
                   data: {
                     analyzeid: "eJ7lVVwlve65wc2NAmEY",
+                    storyNum: 23,
                   }
                 });
               } else {
                 myNavigator.bringPageTop('jobhunting_story.html', {
                   data: {
                     analyzeid: qAndA.id,
+                    storyNum: 23,
                   }
                 });
               }
@@ -4268,14 +4306,22 @@
               var gakuchika = new Gakuchika();
               gakuchika.analyzeid = id;
               gakuchika.title = this.qAndA[0].answers[0];
-              gakuchika.color = "jobhunting";
+              gakuchika.color = this.qAndA.color;
               gakuchika.contents = this.contents;
               gakuchika.complete = true;
               gakuchika.uid = firebase.auth().currentUser.uid;
               if(!DEBUG_MODE) {
                 gakuchika.id = setNewGakuchika(gakuchika);
               }
-              myNavigator.bringPageTop('jobhunting_story.html');
+              if(gakuchika.color === "jobhunting") {
+                myNavigator.bringPageTop('jobhunting_story.html', {
+                  data: {
+                    storyNum: 30,
+                  }
+                });
+              } else {
+                myNavigator.resetToPage('index.html');
+              }
             },
             savingButton: function() {
               // TODO: データベース
@@ -4365,11 +4411,11 @@
       </div>
       <div v-else>
         <div class="result_memo__str">分析の芽は記録されていません</div>
-        <button class="result_memo__button">記録する</button>
+        <button class="result_memo__button" @click="startMemo">記録する</button>
       </div>
       <div class="result__space"></div>
       <!-- float button -->
-      <result-float-button :id="event.analyzeid" :title="event.title" :active="0"></result-float-button>
+      <result-float-button :id="event.analyzeid" :title="event.title" :color="event.color" :active="0"></result-float-button>
     </div>
     <script>
       var debug = new MyEvent();
@@ -4394,6 +4440,13 @@
             back_button: function() {
               myNavigator.popPage();
             },
+            startMemo: function() {
+              myNavigator.pushPage("memo.html", {
+                data: {
+                  event: this.event,
+                }
+              });
+            }
           },
         });
       }
@@ -4442,9 +4495,9 @@
       </div>
       <div v-else>
         <div class="result_memo__str">まだガクチカがありません</div>
-        <button class="result_memo__button">書いてみる！</button>
+        <button class="result_memo__button" @click="startGakuchika">書いてみる！</button>
       </div>
-      <result-float-button :id="gakuchika.analyzeid" :active="2" :title="gakuchika.title"></result-float-button>
+      <result-float-button :id="gakuchika.analyzeid" :title="gakuchika.title" :color="gakuchika.color" :active="2"></result-float-button>
     </div>
     <div class="result__space"></div>
     <script>
@@ -4463,6 +4516,13 @@
             back_button: function() {
               myNavigator.popPage();
             },
+            startGakuchika: function() {
+              myNavigator.pushPage("jobhunting_gakuchika.html",{
+                data: {
+                  gakuchika: this.gakuchika,
+                },
+              });
+            }
           },
         })
       }
@@ -4712,6 +4772,7 @@
         });
       }
       ons.getScriptPage().onShow = function() {
+        if(myNavigator.topPage.data.storyNum) vue.i = myNavigator.topPage.data.storyNum;
         switch(vue.i) {
           case 10:
             vue.comments[10] = "<div class='jobhunting_story__triangle2'></div>この「" + myNavigator.topPage.data.theme + "」という出来事にするテン？";
