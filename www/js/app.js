@@ -171,8 +171,9 @@ var myEventConverter = {
       who: event.who,
       what: event.what,
       how: event.how,
+      complete: event.complete,
       uid: firebase.auth().currentUser.uid,
-      timestamp: event.timestamp,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
   },
   fromFirestore: function(snapshot, options) {
@@ -188,6 +189,7 @@ var myEventConverter = {
       data.who,
       data.what,
       data.how,
+      data.complete,
       data.uid,
       data.timestamp.toDate(),
     );
@@ -250,8 +252,9 @@ var gakuchikaConverter = {
       title: gakuchika.title,
       color: gakuchika.color,
       contents: gakuchika.contents,
+      complete: gakuchika.complete,
       uid: gakuchika.uid,
-      timestamp: gakuchika.timestamp,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
   },
   fromFirestore: function(snapshot, options) {
@@ -263,6 +266,7 @@ var gakuchikaConverter = {
       data.title,
       data.color,
       data.contents,
+      data.complete,
       data.uid,
       data.timestamp.toDate(),
     );

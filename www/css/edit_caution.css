@@ -1,0 +1,42 @@
+.edit_caution {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(55, 107, 152, 0.85);
+  font-size: 2vh;
+}
+.edit_caution__str {
+  color: #FFF;
+  font-weight: bold;
+  text-align: center;
+  padding: 40vh 0 5vh;
+  font-size: 1.5em;
+}
+.edit_caution .edit_caution__button--orange, .edit_caution .edit_caution__button--white {
+  width: 5em;
+  text-align: center;
+  border: none;
+  border-radius: .5em;
+  padding: .5em 0;
+  font-size: 1em;
+}
+.edit_caution__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  font-size: 1.3em;
+}
+.edit_caution__button--orange {
+  color: #FFF;
+  background-color: #ed6a4c;
+  margin-right: 1em;
+}
+.edit_caution__button--white {
+  color: #474645;
+  background-color: #FFF;
+}
+
+/*# sourceMappingURL=edit_caution.css.map */

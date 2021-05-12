@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="css/memo.css">
   <link rel="stylesheet" href="css/jobhunting_story.css">
   <link rel="stylesheet" href="css/jobhunting_story_number.css">
+  <link rel="stylesheet" href="css/edit_caution.css">
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
 
@@ -4378,7 +4379,7 @@
       <div class="result_memo__header">
         <img class="result_memo__header-back" src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
         <div class="result_memo__header-str">{{ event.title }}</div>
-        <img class="result_memo__header-edit" src="images/分析カテゴリ追加時_素材/edit_object.png" v-show="event.complete">
+        <img class="result_memo__header-edit" src="images/分析カテゴリ追加時_素材/edit_object.png" v-show="event.complete" @click="goEdit">
       </div>
       <!-- category -->
       <div>
@@ -4419,7 +4420,7 @@
     </div>
     <script>
       var debug = new MyEvent();
-      ons.getScriptPage().onShow = function() {
+      ons.getScriptPage().onInit = function() {
         var myNavigator = document.querySelector('#myNavigator');
 
         new Vue({
@@ -4431,8 +4432,17 @@
           created: function() {
             var t = this;
             switch(event.color) {
-              case "jobhunting":
+              case "future":
+                t.category = "やりたいこと";
+                break;
+              case "task":
+                t.category = "やりたくないこと";
+                break;
+              case "experience":
                 t.category = "出来事・体験";
+                break;
+              case "hobby":
+                t.category = "日常の小さな感情";
                 break;
             }
           },
@@ -4446,6 +4456,112 @@
                   event: this.event,
                 }
               });
+            },
+            goEdit: function() {
+              myNavigator.pushPage("memoEdit.html",{
+                data: {
+                  bunsekinome: this.event,
+                }
+              });
+            }
+          },
+        });
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="memoEdit.html">
+  <ons-page>
+    <div class="page__background" style="background-color: #FFF;"></div>
+    <div id="memoEdit" class="jobhunting_memo1 result_memo" v-cloak>
+      <!-- header -->
+      <div class="result_memo__header">
+        <img class="result_memo__header-back" src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
+        <div class="result_memo__header-str">{{ event.title }}</div>
+        <img class="result_memo__header-edit" src="images/分析カテゴリ追加時_素材/edit-finish_object.png" @click="saveButton">
+      </div>
+      <!-- category -->
+      <div>
+        {{ category }}
+      </div>
+      <!-- contents -->
+      <div class="jobhunting_memo1__5w">
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>いつ？</p>
+          <textarea v-model="event.when"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>どこで？</p>
+          <textarea v-model="event.where"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>だれが？だれと？</p>
+          <textarea v-model="event.who"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>何を？</p>
+          <textarea v-model="event.what"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>どのように？</p>
+          <textarea v-model="event.how"></textarea>
+        </div>
+      </div>
+      <div class="result__space"></div>
+      <div class="edit_caution" v-show="overlay">
+        <div class="edit_caution__str">編集内容が確定されていません。<br>保存せずに一覧に戻りますか？</div>
+        <div class="edit_caution__button">
+          <button class="edit_caution__button--orange" @click="noSave">戻る</button>
+          <button class="edit_caution__button--white" @click="overlay = false">いいえ</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      var debug = new MyEvent();
+      ons.getScriptPage().onInit = function() {
+        var myNavigator = document.querySelector('#myNavigator');
+        var pre_event = Object.assign({}, myNavigator.topPage.data.bunsekinome);
+
+        new Vue({
+          el: '#memoEdit',
+          data: {
+            event: myNavigator.topPage.data.bunsekinome ?? debug,
+            category: "",
+            overlay: false,
+          },
+          created: function() {
+            var t = this;
+            switch(event.color) {
+              case "future":
+                t.category = "やりたいこと";
+                break;
+              case "task":
+                t.category = "やりたくないこと";
+                break;
+              case "experience":
+                t.category = "出来事・体験";
+                break;
+              case "hobby":
+                t.category = "日常の小さな感情";
+                break;
+            }
+          },
+          methods: {
+            back_button: function() {
+              this.overlay = true;
+            },
+            noSave: function() {
+              this.event.when = pre_event.when;
+              this.event.where = pre_event.where;
+              this.event.who = pre_event.who;
+              this.event.what = pre_event.what;
+              this.event.how = pre_event.how;
+              myNavigator.popPage();
+            },
+            saveButton: function() {
+              updateMyEvent(this.event);
+              myNavigator.popPage();
             }
           },
         });
