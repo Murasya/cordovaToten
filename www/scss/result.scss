@@ -6,7 +6,7 @@
   font-size: 2vh;
 
   &__theme {
-    margin: 2vh 5vw 0;
+    margin: 2vh 5vw 30px;
     font-size: 1.5em;
     font-weight: 700;
     color: #818181;
@@ -110,10 +110,9 @@
     font-size: 15px;
   }
   &__edit {
-    align-self: flex-end;
     margin-right: 5vw;
-    position: relative;
-    top: -50px;
+    position: absolute;
+    top: calc(5vh + 4em);
   }
   &__tweetbtn {
     width: 35vw;
