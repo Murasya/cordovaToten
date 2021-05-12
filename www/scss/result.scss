@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  font-size: 2vh;
 
   &__theme {
     margin: 5vh 5vw 0;
@@ -144,7 +145,7 @@
   &__back {
     padding: 3vh 0 0 5vw;
     display: block;
-    height: 1.9em;
+    height: 2.5em;
     align-self: flex-start;
   }
   &__floatbutton-wrapper {
