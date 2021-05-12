@@ -289,8 +289,8 @@ function setNewGakuchika(gakuchika) {
 }
 // データ更新
 function updateGakuchika(gakuchika, func=function(){}) {
-  db.collection("consideration").doc(gakuchika.id).withConverter(gakuchikaConverter).set(gakuchika).then(function() {
-    console.log("Document successfully updated!");
+  db.collection("gakuchika").doc(gakuchika.id).withConverter(gakuchikaConverter).set(gakuchika).then(function() {
+    console.log("Document successfully updated!" + gakuchika.toString());
     func();
   });
 }

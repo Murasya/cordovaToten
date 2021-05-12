@@ -4578,7 +4578,7 @@
       <div class="result_memo__header">
         <img class="result_memo__header-back" src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
         <div class="result_memo__header-str">{{ gakuchika.title }}</div>
-        <img class="result_memo__header-edit" src="images/分析カテゴリ追加時_素材/edit_object.png" v-show="gakuchika.complete">
+        <img class="result_memo__header-edit" src="images/分析カテゴリ追加時_素材/edit_object.png" v-show="gakuchika.complete" @click="goEdit">
       </div>
       <!-- contents -->
       <div class="jobhunting_memo1__5w" v-if="gakuchika.complete">
@@ -4621,7 +4621,7 @@
       // test.title = "あああ";
       // test.contents = ["あ","あ","あ","あ","あ"];
       console.log(test.toString());
-      ons.getScriptPage().onShow = function() {
+      ons.getScriptPage().onInit = function() {
         var myNavigator = document.querySelector('#myNavigator');
         new Vue({
           el: '#result_gakuchika',
@@ -4638,6 +4638,94 @@
                   gakuchika: this.gakuchika,
                 },
               });
+            },
+            goEdit: function() {
+              myNavigator.pushPage("gakuchikaEdit.html",{
+                data: {
+                  gakuchika: this.gakuchika,
+                }
+              });
+            }
+          },
+        })
+      }
+    </script>
+  </ons-page>
+</template>
+
+<template id="gakuchikaEdit.html">
+  <ons-page>
+    <div class="page__background" style="background-color: #FFF;"></div>
+    <div id="gakuchikaEdit" class="jobhunting_memo1 result_memo" v-cloak>
+      <!-- header -->
+      <div class="result_memo__header">
+        <img class="result_memo__header-back" src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
+        <div class="result_memo__header-str">{{ gakuchika.title }}</div>
+        <img class="result_memo__header-edit" src="images/分析カテゴリ追加時_素材/edit-finish_object.png" @click="saveButton">
+      </div>
+      <!-- contents -->
+      <div class="jobhunting_memo1__5w">
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>結論 ＜どんなことをしたのか＞</p>
+          <textarea v-model="gakuchika.contents[0]"></textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ gakuchika.contents[0].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>背景 ＜どんな状況だったのか＞</p>
+          <textarea v-model="gakuchika.contents[1]"></textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ gakuchika.contents[1].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>課題 ＜何を解決すべきと捉えたのか＞</p>
+          <textarea v-model="gakuchika.contents[2]"></textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ gakuchika.contents[2].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>解決策 ＜課題をどのように工夫して解決したのか＞</p>
+          <textarea v-model="gakuchika.contents[3]"></textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ gakuchika.contents[3].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-gakuchika">
+          <p>まとめ ＜出来事を通して、自分はどんな人と言えるか＞</p>
+          <textarea v-model="gakuchika.contents[4]"></textarea>
+          <div class="jobhunting_memo1__5w-number">[{{ gakuchika.contents[4].length }}]</div>
+        </div>
+        <div class="jobhunting_memo1__5w-total">TOTAL[{{ gakuchika.contents[0].length + gakuchika.contents[1].length + gakuchika.contents[2].length + gakuchika.contents[3].length + gakuchika.contents[4].length }}]</div>
+      </div>
+      <div class="result__space"></div>
+      <div class="edit_caution" v-show="overlay">
+        <div class="edit_caution__str">編集内容が確定されていません。<br>保存せずに一覧に戻りますか？</div>
+        <div class="edit_caution__button">
+          <button class="edit_caution__button--orange" @click="noSave">戻る</button>
+          <button class="edit_caution__button--white" @click="overlay = false">いいえ</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      var test = new Gakuchika();
+
+      ons.getScriptPage().onInit = function() {
+        var myNavigator = document.querySelector('#myNavigator');
+        const pre_contents = myNavigator.topPage.data.gakuchika.contents.slice();
+
+        new Vue({
+          el: '#gakuchikaEdit',
+          data: {
+            gakuchika: myNavigator.topPage.data.gakuchika ?? test,
+            overlay: false,
+          },
+          methods: {
+            back_button: function() {
+              this.overlay = true;
+            },
+            noSave: function() {
+              this.gakuchika.contents = pre_contents;
+              myNavigator.popPage();
+            },
+            saveButton: function() {
+              console.log(this.gakuchika.toString());
+              updateGakuchika(this.gakuchika);
+              myNavigator.popPage();
             }
           },
         })
