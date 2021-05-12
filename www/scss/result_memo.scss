@@ -10,15 +10,17 @@
       height: 2.5em;
     }
     &-edit {
-      display: block;
       margin: 0 5vw 0 auto;
       padding: 0 0 3vh;
       height: 30px;
+      position: absolute;
+      right: 5vw;
+      top: calc(5vh + 4em);
     }
     &-str {
       color: #818181;
       font-size: 1.5em;
-      padding: 2vh 5vw 0;
+      padding: 2vh 5vw 30px;
       font-weight: bold;
     }
   }

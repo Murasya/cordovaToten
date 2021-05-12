@@ -6,7 +6,7 @@
   font-size: 2vh;
 }
 .result__theme {
-  margin: 5vh 5vw 0;
+  margin: 2vh 5vw 30px;
   font-size: 1.5em;
   font-weight: 700;
   color: #818181;
@@ -89,10 +89,9 @@
   font-size: 15px;
 }
 .result__edit {
-  align-self: flex-end;
   margin-right: 5vw;
-  position: relative;
-  top: -50px;
+  position: absolute;
+  top: calc(5vh + 4em);
 }
 .result__tweetbtn {
   width: 35vw;
