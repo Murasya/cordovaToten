@@ -86,8 +86,8 @@
             <input type="checkbox" id="acd-check1" class="acd-check">
             <label for="acd-check1" class="acd-label">OPTIONS </label>
             <div class="acd-content">
-              <a @click="urlClick">利用規約</a>
-              <a @click="urlClick">プライバシー<br>ポリシー</a>
+              <a @click="urlClick('https://noteappm.wixsite.com/policies')">利用規約</a>
+              <a @click="urlClick('https://noteappm.wixsite.com/policies')">プライバシー<br>ポリシー</a>
               <a @click="goFeedback">フィードバック</a>
               <a @click="goMyPage">マイページ</a>
               <a @click="goTutorial">チュートリアル</a>
@@ -104,7 +104,7 @@
           </div>
           <div id="isSignIn" v-else>
             <a @click="goAnalyze"><img class="index__logo" src="./images/home_シンボル.png" alt="ロゴ"></a>
-            <div class="snsButton__wrapper">
+            <!-- <div class="snsButton__wrapper">
               <div class='snsButton__title'>
                 <p>公式Twitter, noteにて活用事例を紹介中！</p>
               </div>
@@ -112,18 +112,25 @@
                 <a href="https://twitter.com/app_toten?s=20" class="snsButton__twitter">Twitterで見てみる</a>
                 <a href="https://note.com/toten_app" class="snsButton__note">noteで見てみる</a>
               </div>
-            </div>
+            </div> -->
             <!-- news -->
+            <div class="index__str">- 続々更新中! お役立ちコンテンツ -</div>
             <div class="index__news">
-              <div class="index__news-item">
-                <span class="index__news-category">イベント情報</span>
-                <span class="index__news-date">04.19.</span>
-                <div class="index__news-title">就活団体「キャリ窓+」とコラボ！自己分析イベント開催</div>
+              <div class="index__news-item" @click="urlClick('https://twitter.com/i/events/1391800558080589825?s=20')">
+                <span class="index__news-category">他の人の思考回路を見てみたい人へ！</span>
+                <div class="index__news-title">#みんなの分析ファイル</div>
               </div>
-              <div class="index__news-item">
-                <span class="index__news-category">お役立ちコンテンツ</span>
-                <span class="index__news-date">04.12.</span>
-                <div class="index__news-title">-自己分析上級者向け- とーてん活用術を公開中！</div>
+              <div class="index__news-item" @click="urlClick('https://twitter.com/i/events/1388152756603473922?s=20')">
+                <span class="index__news-category">何か行動してみたくなった人へ！</span>
+                <div class="index__news-title">#テンちゃんのイベント紹介 / #嘘みたいな本のススメ</div>
+              </div>
+              <div class="index__news-item" @click="urlClick('https://twitter.com/i/events/1391805181549977601?s=20')">
+                <span class="index__news-category">就活生のみんなへ！</span>
+                <div class="index__news-title">コラボ中の就活団体を紹介！</div>
+              </div>
+              <div class="index__news-item" @click="urlClick('https://note.com/toten_app/magazines')">
+                <span class="index__news-category">とーてんの活用法が知りたい人へ！</span>
+                <div class="index__news-title">＜公式note＞就活から日常まで！事例紹介</div>
               </div>
             </div>
             <!-- <div class="archive" v-if="recent.length!=0">
@@ -224,8 +231,8 @@
             goMemo: function() {
               document.getElementById("myNavigator").pushPage('memo.html');
             },
-            urlClick: function() {
-              window.open("https://noteappm.wixsite.com/policies", "_self", "location=yes");
+            urlClick: function(url) {
+              window.open(url, "_self", "location=yes");
             }
           },
         });
