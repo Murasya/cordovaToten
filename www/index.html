@@ -4024,8 +4024,8 @@
         <button @click="nextButton">考えられた！</button>
       </div>
       <!-- result -->
-      <div class="jobhunting_memo1__show-result--hoge" :class="showResultClass ? 'jobhunting_memo1__show-result--on' : 'jobhunting_memo1__show-result--off'">
-        <img @click="showResult" src="images/2021_02_25_新素材/jobhunting_ポップアップ.png">
+      <div class="jobhunting_memo1__show-result--hoge" :class="showResultClass ? 'jobhunting_memo1__show-result--on' : 'jobhunting_memo1__show-result--off'" @click="showResult">
+        <img src="images/2021_02_25_新素材/jobhunting_ポップアップ.png">
         <p v-if="showResultClass === true">考察に戻る</p>
         <p v-if="showResultClass === false">分析結果を見る</p>
       </div>
