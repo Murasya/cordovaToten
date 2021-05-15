@@ -3810,12 +3810,15 @@
       ons.getScriptPage().onInit = function() {
         console.log(myNavigator.topPage.data);
         var wp = myNavigator.topPage.data.wp ?? new WellPoint();
+        console.log(wp);
+        var newContents = wp.contents.filter(n => n.header || n.content1 || n.content2 || n.content3);
+        console.log(newContents);
         new Vue({
           el: '#jobhunting_memo3',
           data: {
             showSavingModal: false,
             picked: "",
-            memo: wp.contents,
+            memo: newContents,
           },
           methods: {
             openModal: function() {
@@ -3827,21 +3830,20 @@
                 ons.notification.toast('どれか一つを選択してください', {animation: 'fall', timeout: 1000});
                 return;
               }
-              wp.useNumber = this.picked;
               if(!DEBUG_MODE) {
                 updateWellPoint(wp);
               }
               var theme = "";
-              const num = Math.floor(wp.useNumber / 3);
-              switch(wp.useNumber % 3) {
+              const num = Math.floor(this.picked / 3);
+              switch(this.picked % 3) {
                 case 0:
-                  theme = wp.contents[num].content1;
+                  theme = this.memo[num].content1;
                   break;
                 case 1:
-                  theme = wp.contents[num].content2;
+                  theme = this.memo[num].content2;
                   break;
                 case 2:
-                  theme = wp.contents[num].content3;
+                  theme = this.memo[num].content3;
                   break;
               }
               if(DEBUG_MODE) {
