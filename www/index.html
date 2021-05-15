@@ -3734,7 +3734,8 @@
               if(DEBUG_MODE) {
                 myNavigator.bringPageTop('jobhunting_story.html',{
                   data: {
-                    wp:wp
+                    wp:wp,
+                    storyNum: 8,
                   }
                 });
               } else {
@@ -3743,6 +3744,7 @@
                   myNavigator.bringPageTop('jobhunting_story.html', {
                     data: {
                       wp: wp,
+                      storyNum: 8,
                     }
                   });
                 });
@@ -3979,6 +3981,7 @@
                   storyNum: 12,
                 }});
               } else {
+                updateData(qAndA);
                 myNavigator.bringPageTop('jobhunting_story.html', {
                   data: {
                     qAndA: qAndA,
@@ -4759,7 +4762,7 @@
         <div class="jobhunting_story__fukidashi" @click="next">
           <div class="jobhunting_story__reader">{{ reader }}</div>
           <div class="jobhunting_story__comment-wrapper">
-            <div class="jobhunting_story__comment" v-html="comments[i]"></div>
+            <div class="jobhunting_story__comment" v-html="comments[i]" v-show="loading"></div>
             <div class="jobhunting_story__orange-button" v-show="buttonMode" @click="onButton1">{{ buttons[buttonNum][0] }}</div>
             <div class="jobhunting_story__orange-button" v-show="buttonMode" @click="onButton2">{{ buttons[buttonNum][1] }}</div>
           </div>
@@ -4847,6 +4850,7 @@
             buttonMode: false,
             lastMode: false,
             overlay: false,
+            loading: false,
           },
           methods: {
             next: function() {
@@ -4867,6 +4871,7 @@
                   myNavigator.pushPage("jobhunting_memo1.html");
                   this.j++;
                   this.lastMode = false;
+                  return;
                   break;
                 case 9:
                   myNavigator.pushPage("jobhunting_memo3.html", {
@@ -4881,6 +4886,7 @@
                   });
                   this.j++;
                   this.lastMode = false;
+                  return;
                   break;
                 case 12:
                 case 14:
@@ -4897,6 +4903,7 @@
                   myNavigator.pushPage("jobhunting_story_number.html", {
                     data: myNavigator.topPage.data,
                   });
+                  return;
                   break;
                 case 22:
                   myNavigator.pushPage("jobhunting_analyze.html", {
@@ -4904,6 +4911,7 @@
                   });
                   this.j++;
                   this.lastMode = false;
+                  return;
                   break;
                 case 29:
                   myNavigator.pushPage("jobhunting_gakuchika.html", {
@@ -4911,6 +4919,7 @@
                   });
                   this.j++;
                   this.lastMode = false;
+                  return;
                   break;
                 case 30:
                   myNavigator.resetToPage("index.html");
@@ -4995,7 +5004,11 @@
         });
       }
       ons.getScriptPage().onShow = function() {
-        if(myNavigator.topPage.data.storyNum) vue.i = myNavigator.topPage.data.storyNum;
+        if(myNavigator.topPage.data.storyNum) {
+          vue.i = myNavigator.topPage.data.storyNum;
+          myNavigator.topPage.data.storyNum = undefined;
+        }
+        vue.loading = true;
         switch(vue.i) {
           case 10:
             vue.comments[10] = "<div class='jobhunting_story__triangle2'></div>この「" + myNavigator.topPage.data.theme + "」という出来事にするテン？";
@@ -5009,6 +5022,9 @@
           case 30:
             vue.lastMode = true;
         }
+      }
+      ons.getScriptPage().onHide = function() {
+        vue.loading = false;
       }
     </script>
   </ons-page>
