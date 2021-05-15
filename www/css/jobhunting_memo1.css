@@ -142,6 +142,7 @@
   background: none;
   border: none;
   font-size: .8em;
+  width: calc(100% - 1.5em);
 }
 .jobhunting_memo1__folder--content hr {
   border: solid .8px #C3C3C3;
