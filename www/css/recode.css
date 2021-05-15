@@ -27,9 +27,15 @@
   display: flex;
   justify-content: space-around;
   width: 90vw;
-  margin: 2vh 5vw;
   border-radius: 80vw;
   background-color: #E6E6E6;
+}
+.recode__topbtns-wrapper {
+  position: sticky;
+  top: 0;
+  background-color: #FFF;
+  padding: 2vh 5vw;
+  z-index: 101;
 }
 .recode__topbtns--on {
   background-color: #9A9A9A;
