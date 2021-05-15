@@ -62,7 +62,7 @@
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> -->
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="jobhunting_story.html"></ons-navigator>
 </body>
 </html>
 
@@ -4762,8 +4762,10 @@
             <div class="jobhunting_story__comment" v-html="comments[i]"></div>
             <div class="jobhunting_story__orange-button" v-show="buttonMode" @click="onButton1">{{ buttons[buttonNum][0] }}</div>
             <div class="jobhunting_story__orange-button" v-show="buttonMode" @click="onButton2">{{ buttons[buttonNum][1] }}</div>
-            <a class="jobhunting_story__triangle-before" v-show="lastMode">{{ lastButtons[j] }}</a>
-            <div class="jobhunting_story__triangle" v-show="!buttonMode"></div>
+          </div>
+          <div class="jobhunting_story__triangle-before">
+            <span v-show="lastMode">{{ lastButtons[j] }}</span>
+            <span class="jobhunting_story__triangle" v-show="!buttonMode"></span>
           </div>
         </div>
       </div>

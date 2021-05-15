@@ -22,7 +22,7 @@
 }
 .jobhunting_story__fukidashi {
   margin: 0 auto;
-  padding: 50vh 0 5vh;
+  padding: 40vh 0 10vh;
   height: 40vh;
   width: 90vw;
 }
@@ -49,16 +49,16 @@
   border-left: solid 10px transparent;
   border-right: solid 10px transparent;
   border-top: solid 15px #ED6A4C;
-  position: absolute;
-  right: 10vw;
-  bottom: 7vh;
+  position: relative;
+  top: 1em;
 }
 .jobhunting_story__triangle-before {
   font-weight: bold;
   color: #ED6A4C;
-  position: absolute;
-  bottom: 7vh;
-  right: 17vw;
+  position: relative;
+  top: -2em;
+  right: 1em;
+  text-align: right;
 }
 .jobhunting_story__triangle2 {
   border-left: solid 10px transparent;
