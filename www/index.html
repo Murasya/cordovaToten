@@ -2726,9 +2726,10 @@
                   updateData(qAndA);
                 }
               }
-              myNavigator.pushPage('result.html',{
+              myNavigator.bringPageTop('result.html',{
                 data: {
-                  qAndA: qAndA
+                  qAndA: qAndA,
+                  recode: false,
                 }
               })
             },
@@ -3120,7 +3121,7 @@
 <template id="result.html">
   <ons-page>
     <div class="background" style="background-color: #E8F6FD;"></div>
-    <div id="resultVue" class="result" v-cloak>
+    <div id="resultVue" class="result" v-cloak v-show="loading">
       <img v-show="recode" class="result__back" src="images/2021_02_25_新素材/archive_back.png" @click="back_button">
       <p class="result__theme">{{ theme }}</p>
       <span :class="headerClass" v-if="category.length">
@@ -3205,14 +3206,11 @@
   
     <script>
       var myNavigator = document.querySelector('#myNavigator');
+      var vm;
       ons.getScriptPage().onInit = function() {
         var debug = new QAndA();
         debug.questions = ["あ","あ"]; debug.answers["Empty","Empty"]; debug.tags["in"];
         var qAndA = myNavigator.topPage.data.qAndA ?? debug;
-        var recode = false;
-        if(myNavigator.topPage.data.recode) {
-          recode = true;
-        }
         vm = new Vue({
           el: '#resultVue',
           data: {
@@ -3226,7 +3224,7 @@
             success: qAndA.success,
             category: qAndA.category,
             color: qAndA.color,
-            recode: recode,
+            recode: myNavigator.topPage.data.recode ?? false,
             defoClass: "defo",
             lightClass: "lightBlue",
             blueClass: "blue",
@@ -3236,7 +3234,8 @@
             tweet: {
               text: "",
               url: "http://toten.html.xdomain.jp/",
-            }
+            },
+            loading: false,
           },
           created: function() {
             this.consideration = getConsiderationFromAnalyzeid(qAndA.id);
@@ -3345,6 +3344,13 @@
             }
           }
         });
+      }
+      ons.getScriptPage().onShow = function() {
+        vm.recode = myNavigator.topPage.data.recode ?? false;
+        vm.loading = true;
+      }
+      ons.getScriptPage().onHide = function() {
+        vm.loading = false;
       }
     </script>
   </ons-page>
