@@ -110,9 +110,9 @@
     font-size: 15px;
   }
   &__edit {
-    margin-right: 5vw;
     position: absolute;
     top: calc(5vh + 4em);
+    right: 5vw;
   }
   &__tweetbtn {
     width: 35vw;

@@ -89,9 +89,9 @@
   font-size: 15px;
 }
 .result__edit {
-  margin-right: 5vw;
   position: absolute;
   top: calc(5vh + 4em);
+  right: 5vw;
 }
 .result__tweetbtn {
   width: 35vw;
