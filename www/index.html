@@ -451,20 +451,20 @@
               console.log(this.category);
             },
             saveButton: function() {
-              this.overlay = true;
               // return;
               if(this.title === "") {
-                ons.notification.toast("タイトルを入力", {timeout: 2000, animation: "fall"});
+                ons.notification.toast("タイトルを入力してください", {timeout: 2000, animation: "fall"});
                 return;
               }
               if(this.category === "") {
-                ons.notification.toast("カテゴリを選択", {timeout: 2000, animation: "fall"});
+                ons.notification.toast("カテゴリを選択してください", {timeout: 2000, animation: "fall"});
                 return;
               }
               if(this.when === "" || this.where === "" || this.who === "" || this.what === "" || this.how === "") {
-                ons.notification.toast("状況を入力", {timeout: 2000, animation: "fall"});
+                ons.notification.toast("状況を入力してください", {timeout: 2000, animation: "fall"});
                 return;
               }
+              this.overlay = true;
               var qAndA = new QAndA();
               qAndA.memo = this.freememo;
               if(e) {
