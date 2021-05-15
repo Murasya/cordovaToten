@@ -460,10 +460,10 @@
                 ons.notification.toast("カテゴリを選択してください", {timeout: 2000, animation: "fall"});
                 return;
               }
-              if(this.when === "" || this.where === "" || this.who === "" || this.what === "" || this.how === "") {
-                ons.notification.toast("状況を入力してください", {timeout: 2000, animation: "fall"});
-                return;
-              }
+              // if(this.when === "" || this.where === "" || this.who === "" || this.what === "" || this.how === "") {
+              //   ons.notification.toast("状況を入力してください", {timeout: 2000, animation: "fall"});
+              //   return;
+              // }
               this.overlay = true;
               var qAndA = new QAndA();
               qAndA.memo = this.freememo;
