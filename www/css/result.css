@@ -6,10 +6,10 @@
   font-size: 2vh;
 }
 .result__theme {
-  margin: 2vh 5vw 30px;
+  margin: 1em 0 1em 1em;
   font-size: 1.5em;
-  font-weight: 700;
-  color: #818181;
+  font-weight: bold;
+  color: #645151;
   align-self: flex-start;
 }
 .result .result__category, .result .result__category--yellow, .result .result__category--blue, .result .result__category--green, .result .result__category--pink {
