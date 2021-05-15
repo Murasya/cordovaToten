@@ -301,6 +301,7 @@ function getGakuchika() {
   db.collection("gakuchika")
     .withConverter(gakuchikaConverter)
     .where("uid", "==", user.uid)
+    .orderBy("timestamp", "desc")
     .get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         var gakuchika = doc.data();
@@ -437,6 +438,7 @@ function getMyEvent() {
   db.collection("event")
     .withConverter(myEventConverter)
     .where("uid", "==", user.uid)
+    .orderBy("timestamp", "desc")
     .get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         var event = doc.data();
