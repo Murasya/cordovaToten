@@ -3777,18 +3777,18 @@
         <div class="jobhunting_memo1__folder--header1"><input type="text" v-model="item.header" readonly></div>
         <div class="jobhunting_memo1__folder--content">
           <div v-if="item.content1 != ''">
-            <input type="radio" :id="item.content1" :value="index*3" v-model="picked">
-            <label :for="item.content1">{{ item.content1 }}</label>
+            <input type="radio" :id="index*3" :value="index*3" v-model="picked">
+            <label :for="index*3">{{ item.content1 }}</label>
             <hr>
           </div>
           <div v-if="item.content2 != ''">
-            <input type="radio" :id="item.content2" :value="index*3 + 1" v-model="picked">
-            <label :for="item.content2">{{ item.content2 }}</label>
+            <input type="radio" :id="index*3 + 1" :value="index*3 + 1" v-model="picked">
+            <label :for="index*3 + 1">{{ item.content2 }}</label>
             <hr>
           </div>
           <div v-if="item.content3 != ''">
-            <input type="radio" :id="item.content3" :value="index*3 + 2" v-model="picked">
-            <label :for="item.content3">{{ item.content3 }}</label>
+            <input type="radio" :id="index*3 + 2" :value="index*3 + 2" v-model="picked">
+            <label :for="index*3 + 2">{{ item.content3 }}</label>
             <hr>
           </div>
         </div>
@@ -3832,7 +3832,7 @@
                 updateWellPoint(wp);
               }
               var theme = "";
-              const num = wp.useNumber / 3;
+              const num = Math.floor(wp.useNumber / 3);
               switch(wp.useNumber % 3) {
                 case 0:
                   theme = wp.contents[num].content1;
@@ -3851,7 +3851,6 @@
                     analyzeid: "eJ7lVVwlve65wc2NAmEY",
                   }
                 });
-                return;
               } else {
                 myNavigator.bringPageTop('jobhunting_story.html', {
                   data: {
