@@ -22,8 +22,8 @@
 }
 .jobhunting_story__fukidashi {
   margin: 0 auto;
-  padding: 60vh 0 0;
-  height: 35vh;
+  padding: 50vh 0 5vh;
+  height: 40vh;
   width: 90vw;
 }
 .jobhunting_story__reader {
@@ -35,7 +35,7 @@
 .jobhunting_story__comment-wrapper {
   background-color: #FFF;
   border-radius: 0 0 1em 1em;
-  height: 50%;
+  height: calc(100% - 6em);
   padding: 2em 1em;
 }
 .jobhunting_story__comment {
