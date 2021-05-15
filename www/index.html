@@ -62,7 +62,7 @@
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> -->
 </head>
 <body>
-  <ons-navigator swapable id="myNavigator" page="jobhunting_story.html"></ons-navigator>
+  <ons-navigator swapable id="myNavigator" page="index.html"></ons-navigator>
 </body>
 </html>
 
@@ -3644,7 +3644,7 @@
       <div class="jobhunting_memo1__folder" v-for="item in defo_memo" :key="item.header">
         <div class="jobhunting_memo1__folder--header1"><input type="text" v-model="item.header" readonly></div>
         <div class="jobhunting_memo1__folder--content">
-          <div>1.<input type="text" placeholder="ああああああああああ" v-model="item.content1"></div>
+          <div>1.<input type="text" placeholder="入力してください" v-model="item.content1"></div>
           <div>2.<input type="text" v-model="item.content2"></div>
           <div>3.<input type="text" v-model="item.content3"></div>
         </div>
@@ -3654,7 +3654,7 @@
         <div class="jobhunting_memo1__folder--header2"><input type="text" v-model="item.header" placeholder="学年/時期を入力"></div>
         <div class="jobhunting_memo1__folder--content">
           <button class="jobhunting_memo1__x" @click="removeMemo(index)">×</button>
-          <div>1.<input type="text" placeholder="ああああああああああ" v-model="item.content1"></div>
+          <div>1.<input type="text" placeholder="入力してください" v-model="item.content1"></div>
           <div>2.<input type="text" v-model="item.content2"></div>
           <div>3.<input type="text" v-model="item.content3"></div>
         </div>
