@@ -496,7 +496,15 @@
               // myNavigator.pushPage('');
             },
             newButton: function() {
-              myNavigator.replacePage('memo.html');
+              this.overlay = false;
+              this.title = "";
+              this.category = "";
+              this.when = "";
+              this.where = "";
+              this.who = "";
+              this.what = "";
+              this.how = "";
+              this.freememo = "";
             },
             homeButton: function() {
               myNavigator.resetToPage('index.html');
