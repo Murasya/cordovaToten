@@ -4353,7 +4353,14 @@
               }
             },
             savingButton: function() {
-              // TODO: データベース
+              var gakuchika = new Gakuchika();
+              gakuchika.analyzeid = id;
+              gakuchika.title = this.qAndA[0].answers[0];
+              gakuchika.color = this.qAndA[0].color;
+              gakuchika.contents = this.contents;
+              gakuchika.complete = false;
+              gakuchika.uid = firebase.auth().currentUser.uid;
+              gakuchika.id = setNewGakuchika(gakuchika);
               myNavigator.resetToPage('index.html');
             },
             showResult: function() {
