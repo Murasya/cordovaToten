@@ -3296,6 +3296,7 @@
               myNavigator.bringPageTop('edit.html', {
                 data: {
                   qAndA: qAndA,
+                  consideration: this.consideration[0],
                 },
                 animation: "fade",
               })
@@ -3512,6 +3513,32 @@
         <p class="question__why">{{ qa.why }}<input class="question__question" v-show="qa.num >= 2" type="text" v-model="qa.question">？</p>
         <textarea v-model="qa.answer" class="question__answer"></textarea>
       </div>
+      <div class="jobhunting_memo1__5w" v-show="color === 'jobhunting'">
+        <div class="jobhunting_memo1__5w-contents">
+          <p>あなたの強みはどこにありそう？</p>
+          <textarea v-model="consideration.contents[0]"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>あなたの強みはどんなことに活かせそう？</p>
+          <textarea v-model="consideration.contents[1]"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>この出来事の中で大切だった・大事にしていたことは?</p>
+          <textarea v-model="consideration.contents[2]"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>一番工夫したポイントは？</p>
+          <textarea v-model="consideration.contents[3]"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>この出来事で悪かったことは?</p>
+          <textarea v-model="consideration.contents[4]"></textarea>
+        </div>
+        <div class="jobhunting_memo1__5w-contents">
+          <p>今回の分析で考えたりていないことは?</p>
+          <textarea v-model="consideration.contents[5]"></textarea>
+        </div>
+      </div>
       <textarea class="edit__memo" v-model="memo" placeholder="振り返りを入力"></textarea>
       <p style="font-size: 11pt; color: #767676; margin-top: 30px;">分析はうまくいった？</p>
       <select v-model="success" class="edit__success">
@@ -3528,6 +3555,7 @@
       var myNavigator = document.querySelector('#myNavigator');
       ons.getScriptPage().onInit = function() {
         var qAndA = myNavigator.topPage.data.qAndA;
+        console.log(qAndA);
         var why = "";
         var items = [];
         switch(qAndA.color) {
@@ -3547,13 +3575,13 @@
             why = "なぜ取り組みたい/叶えたい";
             break;
         };
-        for(i=1; i<qAndA.answers.length; i++) {
+        for(i=1; i<qAndA.questions.length; i++) {
           items.push({
             num: i,
             why: why,
             question: qAndA.questions[i].substring(2,qAndA.questions[i].length-1),
             answer: qAndA.answers[i],
-            tag: qAndA.tags[i-1]
+            tag: qAndA.tags[i-1],
           });
           why = "なぜ";
         }
@@ -3566,12 +3594,13 @@
             numberClass.push("lightBlue");
           }
         });
-        vm = new Vue({
+        var vm = new Vue({
           el: '#edit',
           data: {
             data: items,
             theme: qAndA.answers[0],
             category: qAndA.category,
+            consideration: myNavigator.topPage.data.consideration ?? new Consideration(),
             memo: qAndA.memo,
             success: qAndA.success,
             color: qAndA.color,
@@ -3623,13 +3652,26 @@
               });
               qAndA.memo = this.memo;
               qAndA.success = this.success;
+              
               updateData(qAndA, function(){
-                myNavigator.bringPageTop("result.html",{
-                  data: {
-                    qAndA: qAndA,
-                    recode: true,
-                  }
-                })
+                console.log(vm.consideration);
+                if(vm.color === "jobhunting") {
+                  updateConsideration(vm.consideration, function() {
+                    myNavigator.bringPageTop("result.html",{
+                      data: {
+                        qAndA: qAndA,
+                        recode: true,
+                      }
+                    });
+                  });
+                } else {
+                  myNavigator.bringPageTop("result.html",{
+                    data: {
+                      qAndA: qAndA,
+                      recode: true,
+                    }
+                  });
+                }
               });
             }
           }

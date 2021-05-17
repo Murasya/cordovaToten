@@ -199,7 +199,7 @@ var myEventConverter = {
   }
 }
 class Consideration {
-  constructor(id="", analyzeid="", contents=[]) {
+  constructor(id="", analyzeid="", contents=["","","","","",""]) {
     this.id = id;
     this.analyzeid = analyzeid;
     this.contents = contents;
