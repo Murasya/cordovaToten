@@ -102,7 +102,7 @@
 }
 .overlay__tutorial--main {
   width: 80vw;
-  height: 55vh;
+  padding-bottom: 3vh;
   margin: 15vh auto;
   background-color: #FFF;
   border-radius: 24px;
