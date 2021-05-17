@@ -103,7 +103,7 @@
 .jobhunting_memo1__folder--header1 {
   background-color: #E8F6FD;
   padding: 5px 5vw 5px 2vw;
-  border-radius: .5em;
+  border-radius: .5em .5em 0 0;
   display: inline-block;
   width: 4.5em;
 }
@@ -117,7 +117,7 @@
 .jobhunting_memo1__folder--header2 {
   background-color: #E8F6FD;
   padding: 5px 5vw;
-  border-radius: .5em;
+  border-radius: .5em .5em 0 0;
   display: inline-block;
   width: 7.5em;
 }
@@ -130,7 +130,7 @@
 }
 .jobhunting_memo1__folder--content {
   background-color: #E8F6FD;
-  border-radius: .5em;
+  border-radius: 0 .5em .5em .5em;
   position: relative;
   top: -.3em;
   padding: 5vw;
