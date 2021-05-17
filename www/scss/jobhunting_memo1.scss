@@ -212,15 +212,16 @@
     height: 5em;
     font-size: 0.8em;
   }
+  &__add-btn {
+    height: 35pt;
+    display: block;
+    margin: 3vh auto;
+  }
   &__btn {
-    margin: 5vh 0 7em;
+    margin: 5vh 5vw 7em;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-
-    img {
-      height: 35pt;
-    }
     button {
       height: 30pt;
       background-color: #ED6A4C;

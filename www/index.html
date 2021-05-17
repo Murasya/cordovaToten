@@ -3708,9 +3708,9 @@
           <div>3.<input type="text" v-model="item.content3"></div>
         </div>
       </div>
+      <img class="jobhunting_memo1__add-btn" @click="addMemo" src="images/2021_02_25_新素材/jobhunting_memo1_add.png">
       <div class="jobhunting_memo1__btn">
-        <a @click="addMemo"><img src="images/2021_02_25_新素材/jobhunting_memo1_add.png"></a>
-        <button @click="nextButton">次へ</button>
+        <button @click="nextButton">次へ ＞</button>
       </div>
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
         <p class="overlay__save--string">保存して中断しますか？</p>
@@ -3826,24 +3826,24 @@
         <div class="jobhunting_memo1__folder--header1"><input type="text" v-model="item.header" readonly></div>
         <div class="jobhunting_memo1__folder--content">
           <div v-if="item.content1 != ''">
-            <input type="radio" :id="index*3" :value="index*3" v-model="picked">
+            <input type="radio" :id="index*3" :value="index*3" v-model="picked" style="width: auto;">
             <label :for="index*3">{{ item.content1 }}</label>
             <hr>
           </div>
           <div v-if="item.content2 != ''">
-            <input type="radio" :id="index*3 + 1" :value="index*3 + 1" v-model="picked">
+            <input type="radio" :id="index*3 + 1" :value="index*3 + 1" v-model="picked" style="width: auto;">
             <label :for="index*3 + 1">{{ item.content2 }}</label>
             <hr>
           </div>
           <div v-if="item.content3 != ''">
-            <input type="radio" :id="index*3 + 2" :value="index*3 + 2" v-model="picked">
+            <input type="radio" :id="index*3 + 2" :value="index*3 + 2" v-model="picked" style="width: auto;">
             <label :for="index*3 + 2">{{ item.content3 }}</label>
             <hr>
           </div>
         </div>
       </div>
       <div class="jobhunting_memo1__btn">
-        <button @click="nextButton">この出来事に決定</button>
+        <button @click="nextButton">次へ ＞</button>
       </div>
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal">
         <p class="overlay__save--string">保存して中断しますか？</p>
@@ -3963,7 +3963,7 @@
       </div>
       <!-- button -->
       <div class="jobhunting_memo1__btn">
-        <button @click="nextButton">整理できた！</button>
+        <button @click="nextButton">次へ ＞</button>
       </div>
       <div class="overlay__save" v-show="showSavingModal" @click="closeModal"> <!-- modal -->
         <p class="overlay__save--string">保存して中断しますか？</p>
@@ -4091,7 +4091,7 @@
       <textarea placeholder="フリーメモ" class="jobhunting_memo1__memo" v-model="memo"></textarea>
       <!-- button -->
       <div class="jobhunting_memo1__btn">
-        <button @click="nextButton">考えられた！</button>
+        <button @click="nextButton">次へ ＞</button>
       </div>
       <!-- result -->
       <div class="jobhunting_memo1__show-result--hoge" :class="showResultClass ? 'jobhunting_memo1__show-result--on' : 'jobhunting_memo1__show-result--off'" @click="showResult">
