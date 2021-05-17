@@ -466,7 +466,6 @@
               // }
               this.overlay = true;
               var qAndA = new QAndA();
-              qAndA.memo = this.freememo;
               if(e) {
                 e.when = this.when;
                 e.where = this.where;
@@ -475,6 +474,7 @@
                 e.how = this.how;
                 e.color = this.category;
                 e.complete = true;
+                e.memo = this.freememo;
                 setNewMyEvent(e);
               } else {
                 setNewData(qAndA, (id) => {
@@ -488,6 +488,7 @@
                   memo.color = this.category;
                   memo.complete = true;
                   memo.analyzeid = id;
+                  memo.memo = this.freememo;
                   setNewMyEvent(memo);
                 });
               }
@@ -4334,7 +4335,7 @@
               var gakuchika = new Gakuchika();
               gakuchika.analyzeid = id;
               gakuchika.title = this.qAndA[0].answers[0];
-              gakuchika.color = this.qAndA.color;
+              gakuchika.color = this.qAndA[0].color;
               gakuchika.contents = this.contents;
               gakuchika.complete = true;
               gakuchika.uid = firebase.auth().currentUser.uid;
@@ -4436,6 +4437,7 @@
             <textarea readonly>{{ event.how }}</textarea>
           </div>
         </div>
+        <textarea class="jobhunting_memo1__memo" readonly>{{ event.memo }}</textarea>
       </div>
       <div v-else>
         <div class="result_memo__str">分析の芽は記録されていません</div>

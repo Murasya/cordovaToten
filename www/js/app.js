@@ -142,7 +142,7 @@ var wellPointConverter = {
   }
 }
 class MyEvent{
-  constructor(id="", analyzeid="", title="", color="", when="empty", where="empty", who="empty", what="empty", how="empty", complete=false, uid="", timestamp=new Date()) {
+  constructor(id="", analyzeid="", title="", color="", when="empty", where="empty", who="empty", what="empty", how="empty", complete=false, uid="", timestamp=new Date(), memo="") {
     this.id = id;
     this.analyzeid = analyzeid;
     this.title = title;
@@ -155,9 +155,10 @@ class MyEvent{
     this.complete = complete;
     this.uid = uid;
     this.timestamp = timestamp;
+    this.memo = memo;
   }
   toString() {
-    return this.id + '--' + this.analyzeid + '--' + this.title + '--' + this.color + '--' + this.when + '--' + this.where + '--' + this.who + '--' + this.what + '--' + this.how + '--' + this.complete + '--' + this.uid + '--' + this.timestamp;
+    return this.id + '--' + this.analyzeid + '--' + this.title + '--' + this.color + '--' + this.when + '--' + this.where + '--' + this.who + '--' + this.what + '--' + this.how + '--' + this.complete + '--' + this.uid + '--' + this.timestamp + '--' + this.memo;
   }
 }
 var myEventConverter = {
@@ -174,6 +175,7 @@ var myEventConverter = {
       complete: event.complete,
       uid: firebase.auth().currentUser.uid,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      memo: event.memo,
     };
   },
   fromFirestore: function(snapshot, options) {
@@ -192,6 +194,7 @@ var myEventConverter = {
       data.complete,
       data.uid,
       data.timestamp.toDate(),
+      data.memo
     );
   }
 }
