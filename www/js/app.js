@@ -849,6 +849,31 @@ Vue.component("result-float-button", {
       getQuestionAndAnswerFromId(this.id, (qAndA) => {
         if(!qAndA.answers.length) qAndA.answers[0] = this.title;
         if(qAndA.color === "") qAndA.color = this.color;
+        if(!qAndA.questions.length) {
+          switch(qAndA.color) {
+            case "future":
+              qAndA.questions.push("取り組みたいこと/叶えたいこと");
+              break;
+            case "hobby":
+              qAndA.questions.push("趣味・好きなこと");
+              break;
+            case "experience":
+              qAndA.questions.push("過去の体験・経験");
+              break;
+            case "task":
+              qAndA.questions.push("タスク");
+              break;
+            case "hobby":
+              qAndA.questions.push("趣味・好きなこと");
+              break;
+            case "jobhunting":
+              qAndA.questions.push("ガクチカ");
+              break;
+            default:
+              qAndA.questions.push("取り組みたいこと/叶えたいこと");
+              break;
+          }
+        }
         myNavigator.replacePage("result.html", {
           data: {
             qAndA: qAndA,

@@ -1732,7 +1732,7 @@
   </ons-page>
 </template>
 
-<template id="analyze_jobhunting.html">
+<!-- <template id="analyze_jobhunting.html">
   <ons-page>
     <div class="background analyze__background"></div>
     <div class="analyze">
@@ -1863,7 +1863,7 @@
       }
     </script>
   </ons-page>
-</template>
+</template> -->
 
 <template id="analyze_tutorial.html">
   <ons-page id="analyze">
@@ -3129,7 +3129,7 @@
         <span v-for="n in category">{{ n }}&emsp;</span>
       </span>
       <a v-show="recode && questions.length" class="result__edit" @click="goEdit"><img  src="images/分析カテゴリ追加時_素材/edit_object.png" height="30px"></a>
-      <div v-if="questions.length" class="result__wrapper--on">
+      <div v-if="questions.length > 1" class="result__wrapper--on">
         <!-- 分析の記録 -->
         <div v-for="index in answers.length-1" class="items">
           <p :class='tags[index-1] == "" ? defoClass : (tags[index-1] == "out" ? lightClass : blueClass)'>{{ index }}</p>
