@@ -4587,6 +4587,7 @@
           <textarea v-model="event.how"></textarea>
         </div>
       </div>
+      <textarea class="jobhunting_memo1__memo" v-model="event.memo"></textarea>
       <div class="result__space"></div>
       <div class="edit_caution" v-show="overlay">
         <div class="edit_caution__str">編集内容が確定されていません。<br>保存せずに一覧に戻りますか？</div>
@@ -4636,6 +4637,7 @@
               this.event.who = pre_event.who;
               this.event.what = pre_event.what;
               this.event.how = pre_event.how;
+              this.event.memo = pre_event.memo;
               myNavigator.popPage();
             },
             saveButton: function() {
