@@ -3200,7 +3200,8 @@
         <div class="result__space"></div>
       </div>
       <div v-else class="result__wrapper--off">
-        <div class="result_memo__str">まだ分析の記録がありません</div>
+        <div class="result_memo__str" v-if="answers.length > 1">分析の途中です</div>
+        <div class="result_memo__str" v-else>まだ分析の記録がありません</div>
         <button class="result_memo__button" @click="startQuestion">分析する！</button>
       </div>
       <result-float-button :active="1" :id="id" :title="theme" :color="color" v-show="recode"></result-float-button>
@@ -4699,7 +4700,8 @@
         <div class="jobhunting_memo1__5w-total">TOTAL[{{ gakuchika.contents[0].length + gakuchika.contents[1].length + gakuchika.contents[2].length + gakuchika.contents[3].length + gakuchika.contents[4].length }}]</div>
       </div>
       <div v-else>
-        <div class="result_memo__str">まだガクチカがありません</div>
+        <div class="result_memo__str" v-if="gakuchika.contents[0].length + gakuchika.contents[1].length + gakuchika.contents[2].length + gakuchika.contents[3].length + gakuchika.contents[4].length == 0">まだガクチカがありません</div>
+        <div class="result_memo__str" v-else>ガクチカの途中です</div>
         <button class="result_memo__button" @click="startGakuchika">書いてみる！</button>
       </div>
       <result-float-button :id="gakuchika.analyzeid" :title="gakuchika.title" :color="gakuchika.color" :active="2"></result-float-button>
