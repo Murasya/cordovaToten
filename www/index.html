@@ -4295,7 +4295,7 @@
         <div class="jobhunting_memo1__5w-title">
           {{ qAndA[0].answers[0] }}
         </div>
-        <div class="jobhunting_memo1__5w">
+        <div class="jobhunting_memo1__5w" v-if="qAndA[0].color === 'jobhunting'">
           <div class="jobhunting_memo1__5w-contents">
             <p>あなたの強みはどこにありそう？</p>
             <textarea v-model="consideration[0].contents[0]" readonly></textarea>
@@ -4321,6 +4321,7 @@
             <textarea v-model="consideration[0].contents[5]" readonly></textarea>
           </div>
         </div>
+        <div v-else class="jobhunting_memo1__str">考察は"ガクチカ"カテゴリ内でのみ作成できます</div>
       </div>
 
       <!-- savingModal -->
