@@ -3666,20 +3666,10 @@
                 console.log(vm.consideration);
                 if(vm.color === "jobhunting") {
                   updateConsideration(vm.consideration, function() {
-                    myNavigator.bringPageTop("result.html",{
-                      data: {
-                        qAndA: qAndA,
-                        recode: true,
-                      }
-                    });
+                    myNavigator.popPage();
                   });
                 } else {
-                  myNavigator.bringPageTop("result.html",{
-                    data: {
-                      qAndA: qAndA,
-                      recode: true,
-                    }
-                  });
+                  myNavigator.popPage();
                 }
               });
             }
