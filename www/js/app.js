@@ -559,7 +559,7 @@ function getQuestionAndAnswerAll(limit = 100) {
     .get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         var qAndA = doc.data();
-        if(qAndA.answers.length)
+        if(qAndA.answers.length > 1)
           array.push(qAndA);
       });
     }).catch(function(error) {
