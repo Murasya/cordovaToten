@@ -5098,10 +5098,20 @@
             vue.buttonMode = true;
             vue.buttonNum++;
             break;
+          case 20:
+            vue.titleNum = 1;
+            vue.j = 3;
+            vue.buttonNum = 3;
+            break;
           case 24:
             vue.titleNum = 2;
+            vue.j = 4;
+            break;
           case 30:
+            vue.titleNum = 2;
+            vue.j = 5;
             vue.lastMode = true;
+            break;
         }
       }
       ons.getScriptPage().onHide = function() {
