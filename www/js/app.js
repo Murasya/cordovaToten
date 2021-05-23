@@ -839,7 +839,8 @@ Vue.component("result-float-button", {
           data: {
             bunsekinome: event,
             recode: true,
-          }
+          },
+          animation: "fade",
         });
       });
     },
@@ -852,7 +853,8 @@ Vue.component("result-float-button", {
           data: {
             qAndA: qAndA,
             recode: true,
-          }
+          },
+          animation: "fade",
         });
       });
     },
@@ -865,7 +867,8 @@ Vue.component("result-float-button", {
           data: {
             gakuchika: gakuchika,
             recode: true,
-          }
+          },
+          animation: "fade",
         });
       });
     },
