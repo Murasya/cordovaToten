@@ -215,7 +215,7 @@
             },
             goTutorial: function() {
               hBanner();
-              document.getElementById("myNavigator").pushPage('category_tutorial.html');
+              // document.getElementById("myNavigator").pushPage('category_tutorial.html');
             },
             goAnalyze: function() {
               document.getElementById("myNavigator").pushPage('analyze.html');
@@ -3085,6 +3085,10 @@
           },
           methods: {
             onRegister: function() {
+              if(DEBUG_MODE) {
+                document.querySelector('#myNavigator').resetToPage("category.html");
+                return;
+              }
               if(!this.isTermsAccept) {
                 ons.notification.toast('利用規約とプライバシーポリシーに同意してください', {timeout: 1000, animation: 'fall'});
               }
@@ -3094,7 +3098,7 @@
                 .then(function(result) {
                   user.uid = result.user.uid;
                   setNewUser(user);
-                  document.querySelector('#myNavigator').resetToPage("index.html");
+                  document.querySelector('#myNavigator').resetToPage("category.html");
                   firebase.auth().currentUser.sendEmailVerification().then(function() {
                     ons.notification.toast('確認メールを送りました', {timeout: 1000, animation: 'fall'});
                   }).catch(function(error) {
