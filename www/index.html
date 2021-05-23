@@ -4276,6 +4276,7 @@
             <textarea v-model="event[0].how" readonly></textarea>
           </div>
         </div>
+        <textarea v-show="event[0].memo" class="jobhunting_memo1__memo" readonly>{{ event[0].memo }}</textarea>
       </div>
       <!-- 分析 -->
       <div class="result" style="background-color: #E8F6FD;" :class="contentClass1 ? 'jobhunting_memo1__result--on' : 'jobhunting_memo1__result--off'">
@@ -4285,6 +4286,7 @@
           <p>{{ qAndA[0].questions[index] }}</p>
           <p>{{ qAndA[0].answers[index] }}</p>
         </div>
+        <textarea v-show="qAndA[0].memo" class="result__memo" readonly>{{ qAndA[0].memo }}</textarea>
       </div>
       <!-- 考察 -->
       <div class="jobhunting_memo1" :class="contentClass2 ? 'jobhunting_memo1__result--on' : 'jobhunting_memo1__result--off'" style="background-color: #FFF;">
