@@ -2444,12 +2444,14 @@
                   console.log("Error removing document: ", error);
                 });
               } else if(this.tabType == 'analyze') {
-                db.collection("questionAndAnswer").doc(this.data.id).delete().then(function() {
-                  console.log("Document successfully deleted!");
-                  vm.onArchiveButton();
-                }).catch(function(error) {
-                  console.log("Error removing document: ", error);
-                });
+                this.data.answers = [];
+                this.data.questions = [];
+                this.data.tags = [];
+                this.data.memo = "";
+                this.data.complete = false;
+                this.data.category = "";
+                this.data.success = "";
+                updateData(this.data, function(){vm.onArchiveButton()});
               } else if(this.tabType == 'gakuchika') {
                 db.collection("gakuchika").doc(this.data.id).delete().then(function() {
                   console.log("Document successfully deleted!");
@@ -4865,13 +4867,13 @@
         vue = new Vue({
           el: "#jobhunting_story",
           data: {
-            i: 0,
+            i: 0,//セリフ番号
             titles: [
               "STEP1 出来事整理 編",
               "STEP2 なぜなぜ分析 編",
               "STEP3 ガクチカ 編",
             ],
-            titleNum: 0,
+            titleNum: 0,//タイトル番号
             reader: "テンちゃん",
             comments: [
               "来てくれてうれしいテン〜！！", // 0
@@ -4906,7 +4908,7 @@
               "自分の強みや軸はなんだろう？<br><br>って、考えながら書いていくテンよ〜！",//29
               "おつかれさまテン〜！！！ここまでよく頑張ったテン！さすがテン。<br>今回キミが作ったガクチカは、これからブラッシュアップしていくことでさらに輝いていくテン！",//30
             ],
-            buttonNum: 0,
+            buttonNum: 0, //ボタンの文字番号
             buttons: [
               ['ガクチカ', "志望動機"],//3
               ["OK", "選びなおす"],//10
@@ -4915,7 +4917,7 @@
               ["続ける", "保存して休憩する"],//24
               ["先輩のガクチカを見る", "見ないでやってみる"],//27
             ],
-            j: 0,
+            j: 0, //ラストボタンの番号
             lastButtons: [
               "出来事を書き出す",
               "選ぶ",
@@ -5093,9 +5095,12 @@
             vue.buttonNum++;
             break;
           case 14:
+            vue.titleNum = 1;
             vue.buttonMode = true;
             vue.buttonNum++;
             break;
+          case 24:
+            vue.titleNum = 2;
           case 30:
             vue.lastMode = true;
         }
