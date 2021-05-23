@@ -2723,9 +2723,10 @@
                 qAndA.questions.push(this.qa.why);
                 qAndA.answers.push(this.qa.answer);
                 qAndA.tags.push(this.qa.tag);
-                if(!DEBUG_MODE) {
-                  updateData(qAndA);
-                }
+              }
+              qAndA.complete = true;
+              if(!DEBUG_MODE) {
+                updateData(qAndA);
               }
               myNavigator.bringPageTop('result.html',{
                 data: {
@@ -3129,7 +3130,7 @@
         <span v-for="n in category">{{ n }}&emsp;</span>
       </span>
       <a v-show="recode && questions.length" class="result__edit" @click="goEdit"><img  src="images/分析カテゴリ追加時_素材/edit_object.png" height="30px"></a>
-      <div v-if="questions.length > 1" class="result__wrapper--on">
+      <div v-if="complete" class="result__wrapper--on">
         <!-- 分析の記録 -->
         <div v-for="index in answers.length-1" class="items">
           <p :class='tags[index-1] == "" ? defoClass : (tags[index-1] == "out" ? lightClass : blueClass)'>{{ index }}</p>
@@ -3224,6 +3225,7 @@
             memo: qAndA.memo,
             success: qAndA.success,
             category: qAndA.category,
+            complete: qAndA.complete,
             color: qAndA.color,
             recode: myNavigator.topPage.data.recode ?? false,
             defoClass: "defo",
@@ -3349,6 +3351,7 @@
       }
       ons.getScriptPage().onShow = function() {
         vm.recode = myNavigator.topPage.data.recode ?? false;
+        vm.complete = myNavigator.topPage.data.qAndA.complete ?? false;
         vm.loading = true;
       }
       ons.getScriptPage().onHide = function() {
