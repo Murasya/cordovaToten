@@ -294,8 +294,9 @@
   position: fixed;
   top: calc(5vh + 5em);
   width: 100vw;
-  height: 80vh;
+  height: 85vh;
   overflow-y: auto;
+  display: block;
 }
 .jobhunting_memo1__result--off {
   display: none;
