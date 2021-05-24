@@ -836,6 +836,7 @@ Vue.component("result-float-button", {
       getMyEventFromAnalyzeid(this.id, (event) => {
         if(event.title === "") event.title = this.title;
         if(event.color === "") event.color = this.color;
+        console.log(event);
         myNavigator.replacePage("result_memo.html", {
           data: {
             bunsekinome: event,
@@ -875,6 +876,7 @@ Vue.component("result-float-button", {
               break;
           }
         }
+        console.log(qAndA);
         myNavigator.replacePage("result.html", {
           data: {
             qAndA: qAndA,
@@ -889,6 +891,7 @@ Vue.component("result-float-button", {
       getGakuchikaFromAnalyzeid(this.id, (gakuchika)=>{
         if(gakuchika.title === "") gakuchika.title = this.title;
         if(gakuchika.color === "") gakuchika.color = this.color;
+        console.log(gakuchika);
         myNavigator.replacePage("result_gakuchika.html", {
           data: {
             gakuchika: gakuchika,
