@@ -3092,6 +3092,7 @@
               }
               if(!this.isTermsAccept) {
                 ons.notification.toast('利用規約とプライバシーポリシーに同意してください', {timeout: 1000, animation: 'fall'});
+                return;
               }
               var day = new Date(this.year, this.month-1, this.day);
               var user = new User("", this.email, day, this.sex, this.occupation, this.isResearchAccept);
