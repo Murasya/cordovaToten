@@ -712,7 +712,7 @@
       <div id="categoryVue">
         <div class="overlay__tutorial--bg" v-show="overlay">
           <a class="overlay__str--left" @click="goLeft" v-show="!overlay0"><</a>
-          <div class="overlay__tutorial--main" v-show="overlay0">
+          <div class="overlay__tutorial--main" v-show="overlay0" @click="goRight">
             <div class="overlay__tutorial--header">
               <div class="overlay__str--step">STEP 1</div>
               <div class="overlay__str--step-content">分析カテゴリを選ぶ</div>
@@ -725,7 +725,7 @@
               <div class="overlay__str--green">過去の体験・経験</div>
             </div>
           </div>
-          <div class="overlay__tutorial--main" v-show="overlay1">
+          <div class="overlay__tutorial--main" v-show="overlay1" @click="goRight">
             <div class="overlay__tutorial--header">
               <div class="overlay__str--step">STEP 2</div>
               <div class="overlay__str--step-content">テーマを決め、タグをつける</div>
@@ -736,7 +736,7 @@
             <span class="overlay__str--step1">テーマに合わせてタグをつける</span>
             <div class="overlay__str--step2">夢, 勉強, 人間関係 など<br>最大3つまで選ぶことができます！</div>
           </div>
-          <div class="overlay__tutorial--main" v-show="overlay2">
+          <div class="overlay__tutorial--main" v-show="overlay2" @click="goRight">
             <div class="overlay__tutorial--header">
               <div class="overlay__str--step">STEP 3</div>
               <div class="overlay__str--step-content">分析&記録する</div>
