@@ -464,7 +464,6 @@
               //   ons.notification.toast("状況を入力してください", {timeout: 2000, animation: "fall"});
               //   return;
               // }
-              this.overlay = true;
               var qAndA = new QAndA();
               if(e) {
                 e.when = this.when;
@@ -475,7 +474,7 @@
                 e.color = this.category;
                 e.complete = true;
                 e.memo = this.freememo;
-                setNewMyEvent(e);
+                setNewMyEvent(e, ()=>{vue.overlay = true;});
               } else {
                 setNewData(qAndA, (id) => {
                   var memo = new MyEvent();
@@ -489,7 +488,7 @@
                   memo.complete = true;
                   memo.analyzeid = id;
                   memo.memo = this.freememo;
-                  setNewMyEvent(memo);
+                  setNewMyEvent(memo, ()=>{vue.overlay = true});
                 });
               }
             },

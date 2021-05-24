@@ -387,7 +387,7 @@ function getConsiderationFromAnalyzeid(analyzeid) {
 
 // MyEvent
 // 新規データ
-function setNewMyEvent(event) {
+function setNewMyEvent(event, func=function(){}) {
   var id = "";
   console.log(event.toString());
   db.collection("event").withConverter(myEventConverter).add(
@@ -395,6 +395,7 @@ function setNewMyEvent(event) {
   ).then(function(docRef) {
     console.log('Document written with ID: ', docRef.id);
     id = docRef.id;
+    func();
   }).catch(function(error) {
     console.log('Error adding document: ', error);
     id = error;
