@@ -3362,6 +3362,11 @@
       ons.getScriptPage().onShow = function() {
         vm.recode = myNavigator.topPage.data.recode ?? false;
         vm.complete = myNavigator.topPage.data.qAndA.complete ?? false;
+        vm.questions = myNavigator.topPage.data.qAndA.questions;
+        vm.answers = myNavigator.topPage.data.qAndA.answers;
+        vm.memo = myNavigator.topPage.data.qAndA.memo;
+        vm.success = myNavigator.topPage.data.qAndA.success;
+        vm.consideration = getConsiderationFromAnalyzeid(myNavigator.topPage.data.qAndA.id);
         vm.loading = true;
       }
       ons.getScriptPage().onHide = function() {
@@ -3670,10 +3675,10 @@
                 console.log(vm.consideration);
                 if(vm.color === "jobhunting") {
                   updateConsideration(vm.consideration, function() {
-                    myNavigator.popPage();
+                    myNavigator.popPage({data: {qAndA: qAndA}});
                   });
                 } else {
-                  myNavigator.popPage();
+                  myNavigator.popPage({data: {qAndA: qAndA}});
                 }
               });
             }
