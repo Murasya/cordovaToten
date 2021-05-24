@@ -3140,7 +3140,7 @@
       <span :class="headerClass" v-if="category.length">
         <span v-for="n in category">{{ n }}&emsp;</span>
       </span>
-      <a v-show="recode && questions.length" class="result__edit" @click="goEdit"><img  src="images/分析カテゴリ追加時_素材/edit_object.png" height="30px"></a>
+      <a v-show="recode && complete" class="result__edit" @click="goEdit"><img  src="images/分析カテゴリ追加時_素材/edit_object.png" height="30px"></a>
       <div v-if="complete" class="result__wrapper--on">
         <!-- 分析の記録 -->
         <div v-for="index in answers.length-1" class="items">
