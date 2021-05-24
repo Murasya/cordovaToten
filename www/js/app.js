@@ -1,4 +1,4 @@
-const DEBUG_MODE = true;
+const DEBUG_MODE = false;
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -1015,6 +1015,8 @@ function openUrl(url, readerMode) {
 function dismissSafari() {
   SafariViewController.hide()
 }
+
+//disableDeviceBackButtonHandler();
 
 // キーボードで画面が隠れないようにする
 // //メイン画面の高さ
