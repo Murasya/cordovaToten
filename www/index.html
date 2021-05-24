@@ -3176,7 +3176,7 @@
           </div>
         </div>
         <!-- memo -->
-        <div style="width:100%;">
+        <div style="width:100%;" v-if="!(recode == false && color === 'jobhunting')">
           <textarea class="result__memo" v-model="memo" v-if="recode == false" placeholder="振り返りを入力"></textarea>
           <div v-else class="result__memo--readonly">{{ memo }}</div>
         </div>
